@@ -1,0 +1,18 @@
+<div th:fragment="pagination">
+    <nav aria-label="Page navigation" th:if="${postsData.getTotalPages() > 1 }">
+        <ul class="pagination pagination justify-content-center">
+            <li class="page-item" th:classappend="${!postsData.isHasPrevious()} ? disabled : ''">
+                <a class="page-link" href="#" th:href="${paginationPrefix+'page=1'}">First</a>
+            </li>
+            <li class="page-item" th:classappend="${!postsData.isHasPrevious()} ? disabled : ''">
+                <a class="page-link" href="#" th:href="${paginationPrefix+'page='+(postsData.pageNumber-1)}">Previous</a>
+            </li>
+            <li class="page-item" th:classappend="${!postsData.isHasNext()} ? disabled : ''">
+                <a class="page-link" href="#" th:href="${paginationPrefix+'page='+(postsData.pageNumber+1)}">Next</a>
+            </li>
+            <li class="page-item" th:classappend="${!postsData.isHasNext()} ? disabled : ''">
+                <a class="page-link" href="#" th:href="${paginationPrefix+'page='+(postsData.getTotalPages())}">Last</a>
+            </li>
+        </ul>
+    </nav>
+</div>

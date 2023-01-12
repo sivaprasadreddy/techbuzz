@@ -1,1 +1,1 @@
-# techbuzz
+# TechBuzz

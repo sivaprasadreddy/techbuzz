@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Add Post</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+
+    <div class="row">
+
+        <div class="col-md-4 offset-md-4">
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>Add New Post</h3>
+                </div>
+                <div class="card-body">
+                    <form id="addForm" method="post"
+                          th:action="@{/posts}" th:object="${post}">
+
+                        <div class="mb-3">
+                            <label for="title" class="control-label">Title</label>
+                            <input type="text" id="title" name="title"
+                                   th:field="*{title}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' : ''"
+                                   placeholder="Enter title"
+                            />
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}"
+                                 th:errors="*{title}">Title Error</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="url" class="control-label">URL</label>
+                            <input type="text" id="url" name="url"
+                                   th:field="*{url}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('url')} ? 'is-invalid' : ''"
+                                   placeholder="Enter url"
+                            />
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('url')}"
+                                 th:errors="*{url}">url Error</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="content" class="control-label">Content*</label>
+                            <textarea id="content" name="content"
+                                   th:field="*{content}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('content')} ? 'is-invalid' : ''"
+                                   placeholder="Enter content"></textarea>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('content')}"
+                                 th:errors="*{content}">content Error</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="categoryId" class="control-label">Category</label>
+                            <input type="text" id="categoryId" name="categoryId"
+                                   class="form-control"
+                                   autocomplete="off"
+                                   th:field="*{categoryId}"
+                                   th:classappend="${#fields.hasErrors('categoryId')} ? 'is-invalid' : ''"
+                                   placeholder="Select category"
+                            />
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('categoryId')}"
+                                 th:errors="*{categoryId}">Category Error</div>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="pageScripts">
+<script>
+    $(function () {
+        initCategoriesAutoComplete("#categoryId")
+    });
+</script>
+</div>
+</body>
+</html>

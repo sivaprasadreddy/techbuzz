@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+      layout:decorate="~{layout}">
+<head>
+    <title>Home</title>
+    <meta th:name="_csrf" th:content="${_csrf.token}"/>
+    <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="row">
+    <div class="col-md-8 offset-1">
+        <div th:if="${header != null}">
+            <div >
+                <strong th:text="${header}" style="font-size: 20px;">Header</strong>
+            </div>
+        </div>
+        <div th:replace="~{fragments/pagination :: pagination}"> </div>
+
+        <div >
+            <div class="alert alert-warning" role="alert"
+                 th:if="${postsData.data == null || postsData.data.isEmpty() }">
+                <h3 class="alert-heading">No results found</h3>
+            </div>
+            <div class="alert alert-primary post" role="alert" th:each="post: ${postsData.data}">
+                <h3 class="alert-heading" th:text="${post.title}">Title</h3>
+                <div>
+                    <a href="#" th:href="${post.url}" th:text="${post.url}" target="_blank"></a>
+                </div>
+                <div th:text="${post.content}">
+                    Post content
+                </div>
+                <p sec:authorize="isAuthenticated()" class="mt-3 mb-0"
+                    th:if="${post.editable}">
+                    <a class="button" href="#" th:href="${'/posts/'+post.id+'/edit'}">
+                        <i class="fas fa-edit" ></i> Edit
+                    </a>
+
+                       <a class="button" href="#"
+                               th:onclick="'javascript:deletePost( \''+${post.id}+'\');'">
+                           <i class="fas fa-trash-alt" ></i> Delete
+                       </a>
+
+                </p>
+            </div>
+        </div>
+
+        <div th:replace="~{fragments/pagination :: pagination}"> </div>
+    </div>
+    <div class="col-md-2">
+        <h2>Categories</h2>
+        <div class="list-group list-group-flush">
+            <a href="#"
+               class="list-group-item list-group-item-action badge badge-primary"
+               th:each="category: ${categories}"
+               th:href="${'/c/'+category.name}">
+                <i class="fas fa-tag" ></i>
+                <span style="font-size: 16px;" th:text="${category.name}">Category Name</span>
+            </a>
+        </div>
+    </div>
+    </div>
+</div>
+<div layout:fragment="pageScripts">
+</div>
+</body>
+</html>

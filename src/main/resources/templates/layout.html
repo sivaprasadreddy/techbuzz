@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">TechBuzz</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.css">
+    <link rel="stylesheet" th:href="@{'/selectize.js-0.13.6/css/selectize.bootstrap5.css'}">
+    <link rel="stylesheet" href="/webjars/font-awesome/6.2.0/css/all.css">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+<main>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">TechBuzz</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!--<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    </li>
+                </ul>-->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item" sec:authorize="!isAuthenticated()">
+                        <a class="nav-link" href="/login"><i class="fa-solid fa-right-to-bracket"></i> Login </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="!isAnonymous()">
+                        <a class="nav-link" href="#" th:href="@{/posts/new}">
+                            <i class="fas fa-plus-circle" ></i> Add
+                        </a>
+                    </li>
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout </a>
+                    </li>
+                    <!--<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            UserName
+                        </a>
+                        <ul class="dropdown-menu  dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">My Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Change Password</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#">Logout</a></li>
+                        </ul>
+                    </li>-->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="app" class="container-fluid">
+        <div layout:fragment="content">
+            <!-- Your Page Content Here -->
+        </div>
+    </div>
+</main>
+<script src="/webjars/jquery/3.6.1/jquery.js"></script>
+<script src="/webjars/bootstrap/5.2.3/js/bootstrap.bundle.js"></script>
+<script th:src="@{'/selectize.js-0.13.6/js/standalone/selectize.min.js'}"></script>
+<script th:src="@{'/js/app.js'}"></script>
+<div layout:fragment="pageScripts">
+</div>
+</body>
+</html>

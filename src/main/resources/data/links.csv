@@ -1,0 +1,36 @@
+url,title,category
+https://sivalabs.in/how-to-not-to-ask-for-technical-help/,"How (not) to ask for Technical Help?",General
+https://sivalabs.in/my-all-time-favourite-20-inspiring-tech-talks/,"My all-time favourite 20 inspiring Tech Talks",General
+https://sivalabs.in/announcing-my-springboot-tips-video-series/,"Announcing My "SpringBoot Tips Video Series" on YouTube",Java
+https://sivalabs.in/my-attempt-to-understand-why-people-perceive-java-as-complex/,"My attempt to understand why people perceive Java as complex",Java
+https://sivalabs.in/code-simplicity-by-abstraction-vs-verbosity/,"Code simplicity by Abstraction vs Verbosity",General
+https://sivalabs.in/kubernetes-ingress/,"Kubernetes - Exposing Services to outside of Cluster using Ingress",DevOps
+https://sivalabs.in/kubernetes-blue-green-deployments/,"Kubernetes - Blue/Green Deployments",DevOps
+https://sivalabs.in/kubernetes-deployment-rolling-updates/,"Kubernetes - Releasing a new version of the application using Deployment Rolling Updates",DevOps
+https://sivalabs.in/getting-started-with-kubernetes/,"Getting Started with Kubernetes",DevOps
+https://sivalabs.in/get-super-productive-with-intellij-file-templates/,"Get Super Productive with Intellij File Templates",Java
+https://sivalabs.in/few-things-i-learned-the-hardway-in-15-years-of-my-career/,"Few Things I learned in the HardWay in 15 years of my career",Career
+https://sivalabs.in/my-thoughts-on-cleancode-simplicity-automation-empathy/,"My Thoughts on CleanCode, Simplicity, Automation and Empathy",General
+https://sivalabs.in/localstack-spring-boot-starter-tutorial/,"LocalStack SpringBoot Starter Tutorial",Java
+https://sivalabs.in/all-the-resources-you-ever-need-as-a-java-spring-application-developer/,"All the resources you ever need as a Java & Spring application developer",Java
+https://sivalabs.in/impose-architecture-guidelines-using-archunit/,"Imposing Code Structure Guidelines using ArchUnit",General
+https://sivalabs.in/spring-boot-integration-testing-using-testcontainers-starter/,"SpringBoot Integration Testing using TestContainers Starter",Java
+https://sivalabs.in/testing-rest-apis-with-postman-newman/,"Testing REST APIs using Postman and Newman",Testing
+https://sivalabs.in/spring-boot-testing/,"Testing SpringBoot Applications",Testing
+https://sivalabs.in/spring-boot-best-practices/,"SpringBoot Best Practices",Java
+https://sivalabs.in/how-springboot-autoconfiguration-magic/,"How SpringBoot AutoConfiguration magic works?",Java
+https://sivalabs.in/why-springboot/,"Why SpringBoot?",Java
+https://sivalabs.in/2013/12/clean-code-dont-mix-different-levels-of-abstractions/,"Clean Code: Don’t mix different levels of abstractions",General
+https://reflectoring.io/java-mapping-with-mapstruct/,"One-Stop Guide to Mapping with MapStruct",Java
+https://reflectoring.io/tutorial-guide-axios/,"Complete Guide to Axios HTTP Client",WebDev
+https://reflectoring.io/reactive-architecture-with-spring-boot/,"Reactive Architecture with Spring Boot",Java
+https://reflectoring.io/getting-started-with-spring-webflux/,"Getting Started with Spring WebFlux",Java
+https://reflectoring.io/getting-started-with-aws-sqs/,"Getting Started with Amazon SQS",Cloud
+https://reflectoring.io/getting-started-with-aws-cdk/,"Getting Started with AWS CDK",Cloud
+https://reflectoring.io/immutables-library/,"Complete Guide to the Immutables Java Library",Java
+https://reflectoring.io/spring-boot-tracing/,"Tracing with Spring Boot, OpenTelemetry, and Jaeger",Java
+https://reflectoring.io/laws-and-principles-of-software-development/,"Laws and Principles of Software Development",General
+https://reflectoring.io/time-limiting-with-springboot-resilience4j/,"Timeouts with Spring Boot and Resilience4j",Java
+https://rieckpil.de/test-thymeleaf-controller-endpoints-with-spring-boot-and-mockmvc/,"Test Thymeleaf Controller Endpoints with Spring Boot and MockMvc",Java
+https://rieckpil.de/spring-boot-testing-mockmvc-vs-webtestclient-vs-testresttemplate/,"Spring Boot Testing: MockMvc vs. WebTestClient vs. TestRestTemplate",Java
+https://rieckpil.de/write-gatling-performance-tests-with-java/,"Write Gatling Performance Tests with Java",Testing
