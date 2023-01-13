@@ -10,14 +10,14 @@ import org.springframework.security.web.RedirectStrategy;
 @Configuration
 public class AppConfig {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public RedirectStrategy getRedirectStrategy() {
-        return new DefaultRedirectStrategy();
-    }
+	@Bean
+	public RedirectStrategy getRedirectStrategy() {
+		return new DefaultRedirectStrategy();
+	}
 
 }

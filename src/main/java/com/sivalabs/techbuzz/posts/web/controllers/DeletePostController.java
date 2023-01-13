@@ -17,29 +17,30 @@ import java.util.Objects;
 
 @Controller
 public class DeletePostController {
-    private final PostRepository postRepository;
 
-    public DeletePostController(PostRepository postRepository) {
-        this.postRepository = postRepository;
-    }
+	private final PostRepository postRepository;
 
-    @DeleteMapping("/posts/{id}")
-    @ResponseStatus
-    @AnyAuthenticatedUser
-    public ResponseEntity<Void> deletePost(@PathVariable Long id, @CurrentUser User loginUser) {
-        Post post = postRepository.findById(id).orElse(null);
-        if (post == null) {
-            throw new ResourceNotFoundException("Post not found");
-        }
-        this.checkPrivilege(post, loginUser);
-        postRepository.deleteById(id);
-        return ResponseEntity.ok().build();
-    }
+	public DeletePostController(PostRepository postRepository) {
+		this.postRepository = postRepository;
+	}
 
-    private void checkPrivilege(Post post, User loginUser) {
-        if (!(Objects.equals(post.getCreatedBy().getId(), loginUser.getId())
-                || loginUser.isAdminOrModerator())) {
-            throw new UnauthorisedAccessException("Permission Denied");
-        }
-    }
+	@DeleteMapping("/posts/{id}")
+	@ResponseStatus
+	@AnyAuthenticatedUser
+	public ResponseEntity<Void> deletePost(@PathVariable Long id, @CurrentUser User loginUser) {
+		Post post = postRepository.findById(id).orElse(null);
+		if (post == null) {
+			throw new ResourceNotFoundException("Post not found");
+		}
+		this.checkPrivilege(post, loginUser);
+		postRepository.deleteById(id);
+		return ResponseEntity.ok().build();
+	}
+
+	private void checkPrivilege(Post post, User loginUser) {
+		if (!(Objects.equals(post.getCreatedBy().getId(), loginUser.getId()) || loginUser.isAdminOrModerator())) {
+			throw new UnauthorisedAccessException("Permission Denied");
+		}
+	}
+
 }

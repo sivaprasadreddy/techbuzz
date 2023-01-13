@@ -11,28 +11,27 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 @Entity
-@Table(name="users")
+@Table(name = "users")
 @Setter
 @Getter
-public class User implements Serializable
-{
+public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	@NotEmpty()
 	private String name;
 
-	@Column(nullable=false, unique=true)
+	@Column(nullable = false, unique = true)
 	@NotEmpty
-	@Email(message="Invalid email")
+	@Email(message = "Invalid email")
 	private String email;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	@NotEmpty
-	@Size(min=4)
+	@Size(min = 4)
 	private String password;
 
 	@Column
@@ -50,4 +49,5 @@ public class User implements Serializable
 	public boolean hasAnyRole(RoleEnum... roles) {
 		return Arrays.asList(roles).contains(this.getRole());
 	}
+
 }

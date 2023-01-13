@@ -23,60 +23,60 @@ import java.util.Objects;
 
 @Controller
 public class UpdatePostController {
-    private static final String MODEL_ATTRIBUTE_POST = "post";
-    private static final Logger logger = LoggerFactory.getLogger(UpdatePostController.class);
 
-    private final UpdatePostHandler updatePostHandler;
+	private static final String MODEL_ATTRIBUTE_POST = "post";
 
-    public UpdatePostController(UpdatePostHandler postService) {
-        this.updatePostHandler = postService;
-    }
+	private static final Logger logger = LoggerFactory.getLogger(UpdatePostController.class);
 
-    @GetMapping("/posts/{id}/edit")
-    @AnyAuthenticatedUser
-    public String editPostForm(@PathVariable Long id, @CurrentUser User loginUser, Model model) {
-        Post post = updatePostHandler.getPostById(id).orElse(null);
-        if (post == null) {
-            throw new ResourceNotFoundException("Post not found");
-        }
-        this.checkPrivilege(post, loginUser);
-        Long categoryId = null;
-        if (post.getCategory() != null) {
-            categoryId = post.getCategory().getId();
-        }
-        UpdatePostRequest updatePostRequest =
-                new UpdatePostRequest(id, post.getTitle(), post.getUrl(), post.getContent(), categoryId);
+	private final UpdatePostHandler updatePostHandler;
 
-        model.addAttribute(MODEL_ATTRIBUTE_POST, updatePostRequest);
-        return "edit-post";
-    }
+	public UpdatePostController(UpdatePostHandler postService) {
+		this.updatePostHandler = postService;
+	}
 
-    @PutMapping("/posts/{id}")
-    @AnyAuthenticatedUser
-    public String updateBookmark(
-            @PathVariable Long id,
-            @Valid @ModelAttribute(MODEL_ATTRIBUTE_POST) UpdatePostRequest request,
-            BindingResult bindingResult,
-            @CurrentUser User loginUser) {
-        if (bindingResult.hasErrors()) {
-            return "edit-post";
-        }
-        Post post = updatePostHandler.getPostById(id).orElse(null);
-        if (post == null) {
-            throw new ResourceNotFoundException("Post not found");
-        }
-        var updatePostRequest =
-                new UpdatePostRequest(id, request.title(),request.url(), request.content(), request.categoryId());
-        this.checkPrivilege(post, loginUser);
-        Post updatedPost = updatePostHandler.updatePost(updatePostRequest);
-        logger.info("Post with id: {} updated successfully", updatedPost.getId());
-        return "redirect:/c/"+updatedPost.getCategory().getSlug();
-    }
+	@GetMapping("/posts/{id}/edit")
+	@AnyAuthenticatedUser
+	public String editPostForm(@PathVariable Long id, @CurrentUser User loginUser, Model model) {
+		Post post = updatePostHandler.getPostById(id).orElse(null);
+		if (post == null) {
+			throw new ResourceNotFoundException("Post not found");
+		}
+		this.checkPrivilege(post, loginUser);
+		Long categoryId = null;
+		if (post.getCategory() != null) {
+			categoryId = post.getCategory().getId();
+		}
+		UpdatePostRequest updatePostRequest = new UpdatePostRequest(id, post.getTitle(), post.getUrl(),
+				post.getContent(), categoryId);
 
-    private void checkPrivilege(Post post, User loginUser) {
-        if (!(Objects.equals(post.getCreatedBy().getId(), loginUser.getId())
-                || loginUser.isAdminOrModerator())) {
-            throw new UnauthorisedAccessException("Permission Denied");
-        }
-    }
+		model.addAttribute(MODEL_ATTRIBUTE_POST, updatePostRequest);
+		return "edit-post";
+	}
+
+	@PutMapping("/posts/{id}")
+	@AnyAuthenticatedUser
+	public String updateBookmark(@PathVariable Long id,
+			@Valid @ModelAttribute(MODEL_ATTRIBUTE_POST) UpdatePostRequest request, BindingResult bindingResult,
+			@CurrentUser User loginUser) {
+		if (bindingResult.hasErrors()) {
+			return "edit-post";
+		}
+		Post post = updatePostHandler.getPostById(id).orElse(null);
+		if (post == null) {
+			throw new ResourceNotFoundException("Post not found");
+		}
+		var updatePostRequest = new UpdatePostRequest(id, request.title(), request.url(), request.content(),
+				request.categoryId());
+		this.checkPrivilege(post, loginUser);
+		Post updatedPost = updatePostHandler.updatePost(updatePostRequest);
+		logger.info("Post with id: {} updated successfully", updatedPost.getId());
+		return "redirect:/c/" + updatedPost.getCategory().getSlug();
+	}
+
+	private void checkPrivilege(Post post, User loginUser) {
+		if (!(Objects.equals(post.getCreatedBy().getId(), loginUser.getId()) || loginUser.isAdminOrModerator())) {
+			throw new UnauthorisedAccessException("Permission Denied");
+		}
+	}
+
 }

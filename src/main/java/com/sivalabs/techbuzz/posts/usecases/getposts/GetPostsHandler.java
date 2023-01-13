@@ -24,34 +24,40 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class GetPostsHandler {
-    private final PostRepository postRepository;
-    private final CategoryRepository categoryRepository;
-    private final PostDtoMapper postDtoMapper;
-    private final SecurityService securityService;
-    private final ApplicationProperties properties;
 
-    @Transactional(readOnly = true)
-    public PagedResult<PostDTO> getPostsByCategorySlug(String category, Integer page) {
-        log.debug("process=get_posts_by_category, category={}, page={}", category, page);
-        return convert(postRepository.findPostsByCategorySlug(category, getPageable(page)));
-    }
+	private final PostRepository postRepository;
 
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll(Sort.by("displayOrder"));
-    }
+	private final CategoryRepository categoryRepository;
 
-    public Category getCategory(String categorySlug) {
-        return categoryRepository.findBySlug(categorySlug).orElseThrow();
-    }
+	private final PostDtoMapper postDtoMapper;
 
-    private Pageable getPageable(Integer page) {
-        int pageNo = page > 0 ? page - 1 : 0;
-        return PageRequest.of(pageNo, properties.postsPerPage(), Sort.by(Sort.Direction.DESC, "createdAt"));
-    }
+	private final SecurityService securityService;
 
-    private PagedResult<PostDTO> convert(Page<Post> postsPage) {
-        User loginUser = securityService.loginUser();
-        Page<PostDTO> postDTOPage = postsPage.map(post -> postDtoMapper.toDTO(loginUser, post));
-        return new PagedResult<>(postDTOPage);
-    }
+	private final ApplicationProperties properties;
+
+	@Transactional(readOnly = true)
+	public PagedResult<PostDTO> getPostsByCategorySlug(String category, Integer page) {
+		log.debug("process=get_posts_by_category, category={}, page={}", category, page);
+		return convert(postRepository.findPostsByCategorySlug(category, getPageable(page)));
+	}
+
+	public List<Category> getAllCategories() {
+		return categoryRepository.findAll(Sort.by("displayOrder"));
+	}
+
+	public Category getCategory(String categorySlug) {
+		return categoryRepository.findBySlug(categorySlug).orElseThrow();
+	}
+
+	private Pageable getPageable(Integer page) {
+		int pageNo = page > 0 ? page - 1 : 0;
+		return PageRequest.of(pageNo, properties.postsPerPage(), Sort.by(Sort.Direction.DESC, "createdAt"));
+	}
+
+	private PagedResult<PostDTO> convert(Page<Post> postsPage) {
+		User loginUser = securityService.loginUser();
+		Page<PostDTO> postDTOPage = postsPage.map(post -> postDtoMapper.toDTO(loginUser, post));
+		return new PagedResult<>(postDTOPage);
+	}
+
 }

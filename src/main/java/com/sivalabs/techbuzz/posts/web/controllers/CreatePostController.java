@@ -18,36 +18,36 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class CreatePostController {
-    private static final Logger logger = LoggerFactory.getLogger(CreatePostController.class);
-    private static final String MODEL_ATTRIBUTE_POST = "post";
 
-    private final CreatePostHandler createPostHandler;
+	private static final Logger logger = LoggerFactory.getLogger(CreatePostController.class);
 
-    public CreatePostController(CreatePostHandler createPostHandler) {
-        this.createPostHandler = createPostHandler;
-    }
+	private static final String MODEL_ATTRIBUTE_POST = "post";
 
-    @GetMapping("/posts/new")
-    @AnyAuthenticatedUser
-    public String newPostForm(Model model) {
-        model.addAttribute(MODEL_ATTRIBUTE_POST, new CreatePostRequest("", "","", null, null));
-        return "add-post";
-    }
+	private final CreatePostHandler createPostHandler;
 
-    @PostMapping("/posts")
-    @AnyAuthenticatedUser
-    public String createPost(
-            @Valid @ModelAttribute(MODEL_ATTRIBUTE_POST) CreatePostRequest request,
-            BindingResult bindingResult,
-            @CurrentUser User loginUser) {
-        if (bindingResult.hasErrors()) {
-            return "add-post";
-        }
-        var createPostRequest =
-                new CreatePostRequest(
-                        request.title(), request.url(), request.content(), request.categoryId(), loginUser.getId());
-        Post post = createPostHandler.createPost(createPostRequest);
-        logger.info("Post saved successfully with id: {}", post.getId());
-        return "redirect:/c/"+post.getCategory().getSlug();
-    }
+	public CreatePostController(CreatePostHandler createPostHandler) {
+		this.createPostHandler = createPostHandler;
+	}
+
+	@GetMapping("/posts/new")
+	@AnyAuthenticatedUser
+	public String newPostForm(Model model) {
+		model.addAttribute(MODEL_ATTRIBUTE_POST, new CreatePostRequest("", "", "", null, null));
+		return "add-post";
+	}
+
+	@PostMapping("/posts")
+	@AnyAuthenticatedUser
+	public String createPost(@Valid @ModelAttribute(MODEL_ATTRIBUTE_POST) CreatePostRequest request,
+			BindingResult bindingResult, @CurrentUser User loginUser) {
+		if (bindingResult.hasErrors()) {
+			return "add-post";
+		}
+		var createPostRequest = new CreatePostRequest(request.title(), request.url(), request.content(),
+				request.categoryId(), loginUser.getId());
+		Post post = createPostHandler.createPost(createPostRequest);
+		logger.info("Post saved successfully with id: {}", post.getId());
+		return "redirect:/c/" + post.getCategory().getSlug();
+	}
+
 }

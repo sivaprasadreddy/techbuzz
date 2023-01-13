@@ -12,26 +12,26 @@ import java.util.List;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
-    private final CurrentUserArgumentResolver currentUserArgumentResolver;
 
-    public WebMvcConfig(CurrentUserArgumentResolver currentUserArgumentResolver) {
-        this.currentUserArgumentResolver = currentUserArgumentResolver;
-    }
+	private final CurrentUserArgumentResolver currentUserArgumentResolver;
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        //registry.addViewController("/").setViewName("index");
-        registry.addViewController("/login").setViewName("login");
-    }
+	public WebMvcConfig(CurrentUserArgumentResolver currentUserArgumentResolver) {
+		this.currentUserArgumentResolver = currentUserArgumentResolver;
+	}
 
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(currentUserArgumentResolver);
-    }
+	@Override
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/login").setViewName("login");
+	}
 
-    @Bean
-    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-        return new HiddenHttpMethodFilter();
-    }
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+		resolvers.add(currentUserArgumentResolver);
+	}
+
+	@Bean
+	public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+		return new HiddenHttpMethodFilter();
+	}
 
 }

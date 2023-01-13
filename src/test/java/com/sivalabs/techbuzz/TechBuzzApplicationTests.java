@@ -10,12 +10,7 @@ class TechBuzzApplicationTests extends AbstractIntegrationTest {
 
 	@Test
 	void contextLoads() {
-		given()
-				.contentType(ContentType.JSON)
-				.when()
-				.get("/actuator/health")
-				.then()
-				.statusCode(200);
+		given().contentType(ContentType.JSON).when().get("/actuator/health").then().statusCode(200);
 	}
 
 }

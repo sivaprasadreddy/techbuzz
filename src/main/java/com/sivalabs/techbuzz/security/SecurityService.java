@@ -12,22 +12,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SecurityService {
-    private final UserRepository userRepository;
 
-    public SecurityService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+	private final UserRepository userRepository;
 
-    public User loginUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null
-                && authentication.getPrincipal() instanceof TechBuzzUserPrincipal securityUser) {
-            String username = securityUser.getEmail();
-            return userRepository.findByEmail(username).orElse(null);
-        } else if (authentication instanceof UsernamePasswordAuthenticationToken) {
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-            return userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-        }
-        return null;
-    }
+	public SecurityService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
+
+	public User loginUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication != null && authentication.getPrincipal() instanceof TechBuzzUserPrincipal securityUser) {
+			String username = securityUser.getEmail();
+			return userRepository.findByEmail(username).orElse(null);
+		}
+		else if (authentication instanceof UsernamePasswordAuthenticationToken) {
+			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+			return userRepository.findByEmail(userDetails.getUsername()).orElse(null);
+		}
+		return null;
+	}
+
 }

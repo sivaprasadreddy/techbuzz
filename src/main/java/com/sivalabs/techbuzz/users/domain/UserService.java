@@ -13,27 +13,30 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
 
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
-    }
+	private final UserRepository userRepository;
 
-    public Optional<User> getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
+	private final PasswordEncoder passwordEncoder;
 
-    public boolean isUserExistsByEmail(String email) {
-        return userRepository.existsByEmail(email);
-    }
+	public Optional<User> getUserById(Long id) {
+		return userRepository.findById(id);
+	}
 
-    @Transactional
-    public User createUser(User user) {
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new RuntimeException("Email "+user.getEmail()+" is already in use");
-        }
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
+	public Optional<User> getUserByEmail(String email) {
+		return userRepository.findByEmail(email);
+	}
+
+	public boolean isUserExistsByEmail(String email) {
+		return userRepository.existsByEmail(email);
+	}
+
+	@Transactional
+	public User createUser(User user) {
+		if (userRepository.existsByEmail(user.getEmail())) {
+			throw new RuntimeException("Email " + user.getEmail() + " is already in use");
+		}
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		return userRepository.save(user);
+	}
+
 }

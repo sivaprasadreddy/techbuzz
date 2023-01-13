@@ -10,12 +10,6 @@ import java.util.List;
 
 @ConfigurationProperties(prefix = "techbuzz")
 @Validated
-public record ApplicationProperties(
-        @NotEmpty
-        @Email
-        String adminEmail,
-        @Min(1)
-        int postsPerPage,
-        boolean importDataEnabled,
-        List<String> importFilePaths) {
+public record ApplicationProperties(@NotEmpty @Email String adminEmail, @Min(1) int postsPerPage,
+		boolean importDataEnabled, List<String> importFilePaths) {
 }

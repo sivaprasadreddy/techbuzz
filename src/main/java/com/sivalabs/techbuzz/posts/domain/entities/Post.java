@@ -27,42 +27,43 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false)
-    @NotEmpty()
-    private String title;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column
-    private String url;
+	@Column(nullable = false)
+	@NotEmpty()
+	private String title;
 
-    @Column
-    private String content;
+	@Column
+	private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cat_id")
-    private Category category;
+	@Column
+	private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by", nullable = false)
-    private User createdBy;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cat_id")
+	private Category category;
 
-    @Column(updatable = false)
-    protected LocalDateTime createdAt;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "created_by", nullable = false)
+	private User createdBy;
 
-    @Column(insertable = false)
-    protected LocalDateTime updatedAt;
+	@Column(updatable = false)
+	protected LocalDateTime createdAt;
 
-    @PrePersist
-    public void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
+	@Column(insertable = false)
+	protected LocalDateTime updatedAt;
 
-    @PreUpdate
-    public void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+	@PrePersist
+	public void onCreate() {
+		createdAt = LocalDateTime.now();
+	}
+
+	@PreUpdate
+	public void onUpdate() {
+		updatedAt = LocalDateTime.now();
+	}
 
 }

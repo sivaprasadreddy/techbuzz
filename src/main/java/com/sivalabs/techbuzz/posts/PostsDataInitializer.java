@@ -13,24 +13,27 @@ import java.util.List;
 @Component
 @Transactional
 public class PostsDataInitializer implements CommandLineRunner {
-    private static final Logger logger = LoggerFactory.getLogger(PostsDataInitializer.class);
 
-    private final ApplicationProperties applicationProperties;
-    private final UploadPostsHandler uploadPostsHandler;
+	private static final Logger logger = LoggerFactory.getLogger(PostsDataInitializer.class);
 
-    public PostsDataInitializer(
-            ApplicationProperties applicationProperties, UploadPostsHandler uploadPostsHandler) {
-        this.applicationProperties = applicationProperties;
-        this.uploadPostsHandler = uploadPostsHandler;
-    }
+	private final ApplicationProperties applicationProperties;
 
-    @Override
-    public void run(String... args) throws Exception {
-        if (applicationProperties.importDataEnabled()) {
-            List<String> fileNames = applicationProperties.importFilePaths();
-            uploadPostsHandler.importPostsAsync(fileNames);
-        } else {
-            logger.info("Data importing is disabled");
-        }
-    }
+	private final UploadPostsHandler uploadPostsHandler;
+
+	public PostsDataInitializer(ApplicationProperties applicationProperties, UploadPostsHandler uploadPostsHandler) {
+		this.applicationProperties = applicationProperties;
+		this.uploadPostsHandler = uploadPostsHandler;
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		if (applicationProperties.importDataEnabled()) {
+			List<String> fileNames = applicationProperties.importFilePaths();
+			uploadPostsHandler.importPostsAsync(fileNames);
+		}
+		else {
+			logger.info("Data importing is disabled");
+		}
+	}
+
 }

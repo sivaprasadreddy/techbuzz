@@ -11,14 +11,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/categories")
 public class GetCategoriesController {
-    private final CategoryRepository categoryRepository;
 
-    public GetCategoriesController(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
-    }
+	private final CategoryRepository categoryRepository;
 
-    @GetMapping
-    public List<Category> allCategories() {
-        return categoryRepository.findAll();
-    }
+	public GetCategoriesController(CategoryRepository categoryRepository) {
+		this.categoryRepository = categoryRepository;
+	}
+
+	@GetMapping
+	public List<Category> allCategories() {
+		return categoryRepository.findAll();
+	}
+
 }

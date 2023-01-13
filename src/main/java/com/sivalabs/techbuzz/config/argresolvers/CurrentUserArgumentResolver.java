@@ -14,39 +14,37 @@ import java.lang.annotation.Annotation;
 
 @Component
 public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolver {
-    private final SecurityService securityService;
 
-    public CurrentUserArgumentResolver(SecurityService securityService) {
-        this.securityService = securityService;
-    }
+	private final SecurityService securityService;
 
-    @Override
-    public boolean supportsParameter(MethodParameter methodParameter) {
-        return findMethodAnnotation(CurrentUser.class, methodParameter) != null;
-    }
+	public CurrentUserArgumentResolver(SecurityService securityService) {
+		this.securityService = securityService;
+	}
 
-    @Override
-    public Object resolveArgument(
-            MethodParameter methodParameter,
-            ModelAndViewContainer modelAndViewContainer,
-            NativeWebRequest nativeWebRequest,
-            WebDataBinderFactory webDataBinderFactory) {
-        return securityService.loginUser();
-    }
+	@Override
+	public boolean supportsParameter(MethodParameter methodParameter) {
+		return findMethodAnnotation(CurrentUser.class, methodParameter) != null;
+	}
 
-    private <T extends Annotation> T findMethodAnnotation(
-            Class<T> annotationClass, MethodParameter parameter) {
-        T annotation = parameter.getParameterAnnotation(annotationClass);
-        if (annotation != null) {
-            return annotation;
-        }
-        Annotation[] annotationsToSearch = parameter.getParameterAnnotations();
-        for (Annotation toSearch : annotationsToSearch) {
-            annotation = AnnotationUtils.findAnnotation(toSearch.annotationType(), annotationClass);
-            if (annotation != null) {
-                return annotation;
-            }
-        }
-        return null;
-    }
+	@Override
+	public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
+			NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) {
+		return securityService.loginUser();
+	}
+
+	private <T extends Annotation> T findMethodAnnotation(Class<T> annotationClass, MethodParameter parameter) {
+		T annotation = parameter.getParameterAnnotation(annotationClass);
+		if (annotation != null) {
+			return annotation;
+		}
+		Annotation[] annotationsToSearch = parameter.getParameterAnnotations();
+		for (Annotation toSearch : annotationsToSearch) {
+			annotation = AnnotationUtils.findAnnotation(toSearch.annotationType(), annotationClass);
+			if (annotation != null) {
+				return annotation;
+			}
+		}
+		return null;
+	}
+
 }

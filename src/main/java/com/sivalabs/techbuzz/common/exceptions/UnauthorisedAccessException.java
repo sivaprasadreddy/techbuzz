@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.FORBIDDEN)
 public class UnauthorisedAccessException extends TechBuzzException {
-    public UnauthorisedAccessException(String message) {
-        super(message);
-    }
+
+	public UnauthorisedAccessException(String message) {
+		super(message);
+	}
+
 }

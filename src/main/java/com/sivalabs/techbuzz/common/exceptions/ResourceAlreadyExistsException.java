@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.CONFLICT)
 public class ResourceAlreadyExistsException extends TechBuzzException {
-    public ResourceAlreadyExistsException(String message) {
-        super(message);
-    }
+
+	public ResourceAlreadyExistsException(String message) {
+		super(message);
+	}
+
 }

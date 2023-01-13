@@ -18,25 +18,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequiredArgsConstructor
 @Loggable
 public class GetPostsController {
-    private static final Logger logger = LoggerFactory.getLogger(GetPostsController.class);
-    private static final String PAGINATION_PREFIX = "paginationPrefix";
 
-    private final GetPostsHandler getPostsHandler;
+	private static final Logger logger = LoggerFactory.getLogger(GetPostsController.class);
 
-    @GetMapping("/c/{category}")
-    public String viewCategory(
-            @PathVariable(name = "category") String categorySlug,
-            @RequestParam(name = "page", defaultValue = "1") Integer page,
-            Model model) {
-        logger.info("Fetching posts for category {} with page: {}", categorySlug, page);
-        PagedResult<PostDTO> data = getPostsHandler.getPostsByCategorySlug(categorySlug, page);
-        Category category = getPostsHandler.getCategory(categorySlug);
+	private static final String PAGINATION_PREFIX = "paginationPrefix";
 
-        model.addAttribute("category", category);
-        model.addAttribute(PAGINATION_PREFIX, "/c/" + categorySlug + "?");
+	private final GetPostsHandler getPostsHandler;
 
-        model.addAttribute("postsData", data);
-        model.addAttribute("categories", getPostsHandler.getAllCategories());
-        return "posts";
-    }
+	@GetMapping("/c/{category}")
+	public String viewCategory(@PathVariable(name = "category") String categorySlug,
+			@RequestParam(name = "page", defaultValue = "1") Integer page, Model model) {
+		logger.info("Fetching posts for category {} with page: {}", categorySlug, page);
+		PagedResult<PostDTO> data = getPostsHandler.getPostsByCategorySlug(categorySlug, page);
+		Category category = getPostsHandler.getCategory(categorySlug);
+
+		model.addAttribute("category", category);
+		model.addAttribute(PAGINATION_PREFIX, "/c/" + categorySlug + "?");
+
+		model.addAttribute("postsData", data);
+		model.addAttribute("categories", getPostsHandler.getAllCategories());
+		return "posts";
+	}
+
 }
