@@ -6,6 +6,7 @@ import com.sivalabs.techbuzz.posts.domain.entities.Category;
 import com.sivalabs.techbuzz.posts.domain.entities.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
+import com.sivalabs.techbuzz.posts.domain.repositories.VoteRepository;
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
 import lombok.Getter;
@@ -21,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -30,6 +32,8 @@ public class UploadPostsHandler {
 
 	private final PostRepository postRepository;
 
+	private final VoteRepository voteRepository;
+
 	private final CategoryRepository categoryRepository;
 
 	private final UserRepository userRepository;
@@ -38,7 +42,10 @@ public class UploadPostsHandler {
 
 	@Async
 	public void importPostsAsync(List<String> fileNames) throws IOException {
-		postRepository.deleteAll();
+		log.info("Deleting existing votes and posts");
+		voteRepository.deleteAllInBatch();
+		postRepository.deleteAllInBatch();
+
 		for (String fileName : fileNames) {
 			log.info("Importing posts from file: {}", fileName);
 			ClassPathResource file = new ClassPathResource(fileName, this.getClass());
@@ -65,8 +72,8 @@ public class UploadPostsHandler {
 			return categoryRepository.findBySlug("general").orElseThrow();
 		});
 		User user = userRepository.findByEmail(properties.adminEmail()).orElseThrow();
-		return new Post(null, postEntry.title, postEntry.url, postEntry.content, category, user, LocalDateTime.now(),
-				null);
+		return new Post(null, postEntry.title, postEntry.url, postEntry.content, category, user, Set.of(),
+				LocalDateTime.now(), null);
 	}
 
 	@Setter

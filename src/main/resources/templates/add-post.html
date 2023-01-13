@@ -23,7 +23,7 @@
                     <form id="addForm" method="post" th:action="@{/posts}" th:object="${post}">
 
                         <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
+                            <label for="title" class="form-label">Title*</label>
                             <input type="text" id="title" name="title"
                                    th:field="*{title}"
                                    class="form-control"
@@ -47,7 +47,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="categoryId" class="form-label">Category</label>
+                            <label for="categoryId" class="form-label">Category*</label>
                             <input type="text" id="categoryId" name="categoryId"
                                    class="form-control"
                                    autocomplete="off"

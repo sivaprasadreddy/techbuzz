@@ -1,61 +1,40 @@
 package com.sivalabs.techbuzz.posts.domain.entities;
 
-import com.sivalabs.techbuzz.users.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
-@Table(name = "posts")
+@Table(name = "votes")
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Post {
+public class Vote {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable = false)
-	@NotEmpty()
-	private String title;
+	@Column(name = "user_id", nullable = false)
+	private Long userId;
 
-	@Column
-	private String url;
+	@Column(name = "post_id", nullable = false)
+	private Long postId;
 
-	@Column
-	private String content;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cat_id")
-	private Category category;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "created_by", nullable = false)
-	private User createdBy;
-
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "post_id")
-	private Set<Vote> votes;
+	@Column(name = "value", nullable = false)
+	private Integer value;
 
 	@Column(updatable = false)
 	protected LocalDateTime createdAt;

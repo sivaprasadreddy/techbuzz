@@ -40,3 +40,14 @@ create table posts
     primary key (id)
 );
 
+create table votes
+(
+    id         bigserial not null,
+    user_id    bigint    not null REFERENCES users (id),
+    post_id    bigint    not null REFERENCES posts (id),
+    value      numeric   not null,
+    created_at timestamp,
+    updated_at timestamp,
+    primary key (id),
+    UNIQUE (user_id, post_id)
+);

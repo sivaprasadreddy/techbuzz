@@ -19,6 +19,24 @@ function deletePost(id)
 
 }
 
+function addVote(postId, vote)
+{
+    let token = $("meta[name='_csrf']").attr("content");
+    let header = $("meta[name='_csrf_header']").attr("content");
+    $.ajax ({
+        url: '/api/votes',
+        type: "POST",
+        headers: {
+            [header]: token
+        },
+        data: JSON.stringify({postId: postId, value: vote}),
+        contentType: "application/json",
+        success: function(responseData, status){
+            window.location.reload();
+        }
+    });
+}
+
 function initCategoriesAutoComplete(fieldSelector)
 {
     $.ajax ({

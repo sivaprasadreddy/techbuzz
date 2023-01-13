@@ -41,17 +41,41 @@
                 <div th:text="${post.content}">
                     Post content
                 </div>
-                <p sec:authorize="isAuthenticated()" class="mt-3 mb-0"
-                    th:if="${post.editable}">
-                    <a class="btn btn-primary" href="#" th:href="${'/posts/'+post.id+'/edit'}">
+                <p sec:authorize="isAuthenticated()" class="mt-3 mb-0" >
+
+                    <a th:if="${post.editable}" class="btn btn-primary" href="#" th:href="${'/posts/'+post.id+'/edit'}">
                         <i class="fas fa-edit" ></i> Edit
                     </a>
 
-                       <button class="btn btn-danger"
-                               th:onclick="'javascript:deletePost( \''+${post.id}+'\');'">
-                           <i class="fas fa-trash-alt" ></i> Delete
-                       </button>
+                   <button th:if="${post.editable}" class="btn btn-danger"
+                           th:onclick="'javascript:deletePost( \''+${post.id}+'\');'" >
+                       <i class="fas fa-trash-alt" ></i> Delete
+                   </button>
 
+                    <button class="btn btn-success"
+                            th:classappend="${post.upVoted()} ? disabled : ''"
+                            th:onclick="'javascript:addVote( \''+${post.id}+'\', 1);'" >
+                        <span th:text="${post.getUpVoteCount()}">1</span>
+                        &nbsp;&nbsp; <i class="fa-solid fa-thumbs-up"></i>
+                    </button>
+
+                    <button class="btn btn-danger"
+                            th:classappend="${post.downVoted()} ? disabled : ''"
+                            th:onclick="'javascript:addVote( \''+${post.id}+'\', -1);'" >
+                        <span th:text="${post.getDownVoteCount()}">1</span>
+                        &nbsp;&nbsp; <i class="fa-solid fa-thumbs-down"></i>
+                    </button>
+
+                </p>
+                <p sec:authorize="!isAuthenticated()" class="mt-3 mb-0" >
+                    <button class="btn btn-success disabled">
+                        <span th:text="${post.getUpVoteCount()}">1</span>
+                        &nbsp;&nbsp; <i class="fa-solid fa-thumbs-up"></i>
+                    </button>
+                    <button class="btn btn-danger disabled">
+                        <span th:text="${post.getDownVoteCount()}">1</span>
+                        &nbsp;&nbsp; <i class="fa-solid fa-thumbs-down"></i>
+                    </button>
                 </p>
             </div>
         </div>

@@ -12,10 +12,21 @@
 <div layout:fragment="content">
 
     <div class="container">
-
-        <div class="col-md-6 offset-3">
-            <div class="d-grid gap-2">
-                <a class="btn btn-outline-primary" href="/" th:href="@{'/c/'+ ${category.slug}}" th:each="category: ${categories}" th:text="${category.name}">Category</a>
+        <h2 class="text-center">Welcome to TechBuzz</h2>
+        <div class="row">
+            <div class="col-sm-4 p-3" th:each="category: ${categories}">
+                <a class="category-card" href="#" th:href="@{'/c/'+ ${category.slug}}">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title text-center" th:text="${category.name}">Category</h5>
+                            <div class="card-text text-center">
+                                <div th:text="${category.description}">description</div>
+                                <img class="p-2" src="/images/java.png" th:src="${'/images/'+category.image}"
+                                     width="150px" height="100px">
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

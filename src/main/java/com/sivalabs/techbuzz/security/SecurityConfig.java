@@ -16,7 +16,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig {
 
 	private static final String[] PUBLIC_RESOURCES = { "/webjars/**", "/resources/**", "/static/**", "/js/**",
-			"/css/**", "/images/**", "/favicon.ico", "/h2-console/**", "/", "/login", "/c/**" };
+			"/css/**", "/libs/**", "/images/**", "/favicon.ico", "/h2-console/**", "/", "/login", "/c/**", "/error" };
 
 	private final OAuth2AuthenticationSuccessHandler authenticationSuccessHandler;
 
@@ -26,7 +26,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.authorizeHttpRequests().requestMatchers(PUBLIC_RESOURCES).permitAll().anyRequest().authenticated();
 
-		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll();
+		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll().logoutSuccessUrl("/");
 
 		http.oauth2Login().successHandler(authenticationSuccessHandler).loginPage("/login").userInfoEndpoint()
 				.userService(oauth2UserService);

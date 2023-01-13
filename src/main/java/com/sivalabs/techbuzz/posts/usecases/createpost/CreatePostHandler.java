@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -31,7 +32,7 @@ public class CreatePostHandler {
 		Category category = categoryRepository.getReferenceById(createPostRequest.categoryId());
 		User user = userRepository.getReferenceById(createPostRequest.createdUserId());
 		Post post = new Post(null, title, createPostRequest.url(), createPostRequest.content(), category, user,
-				LocalDateTime.now(), null);
+				Set.of(), LocalDateTime.now(), null);
 		return postRepository.save(post);
 	}
 

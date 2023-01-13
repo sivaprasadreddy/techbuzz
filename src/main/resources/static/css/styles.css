@@ -8,3 +8,7 @@ body {
 .post a:link {
     text-decoration: none;
 }
+
+.category-card  {
+    text-decoration: none;
+}

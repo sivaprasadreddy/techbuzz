@@ -30,6 +30,9 @@ public class GetPostsController {
 			@RequestParam(name = "page", defaultValue = "1") Integer page, Model model) {
 		logger.info("Fetching posts for category {} with page: {}", categorySlug, page);
 		PagedResult<PostDTO> data = getPostsHandler.getPostsByCategorySlug(categorySlug, page);
+		if (data.getData().isEmpty() && page > data.getTotalPages()) {
+			return "redirect:/c/" + categorySlug + "?page=" + data.getTotalPages();
+		}
 		Category category = getPostsHandler.getCategory(categorySlug);
 
 		model.addAttribute("category", category);
