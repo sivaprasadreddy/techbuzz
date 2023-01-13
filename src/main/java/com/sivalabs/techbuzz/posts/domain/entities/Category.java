@@ -32,16 +32,23 @@ public class Category {
     @NotEmpty()
     private String name;
 
+    @Column(nullable = false, unique = true)
+    @NotEmpty()
+    private String slug;
+
+    @Column(nullable = false, unique = true)
+    @NotEmpty()
+    private String description;
+
+    private String image;
+
+    private Integer displayOrder;
+
     @Column(updatable = false)
     protected LocalDateTime createdAt;
 
     @Column(insertable = false)
     protected LocalDateTime updatedAt;
-
-    public Category(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     @PrePersist
     public void onCreate() {

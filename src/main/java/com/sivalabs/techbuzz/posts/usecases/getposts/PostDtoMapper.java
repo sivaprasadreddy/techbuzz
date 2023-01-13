@@ -1,33 +1,13 @@
 package com.sivalabs.techbuzz.posts.usecases.getposts;
 
 import com.sivalabs.techbuzz.posts.domain.entities.Post;
-import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.User;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 @Component
 public class PostDtoMapper {
-    private final SecurityService securityService;
-
-    public PostDtoMapper(SecurityService securityService) {
-        this.securityService = securityService;
-    }
-
-    public List<PostDTO> toDTOs(List<Post> posts) {
-        if (posts == null) {
-            return new ArrayList<>(0);
-        }
-        User loginUser = securityService.loginUser();
-        return posts.stream().map(post -> this.toDTO(loginUser, post)).toList();
-    }
-
-    public PostDTO toDTO(Post post) {
-        return toDTO(securityService.loginUser(), post);
-    }
 
     public PostDTO toDTO(User loginUser, Post post) {
         String category = null;

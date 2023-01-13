@@ -1,0 +1,82 @@
+{
+  "posts": [
+    {
+      "title": "How (not) to ask for Technical Help?",
+      "url": "https://sivalabs.in/how-to-not-to-ask-for-technical-help",
+      "content": "Here I would like share my thoughts on what are the better ways to ask for help? and what are some patterns that you should avoid while asking for help.",
+      "category": "general"
+    },
+    {
+      "title": "Getting Started with Kubernetes",
+      "url": "https://sivalabs.in/getting-started-with-kubernetes",
+      "content": "In this article we will learn Creating a docker image from a SpringBoot application, Local kubernetes setup using Minikube, Run the SpringBoot app in a Pod, Scaling the application using Deployment, Exposing the Deployment as a Service",
+      "category": "devops"
+    },
+    {
+      "title": "Few Things I learned in the HardWay in 15 years of my career",
+      "url": "https://sivalabs.in/few-things-i-learned-the-hardway-in-15-years-of-my-career",
+      "content": "I started my career as a Java developer in 2006, and it is almost 15 years that I have been continuing as a software developer. Along the way I have experienced some amazing things, and a lot of shitty things as well. As I am not a super smart person by birth I ended up learning many things in the HardWay.\n\nIn this article I would like to share some of my learnings.",
+      "category": "career"
+    },
+    {
+      "title": "Testing REST APIs using Postman and Newman",
+      "url": "https://sivalabs.in/testing-rest-apis-with-postman-newman",
+      "content": "Postman is the most popular tool for testing REST APIs. I guess most of the developers are familiar with how to use Postman to send various types (GET, POST, PUT, DELETE, etc) of HTTP requests with various types of payloads (form data, JSON etc).",
+      "category": "testing"
+    },
+    {
+      "title": "Why SpringBoot?",
+      "url": "https://sivalabs.in/why-springboot",
+      "content": "Spring team created SpringBoot to address the complexity of configuration.\n\nBut before diving into SpringBoot, we will take a quick look at Spring framework and see what kind of problems SpringBoot is trying to address.",
+      "category": "java"
+    },
+    {
+      "title": "Testing SpringBoot Applications",
+      "url": "https://sivalabs.in/spring-boot-testing",
+      "content": "In this article we will learn how to Create SpringBoot Application\nUnit Testing using JUnit 5 and Mockito\nIntegration Testing using TestContainers\nTesting MicroService Integrations using MockServer",
+      "category": "java"
+    },
+    {
+      "title": "Imposing Code Structure Guidelines using ArchUnit",
+      "url": "https://sivalabs.in/impose-architecture-guidelines-using-archunit",
+      "content": "In this article we will see how we can use ArchUnit for testing our architecture guidelines.",
+      "category": "java"
+    },
+    {
+      "title": "One-Stop Guide to Mapping with MapStruct",
+      "url": "https://reflectoring.io/java-mapping-with-mapstruct",
+      "content": "In this article, we will take a look at MapStruct, which is an annotation processor plugged into the Java compiler that can automatically generate mappers at build-time. ",
+      "category": "java"
+    },
+    {
+      "title": "Reactive Architecture with Spring Boot",
+      "url": "https://reflectoring.io/reactive-architecture-with-spring-boot",
+      "content": "In this tutorial, we will take a look at microservices that communicate in a blocking fashion and turn them into reactive applications to improve the flow between them.",
+      "category": "java"
+    },
+    {
+      "title": "Getting Started with Spring WebFlux",
+      "url": "https://reflectoring.io/getting-started-with-spring-webflux",
+      "content": "Spring introduced a Multi-Event Loop model to enable a reactive stack known as WebFlux. It is a fully non-blocking and annotation-based web framework built on Project Reactor which allows building reactive web applications on the HTTP layer.",
+      "category": "java"
+    },
+    {
+      "title": "Complete Guide to the Immutables Java Library",
+      "url": "https://reflectoring.io/immutables-library",
+      "content": "The Immutables library generates classes that are immutable, thread-safe, and null-safe, and helps us avoid these side effects. Aside from creating immutable classes, the library helps us write readable and clean code.",
+      "category": "java"
+    },
+    {
+      "title": "Tracing with Spring Boot, OpenTelemetry, and Jaeger",
+      "url": "https://reflectoring.io/spring-boot-tracing",
+      "content": "This tutorial gives an overview of the traceability problem in distributed systems and provides a complete guide on how to implement tracing with Spring Boot, OpenTelemetry, and Jaeger.",
+      "category": "java"
+    },
+    {
+      "title": "Laws and Principles of Software Development",
+      "url": "https://reflectoring.io/laws-and-principles-of-software-development",
+      "content": "This article enumerates some of the most popular laws and principles that can be applied to software development. For each law, we will quickly discuss its main proposition and then explore how we can apply it to software development (and maybe when we shouldn’t).",
+      "category": "general"
+    }
+  ]
+}

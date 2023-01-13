@@ -14,12 +14,17 @@ create table users
 
 create table categories
 (
-    id         bigserial not null,
-    name       varchar   not null,
-    created_at timestamp,
-    updated_at timestamp,
+    id            bigserial not null,
+    name          varchar   not null,
+    slug          varchar   not null,
+    description   varchar   not null,
+    image         varchar,
+    display_order numeric   not null,
+    created_at    timestamp,
+    updated_at    timestamp,
     primary key (id),
-    CONSTRAINT category_name_unique UNIQUE (name)
+    CONSTRAINT category_name_unique UNIQUE (name),
+    CONSTRAINT category_slug_unique UNIQUE (slug)
 );
 
 create table posts

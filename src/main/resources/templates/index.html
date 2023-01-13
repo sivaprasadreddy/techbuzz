@@ -15,7 +15,7 @@
 
         <div class="col-md-6 offset-3">
             <div class="d-grid gap-2">
-                <a class="btn btn-outline-primary" href="/" th:href="@{'/c/'+ ${category.name}}" th:each="category: ${categories}" th:text="${category.name}">Category</a>
+                <a class="btn btn-outline-primary" href="/" th:href="@{'/c/'+ ${category.slug}}" th:each="category: ${categories}" th:text="${category.name}">Category</a>
             </div>
         </div>
     </div>

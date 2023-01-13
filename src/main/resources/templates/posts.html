@@ -13,16 +13,22 @@
 <body>
 
 <div layout:fragment="content">
+    <div>
+        <ul class="nav justify-content-center">
+            <li class="nav-item" th:each="category: ${categories}">
+                <a class="nav-link" href="#" th:href="${'/c/'+category.slug}" th:text="${category.name}">Category</a>
+            </li>
+        </ul>
+    </div>
+    <div class="container text-center pt-3 pb-3" >
+        <h2 th:text="${category.description}">Category Description</h2>
+    </div>
+    <div class="pt-3">
     <div class="row">
-    <div class="col-md-8 offset-1">
-        <div th:if="${header != null}">
-            <div >
-                <strong th:text="${header}" style="font-size: 20px;">Header</strong>
-            </div>
-        </div>
+    <div class="col-md-8 offset-2">
         <div th:replace="~{fragments/pagination :: pagination}"> </div>
 
-        <div >
+        <div>
             <div class="alert alert-warning" role="alert"
                  th:if="${postsData.data == null || postsData.data.isEmpty() }">
                 <h3 class="alert-heading">No results found</h3>
@@ -37,14 +43,14 @@
                 </div>
                 <p sec:authorize="isAuthenticated()" class="mt-3 mb-0"
                     th:if="${post.editable}">
-                    <a class="button" href="#" th:href="${'/posts/'+post.id+'/edit'}">
+                    <a class="btn btn-primary" href="#" th:href="${'/posts/'+post.id+'/edit'}">
                         <i class="fas fa-edit" ></i> Edit
                     </a>
 
-                       <a class="button" href="#"
+                       <button class="btn btn-danger"
                                th:onclick="'javascript:deletePost( \''+${post.id}+'\');'">
                            <i class="fas fa-trash-alt" ></i> Delete
-                       </a>
+                       </button>
 
                 </p>
             </div>
@@ -52,17 +58,6 @@
 
         <div th:replace="~{fragments/pagination :: pagination}"> </div>
     </div>
-    <div class="col-md-2">
-        <h2>Categories</h2>
-        <div class="list-group list-group-flush">
-            <a href="#"
-               class="list-group-item list-group-item-action badge badge-primary"
-               th:each="category: ${categories}"
-               th:href="${'/c/'+category.name}">
-                <i class="fas fa-tag" ></i>
-                <span style="font-size: 16px;" th:text="${category.name}">Category Name</span>
-            </a>
-        </div>
     </div>
     </div>
 </div>

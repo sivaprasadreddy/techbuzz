@@ -12,7 +12,7 @@ function deletePost(id)
               [header]: token
             },
             success: function(responseData, status){
-                window.location = '/'
+                window.location.reload();
             }
         });
     }

@@ -13,18 +13,17 @@
 
     <div class="row">
 
-        <div class="col-md-4 offset-md-4">
+        <div class="col-md-6 offset-md-3">
 
             <div class="card">
                 <div class="card-header">
-                    <h3>Add New Post</h3>
+                    <h3 class="text-center">Add New Post</h3>
                 </div>
                 <div class="card-body">
-                    <form id="addForm" method="post"
-                          th:action="@{/posts}" th:object="${post}">
+                    <form id="addForm" method="post" th:action="@{/posts}" th:object="${post}">
 
                         <div class="mb-3">
-                            <label for="title" class="control-label">Title</label>
+                            <label for="title" class="form-label">Title</label>
                             <input type="text" id="title" name="title"
                                    th:field="*{title}"
                                    class="form-control"
@@ -34,8 +33,9 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}"
                                  th:errors="*{title}">Title Error</div>
                         </div>
+
                         <div class="mb-3">
-                            <label for="url" class="control-label">URL</label>
+                            <label for="url" class="form-label">URL</label>
                             <input type="text" id="url" name="url"
                                    th:field="*{url}"
                                    class="form-control"
@@ -45,19 +45,9 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('url')}"
                                  th:errors="*{url}">url Error</div>
                         </div>
-                        <div class="mb-3">
-                            <label for="content" class="control-label">Content*</label>
-                            <textarea id="content" name="content"
-                                   th:field="*{content}"
-                                   class="form-control"
-                                   th:classappend="${#fields.hasErrors('content')} ? 'is-invalid' : ''"
-                                   placeholder="Enter content"></textarea>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('content')}"
-                                 th:errors="*{content}">content Error</div>
-                        </div>
 
                         <div class="mb-3">
-                            <label for="categoryId" class="control-label">Category</label>
+                            <label for="categoryId" class="form-label">Category</label>
                             <input type="text" id="categoryId" name="categoryId"
                                    class="form-control"
                                    autocomplete="off"
@@ -68,6 +58,20 @@
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('categoryId')}"
                                  th:errors="*{categoryId}">Category Error</div>
                         </div>
+
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Content*</label>
+                            <textarea id="content" name="content"
+                                      rows="5"
+                                   th:field="*{content}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('content')} ? 'is-invalid' : ''"
+                                   placeholder="Enter content"></textarea>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('content')}"
+                                 th:errors="*{content}">content Error</div>
+                        </div>
+
+
                         <div class="col-auto">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

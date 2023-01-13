@@ -24,7 +24,8 @@ public class SecurityConfig {
             "/images/**",
             "/favicon.ico",
             "/h2-console/**",
-            "/", "/login"
+            "/", "/login",
+            "/c/**"
     };
 
     private final OAuth2AuthenticationSuccessHandler authenticationSuccessHandler;
@@ -32,8 +33,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        //http.csrf().disable();
-
         http.authorizeHttpRequests()
                 .requestMatchers(PUBLIC_RESOURCES).permitAll()
                 .anyRequest().authenticated()
@@ -48,7 +47,6 @@ public class SecurityConfig {
                 .loginPage("/login")
                 .userInfoEndpoint()
                     .userService(oauth2UserService)
-                    //.oidcUserService(oidcUserService)
         ;
 
         return http.build();

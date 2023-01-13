@@ -2,8 +2,10 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.common.model.PagedResult;
 import com.sivalabs.techbuzz.config.logging.Loggable;
+import com.sivalabs.techbuzz.posts.domain.entities.Category;
 import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
 import com.sivalabs.techbuzz.posts.usecases.getposts.PostDTO;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequiredArgsConstructor
 @Loggable
 public class GetPostsController {
     private static final Logger logger = LoggerFactory.getLogger(GetPostsController.class);
@@ -20,19 +23,17 @@ public class GetPostsController {
 
     private final GetPostsHandler getPostsHandler;
 
-    public GetPostsController(GetPostsHandler getPostsHandler) {
-        this.getPostsHandler = getPostsHandler;
-    }
-
     @GetMapping("/c/{category}")
     public String viewCategory(
-            @PathVariable(name = "category") String category,
+            @PathVariable(name = "category") String categorySlug,
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             Model model) {
-            logger.info("Fetching posts for category {} with page: {}", category, page);
-            PagedResult<PostDTO> data = getPostsHandler.getPostsByCategory(category, page);
-            model.addAttribute("header", "Posts by category : " + category);
-            model.addAttribute(PAGINATION_PREFIX, "/c/" + category+"?");
+        logger.info("Fetching posts for category {} with page: {}", categorySlug, page);
+        PagedResult<PostDTO> data = getPostsHandler.getPostsByCategorySlug(categorySlug, page);
+        Category category = getPostsHandler.getCategory(categorySlug);
+
+        model.addAttribute("category", category);
+        model.addAttribute(PAGINATION_PREFIX, "/c/" + categorySlug + "?");
 
         model.addAttribute("postsData", data);
         model.addAttribute("categories", getPostsHandler.getAllCategories());

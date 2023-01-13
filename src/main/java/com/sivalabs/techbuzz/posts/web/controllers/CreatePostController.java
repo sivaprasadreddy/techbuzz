@@ -48,6 +48,6 @@ public class CreatePostController {
                         request.title(), request.url(), request.content(), request.categoryId(), loginUser.getId());
         Post post = createPostHandler.createPost(createPostRequest);
         logger.info("Post saved successfully with id: {}", post.getId());
-        return "redirect:/c/"+post.getCategory().getName();
+        return "redirect:/c/"+post.getCategory().getSlug();
     }
 }

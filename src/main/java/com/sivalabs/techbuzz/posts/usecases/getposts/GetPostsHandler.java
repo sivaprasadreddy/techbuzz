@@ -1,10 +1,12 @@
 package com.sivalabs.techbuzz.posts.usecases.getposts;
 
+import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.common.model.PagedResult;
 import com.sivalabs.techbuzz.posts.domain.entities.Category;
 import com.sivalabs.techbuzz.posts.domain.entities.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
+import com.sivalabs.techbuzz.security.SecurityService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,42 +23,33 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class GetPostsHandler {
-    private static final Integer PAGE_SIZE = 15;
-
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
     private final PostDtoMapper postDtoMapper;
-
-
-    @Transactional(readOnly = true)
-    public PagedResult<PostDTO> getPosts(Integer page) {
-        log.debug("process=get_posts, page={}", page);
-        return convert(postRepository.findPosts(getPageable(page)));
-    }
+    private final SecurityService securityService;
+    private final ApplicationProperties properties;
 
     @Transactional(readOnly = true)
-    public PagedResult<PostDTO> searchPosts(String query, Integer page) {
-        log.debug("process=search_posts, query={}, page={}", query, page);
-        return convert(postRepository.searchPosts(query, getPageable(page)));
-    }
-
-    @Transactional(readOnly = true)
-    public PagedResult<PostDTO> getPostsByCategory(String category, Integer page) {
+    public PagedResult<PostDTO> getPostsByCategorySlug(String category, Integer page) {
         log.debug("process=get_posts_by_category, category={}, page={}", category, page);
-        return convert(postRepository.findPostsByCategory(category, getPageable(page)));
-    }
-
-    private static Pageable getPageable(Integer page) {
-        int pageNo = page > 0 ? page - 1 : 0;
-        return PageRequest.of(pageNo, PAGE_SIZE, Sort.by(Sort.Direction.DESC, "createdAt"));
-    }
-
-    private PagedResult<PostDTO> convert(Page<Post> postsPage) {
-        Page<PostDTO> postDTOPage = postsPage.map(postDtoMapper::toDTO);
-        return new PagedResult<>(postDTOPage);
+        return convert(postRepository.findPostsByCategorySlug(category, getPageable(page)));
     }
 
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        return categoryRepository.findAll(Sort.by("displayOrder"));
+    }
+
+    public Category getCategory(String categorySlug) {
+        return categoryRepository.findBySlug(categorySlug).orElseThrow();
+    }
+
+    private Pageable getPageable(Integer page) {
+        int pageNo = page > 0 ? page - 1 : 0;
+        return PageRequest.of(pageNo, properties.postsPerPage(), Sort.by(Sort.Direction.DESC, "createdAt"));
+    }
+
+    private PagedResult<PostDTO> convert(Page<Post> postsPage) {
+        Page<PostDTO> postDTOPage = postsPage.map(post -> postDtoMapper.toDTO(securityService.loginUser(), post));
+        return new PagedResult<>(postDTOPage);
     }
 }

@@ -70,7 +70,7 @@ public class UpdatePostController {
         this.checkPrivilege(post, loginUser);
         Post updatedPost = updatePostHandler.updatePost(updatePostRequest);
         logger.info("Post with id: {} updated successfully", updatedPost.getId());
-        return "redirect:/c/"+updatedPost.getCategory().getName();
+        return "redirect:/c/"+updatedPost.getCategory().getSlug();
     }
 
     private void checkPrivilege(Post post, User loginUser) {
