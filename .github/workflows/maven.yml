@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - '**'
+jobs:
+  build:
+    name: Maven Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distribution: [ 'temurin' ]
+        java: [ '17']
+    env:
+      DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/techbuzz
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Java ${{ matrix.java }} (${{ matrix.distribution }})
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: ${{ matrix.distribution }}
+          cache: 'maven'
+
+      - name: Build with Maven
+        run: ./mvnw verify
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Build and Publish Docker Image
+        run: |
+          ./mvnw spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=sivaprasadreddy/techbuzz
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+          docker push $DOCKER_IMAGE_NAME --all-tags

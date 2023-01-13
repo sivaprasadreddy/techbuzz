@@ -7,6 +7,7 @@ import com.sivalabs.techbuzz.posts.domain.entities.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.security.SecurityService;
+import com.sivalabs.techbuzz.users.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -49,7 +50,8 @@ public class GetPostsHandler {
     }
 
     private PagedResult<PostDTO> convert(Page<Post> postsPage) {
-        Page<PostDTO> postDTOPage = postsPage.map(post -> postDtoMapper.toDTO(securityService.loginUser(), post));
+        User loginUser = securityService.loginUser();
+        Page<PostDTO> postDTOPage = postsPage.map(post -> postDtoMapper.toDTO(loginUser, post));
         return new PagedResult<>(postDTOPage);
     }
 }
