@@ -9,8 +9,8 @@ import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostRequest;
 import com.sivalabs.techbuzz.users.domain.User;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,17 +22,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import java.util.Objects;
 
 @Controller
+@RequiredArgsConstructor
+@Slf4j
 public class UpdatePostController {
 
 	private static final String MODEL_ATTRIBUTE_POST = "post";
 
-	private static final Logger logger = LoggerFactory.getLogger(UpdatePostController.class);
-
 	private final UpdatePostHandler updatePostHandler;
-
-	public UpdatePostController(UpdatePostHandler postService) {
-		this.updatePostHandler = postService;
-	}
 
 	@GetMapping("/posts/{id}/edit")
 	@AnyAuthenticatedUser
@@ -69,7 +65,7 @@ public class UpdatePostController {
 				request.categoryId());
 		this.checkPrivilege(post, loginUser);
 		Post updatedPost = updatePostHandler.updatePost(updatePostRequest);
-		logger.info("Post with id: {} updated successfully", updatedPost.getId());
+		log.info("Post with id: {} updated successfully", updatedPost.getId());
 		return "redirect:/c/" + updatedPost.getCategory().getSlug();
 	}
 

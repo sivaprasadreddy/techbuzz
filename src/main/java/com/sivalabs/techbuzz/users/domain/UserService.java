@@ -6,8 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -17,14 +15,6 @@ public class UserService {
 	private final UserRepository userRepository;
 
 	private final PasswordEncoder passwordEncoder;
-
-	public Optional<User> getUserById(Long id) {
-		return userRepository.findById(id);
-	}
-
-	public Optional<User> getUserByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
 
 	public boolean isUserExistsByEmail(String email) {
 		return userRepository.existsByEmail(email);

@@ -37,7 +37,7 @@ public class GetPostsHandler {
 
 	@Transactional(readOnly = true)
 	public PagedResult<PostDTO> getPostsByCategorySlug(String category, Integer page) {
-		log.debug("process=get_posts_by_category, category={}, page={}", category, page);
+		log.debug("process=get_posts_by_category_slug, category={}, page={}", category, page);
 		return convert(postRepository.findPostsByCategorySlug(category, getPageable(page)));
 	}
 
