@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Loggable
 @RequiredArgsConstructor
 @Slf4j
-public class GetPostsController {
+public class ViewCategoryController {
 
 	private static final String PAGINATION_PREFIX = "paginationPrefix";
 
@@ -28,7 +28,7 @@ public class GetPostsController {
 			@RequestParam(name = "page", defaultValue = "1") Integer page, Model model) {
 		log.info("Fetching posts for category {} with page: {}", categorySlug, page);
 		PagedResult<PostDTO> data = getPostsHandler.getPostsByCategorySlug(categorySlug, page);
-		if (data.getData().isEmpty() && page > data.getTotalPages()) {
+		if (data.getData().isEmpty() && (page > 1 && page > data.getTotalPages())) {
 			return "redirect:/c/" + categorySlug + "?page=" + data.getTotalPages();
 		}
 		Category category = getPostsHandler.getCategory(categorySlug);
@@ -38,7 +38,7 @@ public class GetPostsController {
 
 		model.addAttribute("postsData", data);
 		model.addAttribute("categories", getPostsHandler.getAllCategories());
-		return "posts";
+		return "category";
 	}
 
 }

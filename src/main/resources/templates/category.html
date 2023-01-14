@@ -6,7 +6,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
       layout:decorate="~{layout}">
 <head>
-    <title>Home</title>
+    <title th:text="${category.name}">Category</title>
     <meta th:name="_csrf" th:content="${_csrf.token}"/>
     <meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
