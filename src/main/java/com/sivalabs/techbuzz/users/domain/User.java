@@ -1,6 +1,8 @@
 package com.sivalabs.techbuzz.users.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import jakarta.persistence.*;
@@ -14,6 +16,8 @@ import java.util.Arrays;
 @Table(name = "users")
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class User implements Serializable {
 
 	@Id
@@ -37,6 +41,12 @@ public class User implements Serializable {
 	@Column
 	@Enumerated(EnumType.STRING)
 	private RoleEnum role;
+
+	@Column(nullable = false)
+	private boolean verified;
+
+	@Column(name = "verification_token")
+	private String verificationToken;
 
 	@Column
 	@Enumerated(EnumType.STRING)

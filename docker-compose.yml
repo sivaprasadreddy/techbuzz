@@ -11,3 +11,10 @@ services:
     ports:
       - "15432:5432"
     restart: unless-stopped
+
+  mailhog:
+    image: mailhog/mailhog
+    platform: linux/x86_64
+    ports:
+      - "1025:1025"
+      - "8025:8025"

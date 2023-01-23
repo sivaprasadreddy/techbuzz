@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Status</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="row">
+
+        <div class="col-md-4 offset-md-4 text-center">
+            <div th:if="${success}">
+                <h3>Your email verified successfully</h3>
+                <h4>You can <a th:href="@{/login}">Login</a> or visit <a th:href="@{/}">Home</a> page</h4>
+            </div>
+            <div th:if="${!success}">
+                <h3>Your email verified failed</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

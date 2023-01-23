@@ -1,13 +1,15 @@
 create table users
 (
-    id            bigserial not null,
-    email         varchar   not null,
-    password      varchar   not null,
-    name          varchar   not null,
-    auth_provider varchar   not null,
-    role          varchar   not null,
-    created_at    timestamp,
-    updated_at    timestamp,
+    id                 bigserial not null,
+    email              varchar   not null,
+    password           varchar   not null,
+    name               varchar   not null,
+    auth_provider      varchar   not null,
+    role               varchar   not null,
+    verified           bool      not null default false,
+    verification_token varchar,
+    created_at         timestamp,
+    updated_at         timestamp,
     primary key (id),
     CONSTRAINT user_email_unique UNIQUE (email)
 );

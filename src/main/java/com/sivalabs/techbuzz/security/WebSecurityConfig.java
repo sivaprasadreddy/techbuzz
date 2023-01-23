@@ -13,10 +13,15 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class WebSecurityConfig {
 
-	private static final String[] PUBLIC_RESOURCES = { "/webjars/**", "/resources/**", "/static/**", "/js/**",
-			"/css/**", "/libs/**", "/images/**", "/favicon.ico", "/h2-console/**", "/", "/login", "/c/**", "/error" };
+	private static final String[] PUBLIC_RESOURCES = {
+			"/webjars/**", "/resources/**", "/static/**", "/js/**",
+			"/css/**", "/libs/**", "/images/**", "/favicon.ico",
+			"/", "/error", "/403", "/404",
+			"/login", "/registration", "/registrationStatus", "/verifyEmail",
+			"/c/**"
+	};
 
 	private final OAuth2AuthenticationSuccessHandler authenticationSuccessHandler;
 
@@ -24,12 +29,25 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests().requestMatchers(PUBLIC_RESOURCES).permitAll().anyRequest().authenticated();
+		http.authorizeHttpRequests()
+				.requestMatchers(PUBLIC_RESOURCES).permitAll()
+				.anyRequest().authenticated();
 
-		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll().logoutSuccessUrl("/");
+		http.formLogin()
+				.loginPage("/login")
+				.defaultSuccessUrl("/")
+				.failureUrl("/login?error")
+				.permitAll();
 
-		http.oauth2Login().successHandler(authenticationSuccessHandler).loginPage("/login").userInfoEndpoint()
-				.userService(oauth2UserService);
+		http.logout()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
+				.logoutSuccessUrl("/");
+
+		http.oauth2Login()
+				.successHandler(authenticationSuccessHandler)
+				.loginPage("/login")
+				.userInfoEndpoint()
+					.userService(oauth2UserService);
 
 		return http.build();
 	}

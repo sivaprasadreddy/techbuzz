@@ -21,12 +21,21 @@ public class SecurityService {
 
 	public User loginUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication != null && authentication.getPrincipal() instanceof TechBuzzUserPrincipal securityUser) {
+		if(authentication == null || authentication.getPrincipal() == null) {
+			return null;
+		}
+
+		Object principal = authentication.getPrincipal();
+		if (principal instanceof SecurityUser securityUser) {
+			String username = securityUser.getUsername();
+			return userRepository.findByEmail(username).orElse(null);
+		}
+		if (principal instanceof TechBuzzUserPrincipal securityUser) {
 			String username = securityUser.getEmail();
 			return userRepository.findByEmail(username).orElse(null);
 		}
-		else if (authentication instanceof UsernamePasswordAuthenticationToken) {
-			UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+		if (authentication instanceof UsernamePasswordAuthenticationToken) {
+			UserDetails userDetails = (UserDetails) principal;
 			return userRepository.findByEmail(userDetails.getUsername()).orElse(null);
 		}
 		return null;

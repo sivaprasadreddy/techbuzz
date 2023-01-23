@@ -1,5 +1,5 @@
-INSERT INTO users (email, password, name, role, auth_provider, created_at)
-VALUES ('sivaprasadreddy.k@gmail.com', '$2a$10$ZuGgeoawgOg.6AM3QEGZ3O4QlBSWyRx3A70oIcBjYPpUB8mAZWY16', 'Admin', 'ROLE_ADMIN', 'LOCAL',
+INSERT INTO users (email, password, name, role, verified, auth_provider, created_at)
+VALUES ('sivaprasadreddy.k@gmail.com', '$2a$10$ZuGgeoawgOg.6AM3QEGZ3O4QlBSWyRx3A70oIcBjYPpUB8mAZWY16', 'Siva', 'ROLE_ADMIN', true, 'LOCAL',
         CURRENT_TIMESTAMP)
 ;
 
