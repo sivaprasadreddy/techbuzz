@@ -16,8 +16,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig {
 
 	private static final String[] PUBLIC_RESOURCES = {
-			"/webjars/**", "/resources/**", "/static/**", "/js/**",
-			"/css/**", "/libs/**", "/images/**", "/favicon.ico",
+			"/webjars/**", "/resources/**", "/static/**", "/assets/**",
+			"/favicon.ico",
 			"/", "/error", "/403", "/404",
 			"/login", "/registration", "/registrationStatus", "/verifyEmail",
 			"/c/**"

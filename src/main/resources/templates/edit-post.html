@@ -20,6 +20,9 @@
                     <h3 class="text-center">Edit Post</h3>
                 </div>
                 <div class="card-body">
+                    <div th:if="${message != null}">
+                        <div class="alert alert-success" th:text="${message}">Message</div>
+                    </div>
                     <form id="editForm" method="post" th:method="put"
                           th:action="${'/posts/'+post.id}" th:object="${post}">
                         <input type="hidden" name="id" th:value="${post.id}"/>

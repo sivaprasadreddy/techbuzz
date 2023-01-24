@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,7 +36,9 @@ public class CreatePostController {
 	@PostMapping("/posts")
 	@AnyAuthenticatedUser
 	public String createPost(@Valid @ModelAttribute(MODEL_ATTRIBUTE_POST) CreatePostRequest request,
-			BindingResult bindingResult, @CurrentUser User loginUser) {
+							 BindingResult bindingResult,
+							 @CurrentUser User loginUser,
+							 RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
 			return "add-post";
 		}
@@ -43,7 +46,8 @@ public class CreatePostController {
 				request.categoryId(), loginUser.getId());
 		Post post = createPostHandler.createPost(createPostRequest);
 		log.info("Post saved successfully with id: {}", post.getId());
-		return "redirect:/c/" + post.getCategory().getSlug();
+		redirectAttributes.addFlashAttribute("message", "Post saved successfully");
+		return "redirect:/posts/" + post.getId()+"/edit";
 	}
 
 }

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Objects;
 
@@ -52,8 +53,10 @@ public class UpdatePostController {
 	@PutMapping("/posts/{id}")
 	@AnyAuthenticatedUser
 	public String updateBookmark(@PathVariable Long id,
-			@Valid @ModelAttribute(MODEL_ATTRIBUTE_POST) UpdatePostRequest request, BindingResult bindingResult,
-			@CurrentUser User loginUser) {
+								 @Valid @ModelAttribute(MODEL_ATTRIBUTE_POST) UpdatePostRequest request,
+								 BindingResult bindingResult,
+								 @CurrentUser User loginUser,
+								 RedirectAttributes redirectAttributes) {
 		if (bindingResult.hasErrors()) {
 			return "edit-post";
 		}
@@ -66,7 +69,8 @@ public class UpdatePostController {
 		this.checkPrivilege(post, loginUser);
 		Post updatedPost = updatePostHandler.updatePost(updatePostRequest);
 		log.info("Post with id: {} updated successfully", updatedPost.getId());
-		return "redirect:/c/" + updatedPost.getCategory().getSlug();
+		redirectAttributes.addFlashAttribute("message", "Post updated successfully");
+		return "redirect:/posts/" + updatedPost.getId()+"/edit";
 	}
 
 	private void checkPrivilege(Post post, User loginUser) {
