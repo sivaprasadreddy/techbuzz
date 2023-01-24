@@ -1,15 +1,15 @@
 package com.sivalabs.techbuzz;
 
-import static io.restassured.RestAssured.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
-import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 class TechBuzzApplicationTests extends AbstractIntegrationTest {
 
     @Test
-    void contextLoads() {
-        given().contentType(ContentType.JSON).when().get("/actuator/health").then().statusCode(200);
+    void contextLoads() throws Exception {
+        mockMvc.perform(get("/actuator/health")).andExpect(status().isOk());
     }
 }

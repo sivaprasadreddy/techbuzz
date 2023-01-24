@@ -49,7 +49,7 @@ public class RegistrationController {
         try {
             User user = createUserHandler.createUser(createUserRequest);
             this.sendVerificationEmail(request, user);
-            redirectAttributes.addFlashAttribute("message", "Registration is successful.");
+            redirectAttributes.addFlashAttribute("message", "Registration is successful");
             return "redirect:/registrationStatus";
         } catch (ResourceAlreadyExistsException e) {
             logger.error("Registration err", e);
