@@ -19,14 +19,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 public class AddVoteController {
 
-	private final VoteHandler voteHandler;
+    private final VoteHandler voteHandler;
 
-	@PostMapping("/api/votes")
-	@ResponseStatus(HttpStatus.OK)
-	@AnyAuthenticatedUser
-	public void createVote(@Valid @RequestBody CreateVoteRequest request, @CurrentUser User loginUser) {
-		var createVoteRequest = new CreateVoteRequest(request.postId(), loginUser.getId(), request.value());
-		voteHandler.addVote(createVoteRequest);
-	}
-
+    @PostMapping("/api/votes")
+    @ResponseStatus(HttpStatus.OK)
+    @AnyAuthenticatedUser
+    public void createVote(
+            @Valid @RequestBody CreateVoteRequest request, @CurrentUser User loginUser) {
+        var createVoteRequest =
+                new CreateVoteRequest(request.postId(), loginUser.getId(), request.value());
+        voteHandler.addVote(createVoteRequest);
+    }
 }

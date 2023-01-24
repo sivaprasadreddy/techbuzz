@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 public class HomeController {
 
-	private final CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
-	@GetMapping("/")
-	public String index(Model model) {
-		model.addAttribute("categories", categoryRepository.findAll());
-		return "index";
-	}
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "index";
+    }
 }

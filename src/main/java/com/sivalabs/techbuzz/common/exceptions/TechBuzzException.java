@@ -2,11 +2,11 @@ package com.sivalabs.techbuzz.common.exceptions;
 
 public class TechBuzzException extends RuntimeException {
 
-	public TechBuzzException(String message) {
-		super(message);
-	}
+    public TechBuzzException(String message) {
+        super(message);
+    }
 
     public TechBuzzException(String message, Exception e) {
-		super(message, e);
+        super(message, e);
     }
 }

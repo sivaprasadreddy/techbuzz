@@ -16,8 +16,11 @@ public class EmailVerificationHandler {
     private final UserRepository userRepository;
 
     public void verify(String email, String token) {
-        User user = userRepository.findByEmailAndVerificationToken(email, token)
-                .orElseThrow(() -> new TechBuzzException("Invalid email verification request"));
+        User user =
+                userRepository
+                        .findByEmailAndVerificationToken(email, token)
+                        .orElseThrow(
+                                () -> new TechBuzzException("Invalid email verification request"));
         user.setVerified(true);
         user.setVerificationToken(null);
         userRepository.save(user);

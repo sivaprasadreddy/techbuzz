@@ -7,10 +7,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ ElementType.PARAMETER })
+@Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @Documented
-public @interface CurrentUser {
-
-}
+public @interface CurrentUser {}

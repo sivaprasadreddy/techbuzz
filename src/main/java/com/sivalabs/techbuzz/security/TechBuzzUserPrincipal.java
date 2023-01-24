@@ -2,10 +2,9 @@ package com.sivalabs.techbuzz.security;
 
 public interface TechBuzzUserPrincipal {
 
-	String getId();
+    String getId();
 
-	String getName();
+    String getName();
 
-	String getEmail();
-
+    String getEmail();
 }

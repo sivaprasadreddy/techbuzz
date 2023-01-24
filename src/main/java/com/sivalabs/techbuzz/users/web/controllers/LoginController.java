@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class LoginController {
 
     @GetMapping("/login")
-    public String login(HttpServletRequest request, Model model,
-                        @RequestParam(name = "error", required = false) String error) {
-        if(error != null) {
+    public String login(
+            HttpServletRequest request,
+            Model model,
+            @RequestParam(name = "error", required = false) String error) {
+        if (error != null) {
             HttpSession session = request.getSession(false);
             String errorMessage = null;
             if (session != null) {
-                AuthenticationException ex = (AuthenticationException) session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
+                AuthenticationException ex =
+                        (AuthenticationException)
+                                session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
                 if (ex != null) {
                     errorMessage = ex.getMessage();
                 }

@@ -1,5 +1,8 @@
 package com.sivalabs.techbuzz.users.web.controllers;
 
+import static java.net.URLEncoder.encode;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
 import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.User;
@@ -18,9 +21,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import static java.net.URLEncoder.encode;
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 @Controller
 @RequiredArgsConstructor
@@ -64,15 +64,21 @@ public class RegistrationController {
     }
 
     private void sendVerificationEmail(HttpServletRequest request, User user) {
-        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-                .replacePath(null)
-                .build()
-                .toUriString();
-        String params = "email="+ encode(user.getEmail(), UTF_8)+"&token="+ encode(user.getVerificationToken(), UTF_8);
-        String verificationUrl = baseUrl + "/verifyEmail?"+params;
+        String baseUrl =
+                ServletUriComponentsBuilder.fromRequestUri(request)
+                        .replacePath(null)
+                        .build()
+                        .toUriString();
+        String params =
+                "email="
+                        + encode(user.getEmail(), UTF_8)
+                        + "&token="
+                        + encode(user.getVerificationToken(), UTF_8);
+        String verificationUrl = baseUrl + "/verifyEmail?" + params;
         String to = user.getEmail();
         String subject = "TechBuzz - Email verification";
-        String content = """
+        String content =
+                """
                 Hi %s,
                 <br/>
                 <br/>
@@ -84,7 +90,8 @@ public class RegistrationController {
                 <br/>
                 Thanks,<br/>
                 TechBuzz Team
-                """.formatted(user.getName(), verificationUrl);
+                """
+                        .formatted(user.getName(), verificationUrl);
         emailService.sendEmail(to, subject, content);
     }
 }

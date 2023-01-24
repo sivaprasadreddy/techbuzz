@@ -5,11 +5,10 @@ import com.sivalabs.techbuzz.users.domain.AuthProvider;
 import com.sivalabs.techbuzz.users.domain.RoleEnum;
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
+import java.util.UUID;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Service
 @Transactional

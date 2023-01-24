@@ -13,32 +13,31 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SecurityService {
 
-	private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-	public SecurityService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+    public SecurityService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-	public User loginUser() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if(authentication == null || authentication.getPrincipal() == null) {
-			return null;
-		}
+    public User loginUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication.getPrincipal() == null) {
+            return null;
+        }
 
-		Object principal = authentication.getPrincipal();
-		if (principal instanceof SecurityUser securityUser) {
-			String username = securityUser.getUsername();
-			return userRepository.findByEmail(username).orElse(null);
-		}
-		if (principal instanceof TechBuzzUserPrincipal securityUser) {
-			String username = securityUser.getEmail();
-			return userRepository.findByEmail(username).orElse(null);
-		}
-		if (authentication instanceof UsernamePasswordAuthenticationToken) {
-			UserDetails userDetails = (UserDetails) principal;
-			return userRepository.findByEmail(userDetails.getUsername()).orElse(null);
-		}
-		return null;
-	}
-
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof SecurityUser securityUser) {
+            String username = securityUser.getUsername();
+            return userRepository.findByEmail(username).orElse(null);
+        }
+        if (principal instanceof TechBuzzUserPrincipal securityUser) {
+            String username = securityUser.getEmail();
+            return userRepository.findByEmail(username).orElse(null);
+        }
+        if (authentication instanceof UsernamePasswordAuthenticationToken) {
+            UserDetails userDetails = (UserDetails) principal;
+            return userRepository.findByEmail(userDetails.getUsername()).orElse(null);
+        }
+        return null;
+    }
 }

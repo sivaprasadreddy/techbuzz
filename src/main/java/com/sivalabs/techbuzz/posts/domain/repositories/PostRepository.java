@@ -10,8 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-	@Query(value = "select p from Post p join p.category c join fetch p.createdBy u left join fetch p.votes where c.slug=?1",
-			countQuery = "select count(p) from Post p join p.category c where c.slug=?1")
-	Page<Post> findPostsByCategorySlug(String categorySlug, Pageable pageable);
-
+    @Query(
+            value =
+                    "select p from Post p join p.category c join fetch p.createdBy u left join fetch p.votes where c.slug=?1",
+            countQuery = "select count(p) from Post p join p.category c where c.slug=?1")
+    Page<Post> findPostsByCategorySlug(String categorySlug, Pageable pageable);
 }

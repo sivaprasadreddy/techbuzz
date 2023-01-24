@@ -1,16 +1,15 @@
 package com.sivalabs.techbuzz.users.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Arrays;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "users")
@@ -20,44 +19,43 @@ import java.util.Arrays;
 @AllArgsConstructor
 public class User implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable = false)
-	@NotEmpty()
-	private String name;
+    @Column(nullable = false)
+    @NotEmpty()
+    private String name;
 
-	@Column(nullable = false, unique = true)
-	@NotEmpty
-	@Email(message = "Invalid email")
-	private String email;
+    @Column(nullable = false, unique = true)
+    @NotEmpty
+    @Email(message = "Invalid email")
+    private String email;
 
-	@Column(nullable = false)
-	@NotEmpty
-	@Size(min = 4)
-	private String password;
+    @Column(nullable = false)
+    @NotEmpty
+    @Size(min = 4)
+    private String password;
 
-	@Column
-	@Enumerated(EnumType.STRING)
-	private RoleEnum role;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private RoleEnum role;
 
-	@Column(nullable = false)
-	private boolean verified;
+    @Column(nullable = false)
+    private boolean verified;
 
-	@Column(name = "verification_token")
-	private String verificationToken;
+    @Column(name = "verification_token")
+    private String verificationToken;
 
-	@Column
-	@Enumerated(EnumType.STRING)
-	private AuthProvider authProvider;
+    @Column
+    @Enumerated(EnumType.STRING)
+    private AuthProvider authProvider;
 
-	public boolean isAdminOrModerator() {
-		return hasAnyRole(RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_MODERATOR);
-	}
+    public boolean isAdminOrModerator() {
+        return hasAnyRole(RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_MODERATOR);
+    }
 
-	public boolean hasAnyRole(RoleEnum... roles) {
-		return Arrays.asList(roles).contains(this.getRole());
-	}
-
+    public boolean hasAnyRole(RoleEnum... roles) {
+        return Arrays.asList(roles).contains(this.getRole());
+    }
 }

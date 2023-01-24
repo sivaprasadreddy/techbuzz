@@ -1,12 +1,12 @@
 package com.sivalabs.techbuzz.notifications;
 
+import com.sendgrid.*;
 import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
-import com.sendgrid.*;
 
 @Component
 @ConditionalOnProperty(name = "techbuzz.email-provider", havingValue = "sendgrid")

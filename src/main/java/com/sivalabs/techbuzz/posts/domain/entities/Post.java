@@ -14,13 +14,12 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -30,46 +29,43 @@ import java.util.Set;
 @AllArgsConstructor
 public class Post {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable = false)
-	@NotEmpty()
-	private String title;
+    @Column(nullable = false)
+    @NotEmpty()
+    private String title;
 
-	@Column
-	private String url;
+    @Column private String url;
 
-	@Column
-	private String content;
+    @Column private String content;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cat_id")
-	private Category category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cat_id")
+    private Category category;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "created_by", nullable = false)
-	private User createdBy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by", nullable = false)
+    private User createdBy;
 
-	@OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "post_id")
-	private Set<Vote> votes;
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "post_id")
+    private Set<Vote> votes;
 
-	@Column(updatable = false)
-	protected LocalDateTime createdAt;
+    @Column(updatable = false)
+    protected LocalDateTime createdAt;
 
-	@Column(insertable = false)
-	protected LocalDateTime updatedAt;
+    @Column(insertable = false)
+    protected LocalDateTime updatedAt;
 
-	@PrePersist
-	public void onCreate() {
-		createdAt = LocalDateTime.now();
-	}
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
-	@PreUpdate
-	public void onUpdate() {
-		updatedAt = LocalDateTime.now();
-	}
-
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

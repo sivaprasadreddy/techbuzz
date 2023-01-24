@@ -12,21 +12,20 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 public class UserService {
 
-	private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-	private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-	public boolean isUserExistsByEmail(String email) {
-		return userRepository.existsByEmail(email);
-	}
+    public boolean isUserExistsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
 
-	@Transactional
-	public User createUser(User user) {
-		if (userRepository.existsByEmail(user.getEmail())) {
-			throw new RuntimeException("Email " + user.getEmail() + " is already in use");
-		}
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		return userRepository.save(user);
-	}
-
+    @Transactional
+    public User createUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new RuntimeException("Email " + user.getEmail() + " is already in use");
+        }
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
 }

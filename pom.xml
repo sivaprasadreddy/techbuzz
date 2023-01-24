@@ -22,6 +22,10 @@
 		<jquery.version>3.6.1</jquery.version>
 		<fontawesome.version>6.2.0</fontawesome.version>
 		<sendgrid-java.version>4.0.1</sendgrid-java.version>
+		<spotless.version>2.17.4</spotless.version>
+		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
+		<dockerUserName>sivaprasadreddy</dockerUserName>
+		<dockerImageName>${dockerUserName}/${project.artifactId}</dockerImageName>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -114,6 +118,11 @@
 			<version>${bootstrap.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>bootswatch</artifactId>
+			<version>${bootstrap.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>${jquery.version}</version>
@@ -196,6 +205,70 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>io.github.git-commit-id</groupId>
+				<artifactId>git-commit-id-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>revision</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<failOnNoGitDirectory>false</failOnNoGitDirectory>
+					<failOnUnableToExtractRepoInfo>false</failOnUnableToExtractRepoInfo>
+					<generateGitPropertiesFile>true</generateGitPropertiesFile>
+					<includeOnlyProperties>
+						<includeOnlyProperty>^git.branch$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.user.name$</includeOnlyProperty>
+						<includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
+					</includeOnlyProperties>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless.version}</version>
+				<configuration>
+					<java>
+						<googleJavaFormat>
+							<version>1.12.0</version>
+							<style>AOSP</style>
+						</googleJavaFormat>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>${jib-maven-plugin.version}</version>
+				<configuration>
+					<from>
+						<image>eclipse-temurin:17-jre-focal</image>
+					</from>
+					<to>
+						<image>${dockerImageName}</image>
+						<tags>
+							<tag>latest</tag>
+						</tags>
+					</to>
+					<container>
+						<ports>
+							<port>8080</port>
+						</ports>
+					</container>
 				</configuration>
 			</plugin>
 		</plugins>

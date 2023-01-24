@@ -15,41 +15,52 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-	private static final String[] PUBLIC_RESOURCES = {
-			"/webjars/**", "/resources/**", "/static/**", "/assets/**",
-			"/favicon.ico",
-			"/", "/error", "/403", "/404",
-			"/login", "/registration", "/registrationStatus", "/verifyEmail",
-			"/c/**"
-	};
+    private static final String[] PUBLIC_RESOURCES = {
+        "/webjars/**",
+        "/resources/**",
+        "/static/**",
+        "/assets/**",
+        "/favicon.ico",
+        "/",
+        "/error",
+        "/403",
+        "/404",
+        "/login",
+        "/registration",
+        "/registrationStatus",
+        "/verifyEmail",
+        "/c/**"
+    };
 
-	private final OAuth2AuthenticationSuccessHandler authenticationSuccessHandler;
+    private final OAuth2AuthenticationSuccessHandler authenticationSuccessHandler;
 
-	private final CustomOAuth2UserService oauth2UserService;
+    private final CustomOAuth2UserService oauth2UserService;
 
-	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.authorizeHttpRequests()
-				.requestMatchers(PUBLIC_RESOURCES).permitAll()
-				.anyRequest().authenticated();
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests()
+                .requestMatchers(PUBLIC_RESOURCES)
+                .permitAll()
+                .anyRequest()
+                .authenticated();
 
-		http.formLogin()
-				.loginPage("/login")
-				.defaultSuccessUrl("/")
-				.failureUrl("/login?error")
-				.permitAll();
+        http.formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/")
+                .failureUrl("/login?error")
+                .permitAll();
 
-		http.logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).permitAll()
-				.logoutSuccessUrl("/");
+        http.logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .permitAll()
+                .logoutSuccessUrl("/");
 
-		http.oauth2Login()
-				.successHandler(authenticationSuccessHandler)
-				.loginPage("/login")
-				.userInfoEndpoint()
-					.userService(oauth2UserService);
+        http.oauth2Login()
+                .successHandler(authenticationSuccessHandler)
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(oauth2UserService);
 
-		return http.build();
-	}
-
+        return http.build();
+    }
 }

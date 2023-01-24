@@ -13,18 +13,19 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class DeletePostHandler {
 
-	private final PostRepository postRepository;
+    private final PostRepository postRepository;
 
-	private final VoteRepository voteRepository;
+    private final VoteRepository voteRepository;
 
-	public void deletePost(Long postId) {
-		Post post = getPost(postId);
-		voteRepository.deleteVotesForPost(postId);
-		postRepository.delete(post);
-	}
+    public void deletePost(Long postId) {
+        Post post = getPost(postId);
+        voteRepository.deleteVotesForPost(postId);
+        postRepository.delete(post);
+    }
 
-	public Post getPost(Long postId) {
-		return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
-	}
-
+    public Post getPost(Long postId) {
+        return postRepository
+                .findById(postId)
+                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+    }
 }

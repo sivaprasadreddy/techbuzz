@@ -16,9 +16,8 @@ public class EmailVerificationController {
     private final EmailVerificationHandler emailVerificationHandler;
 
     @GetMapping("/verifyEmail")
-    public String verifyEmail(Model model,
-                                   @RequestParam("email") String email,
-                                   @RequestParam("token") String token) {
+    public String verifyEmail(
+            Model model, @RequestParam("email") String email, @RequestParam("token") String token) {
         try {
             emailVerificationHandler.verify(email, token);
             model.addAttribute("success", true);
