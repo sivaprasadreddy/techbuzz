@@ -6,4 +6,7 @@ public class TechBuzzException extends RuntimeException {
 		super(message);
 	}
 
+    public TechBuzzException(String message, Exception e) {
+		super(message, e);
+    }
 }

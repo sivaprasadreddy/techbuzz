@@ -10,5 +10,10 @@ import java.util.List;
 
 @ConfigurationProperties(prefix = "techbuzz")
 @Validated
-public record ApplicationProperties(@NotEmpty @Email String adminEmail, @Min(1) int postsPerPage, List<String> importFilePaths) {
+public record ApplicationProperties(
+        String emailProvider,
+        @NotEmpty @Email String adminEmail,
+        String sendgridApiKey,
+        @Min(1) int postsPerPage,
+        List<String> importFilePaths) {
 }

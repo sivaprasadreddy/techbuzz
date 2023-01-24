@@ -21,6 +21,7 @@
 		<bootstrap.version>5.2.3</bootstrap.version>
 		<jquery.version>3.6.1</jquery.version>
 		<fontawesome.version>6.2.0</fontawesome.version>
+		<sendgrid-java.version>4.0.1</sendgrid-java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -55,6 +56,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>${sendgrid-java.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

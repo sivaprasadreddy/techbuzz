@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import static java.net.URLEncoder.encode;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 @Controller
 @RequiredArgsConstructor
 public class RegistrationController {
@@ -65,7 +68,8 @@ public class RegistrationController {
                 .replacePath(null)
                 .build()
                 .toUriString();
-        String verificationUrl = baseUrl + "/verifyEmail?email="+user.getEmail()+"&token="+user.getVerificationToken();
+        String params = "email="+ encode(user.getEmail(), UTF_8)+"&token="+ encode(user.getVerificationToken(), UTF_8);
+        String verificationUrl = baseUrl + "/verifyEmail?"+params;
         String to = user.getEmail();
         String subject = "TechBuzz - Email verification";
         String content = """
