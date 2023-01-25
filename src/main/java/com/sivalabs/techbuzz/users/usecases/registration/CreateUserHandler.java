@@ -4,24 +4,24 @@ import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
 import com.sivalabs.techbuzz.users.domain.AuthProvider;
 import com.sivalabs.techbuzz.users.domain.RoleEnum;
 import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
+import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class CreateUserHandler {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final UserDTOMapper userDTOMapper;
 
-    public CreateUserHandler(PasswordEncoder passwordEncoder, UserRepository userRepository) {
-        this.passwordEncoder = passwordEncoder;
-        this.userRepository = userRepository;
-    }
-
-    public User createUser(CreateUserRequest createUserRequest) {
+    public UserDTO createUser(CreateUserRequest createUserRequest) {
         if (userRepository.existsByEmail(createUserRequest.email())) {
             throw new ResourceAlreadyExistsException(
                     "User with email " + createUserRequest.email() + " already exists");
@@ -38,6 +38,7 @@ public class CreateUserHandler {
                         false,
                         verificationToken,
                         AuthProvider.LOCAL);
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        return userDTOMapper.toDTO(savedUser);
     }
 }

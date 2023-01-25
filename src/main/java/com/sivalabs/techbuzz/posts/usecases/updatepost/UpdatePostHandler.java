@@ -3,46 +3,42 @@ package com.sivalabs.techbuzz.posts.usecases.updatepost;
 import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
 import com.sivalabs.techbuzz.posts.domain.entities.Category;
 import com.sivalabs.techbuzz.posts.domain.entities.Post;
+import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
+import com.sivalabs.techbuzz.posts.mappers.PostDTOMapper;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class UpdatePostHandler {
-
-    private static final Logger logger = LoggerFactory.getLogger(UpdatePostHandler.class);
 
     private final PostRepository postRepository;
 
     private final CategoryRepository categoryRepository;
+    private final PostDTOMapper postDTOMapper;
 
-    @Transactional(readOnly = true)
-    public Optional<Post> getPostById(Long id) {
-        logger.debug("process=get_post_by_id, id={}", id);
-        return postRepository.findById(id);
-    }
-
-    public Post updatePost(UpdatePostRequest updatePostRequest) {
-        logger.debug("process=update_post, id={}", updatePostRequest.id());
-        Post post = postRepository.findById(updatePostRequest.id()).orElse(null);
-        if (post == null) {
-            throw new ResourceNotFoundException(
-                    "Post with id: " + updatePostRequest.id() + " not found");
-        }
-        Category category = categoryRepository.getReferenceById(updatePostRequest.categoryId());
+    public PostDTO updatePost(UpdatePostRequest request) {
+        log.debug("process=update_post, id={}", request.id());
+        Post post =
+                postRepository
+                        .findById(request.id())
+                        .orElseThrow(
+                                () ->
+                                        new ResourceNotFoundException(
+                                                "Post with id: " + request.id() + " not found"));
+        Category category = categoryRepository.getReferenceById(request.categoryId());
         post.setCategory(category);
-        post.setTitle(updatePostRequest.title());
-        post.setUrl(updatePostRequest.url());
-        post.setContent(updatePostRequest.content());
+        post.setTitle(request.title());
+        post.setUrl(request.url());
+        post.setContent(request.content());
         post.setUpdatedAt(LocalDateTime.now());
-        return postRepository.save(post);
+        return postDTOMapper.toDTO(postRepository.save(post));
     }
 }

@@ -11,11 +11,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
-import com.sivalabs.techbuzz.posts.domain.entities.Category;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
+import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
+import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
-import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
+import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,21 +25,21 @@ import org.springframework.security.test.context.support.WithUserDetails;
 
 class UpdatePostControllerTests extends AbstractIntegrationTest {
     @Autowired CreatePostHandler createPostHandler;
-    @Autowired GetPostsHandler getPostsHandler;
+    @Autowired GetCategoriesHandler getCategoriesHandler;
     @Autowired SecurityService securityService;
 
-    Post post = null;
+    PostDTO post = null;
 
     @BeforeEach
     void setUp() {
-        Category category = getPostsHandler.getCategory("java");
+        CategoryDTO category = getCategoriesHandler.getCategory("java");
         User user = securityService.loginUser();
         CreatePostRequest request =
                 new CreatePostRequest(
                         "title",
                         "https://sivalabs.in",
                         "test content",
-                        category.getId(),
+                        category.id(),
                         user.getId());
         post = createPostHandler.createPost(request);
     }
@@ -47,7 +47,7 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
     @Test
     @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
     void shouldShowUpdatePostFormPage() throws Exception {
-        mockMvc.perform(get("/posts/{id}/edit", post.getId()))
+        mockMvc.perform(get("/posts/{id}/edit", post.id()))
                 .andExpect(status().isOk())
                 .andExpect(view().name("edit-post"))
                 .andExpect(model().attributeExists("post"));
@@ -57,7 +57,7 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
     @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
     void shouldUpdatePostSuccessfully() throws Exception {
         mockMvc.perform(
-                        put("/posts/{id}", post.getId())
+                        put("/posts/{id}", post.id())
                                 .with(csrf())
                                 .param("url", "https://sivalabs.in")
                                 .param("title", "SivaLabs")
@@ -72,7 +72,7 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
     @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
     void shouldFailToUpdatePostIfDataIsInvalid() throws Exception {
         mockMvc.perform(
-                        put("/posts/{id}", post.getId())
+                        put("/posts/{id}", post.id())
                                 .with(csrf())
                                 .param("url", "")
                                 .param("title", "")

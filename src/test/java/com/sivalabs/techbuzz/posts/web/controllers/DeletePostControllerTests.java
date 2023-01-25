@@ -5,11 +5,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
-import com.sivalabs.techbuzz.posts.domain.entities.Category;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
+import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
+import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
-import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
+import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.User;
 import org.junit.jupiter.api.Test;
@@ -18,23 +18,22 @@ import org.springframework.security.test.context.support.WithUserDetails;
 
 class DeletePostControllerTests extends AbstractIntegrationTest {
     @Autowired CreatePostHandler createPostHandler;
-    @Autowired GetPostsHandler getPostsHandler;
+    @Autowired GetCategoriesHandler getCategoriesHandler;
     @Autowired SecurityService securityService;
 
     @Test
     @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
     void shouldDeletePost() throws Exception {
-        Category category = getPostsHandler.getCategory("java");
+        CategoryDTO category = getCategoriesHandler.getCategory("java");
         User user = securityService.loginUser();
         CreatePostRequest request =
                 new CreatePostRequest(
                         "title",
                         "https://sivalabs.in",
                         "test content",
-                        category.getId(),
+                        category.id(),
                         user.getId());
-        Post post = createPostHandler.createPost(request);
-        mockMvc.perform(delete("/posts/{id}", post.getId()).with(csrf()))
-                .andExpect(status().isOk());
+        PostDTO post = createPostHandler.createPost(request);
+        mockMvc.perform(delete("/posts/{id}", post.id()).with(csrf())).andExpect(status().isOk());
     }
 }

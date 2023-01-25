@@ -2,8 +2,10 @@ package com.sivalabs.techbuzz.posts.usecases.createpost;
 
 import com.sivalabs.techbuzz.posts.domain.entities.Category;
 import com.sivalabs.techbuzz.posts.domain.entities.Post;
+import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
+import com.sivalabs.techbuzz.posts.mappers.PostDTOMapper;
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
 import java.time.LocalDateTime;
@@ -25,7 +27,9 @@ public class CreatePostHandler {
 
     private final UserRepository userRepository;
 
-    public Post createPost(CreatePostRequest createPostRequest) {
+    private final PostDTOMapper postDTOMapper;
+
+    public PostDTO createPost(CreatePostRequest createPostRequest) {
         String title = createPostRequest.title();
         log.info("process=create_post, title={}", title);
         Category category = categoryRepository.getReferenceById(createPostRequest.categoryId());
@@ -41,6 +45,6 @@ public class CreatePostHandler {
                         Set.of(),
                         LocalDateTime.now(),
                         null);
-        return postRepository.save(post);
+        return postDTOMapper.toDTO(postRepository.save(post));
     }
 }

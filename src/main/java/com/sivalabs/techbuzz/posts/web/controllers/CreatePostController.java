@@ -2,7 +2,7 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
+import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
 import com.sivalabs.techbuzz.users.domain.User;
@@ -50,9 +50,9 @@ public class CreatePostController {
                         request.content(),
                         request.categoryId(),
                         loginUser.getId());
-        Post post = createPostHandler.createPost(createPostRequest);
-        log.info("Post saved successfully with id: {}", post.getId());
+        PostDTO post = createPostHandler.createPost(createPostRequest);
+        log.info("Post saved successfully with id: {}", post.id());
         redirectAttributes.addFlashAttribute("message", "Post saved successfully");
-        return "redirect:/posts/" + post.getId() + "/edit";
+        return "redirect:/posts/" + post.id() + "/edit";
     }
 }

@@ -54,10 +54,10 @@ public class Post {
     private Set<Vote> votes;
 
     @Column(updatable = false)
-    protected LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     @Column(insertable = false)
-    protected LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     @PrePersist
     public void onCreate() {

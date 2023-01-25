@@ -18,14 +18,11 @@ public class DeletePostHandler {
     private final VoteRepository voteRepository;
 
     public void deletePost(Long postId) {
-        Post post = getPost(postId);
+        Post post =
+                postRepository
+                        .findById(postId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
         voteRepository.deleteVotesForPost(postId);
         postRepository.delete(post);
-    }
-
-    public Post getPost(Long postId) {
-        return postRepository
-                .findById(postId)
-                .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
     }
 }

@@ -5,11 +5,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
-import com.sivalabs.techbuzz.posts.domain.entities.Category;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
+import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
+import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
-import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
+import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,21 +20,21 @@ import org.springframework.security.test.context.support.WithUserDetails;
 
 class AddVoteControllerTest extends AbstractIntegrationTest {
     @Autowired CreatePostHandler createPostHandler;
-    @Autowired GetPostsHandler getPostsHandler;
+    @Autowired GetCategoriesHandler getCategoriesHandler;
     @Autowired SecurityService securityService;
 
-    Post post = null;
+    PostDTO post = null;
 
     @BeforeEach
     void setUp() {
-        Category category = getPostsHandler.getCategory("java");
+        CategoryDTO category = getCategoriesHandler.getCategory("java");
         User user = securityService.loginUser();
         CreatePostRequest request =
                 new CreatePostRequest(
                         "title",
                         "https://sivalabs.in",
                         "test content",
-                        category.getId(),
+                        category.id(),
                         user.getId());
         post = createPostHandler.createPost(request);
     }
@@ -55,7 +55,7 @@ class AddVoteControllerTest extends AbstractIntegrationTest {
                             "value": "1"
                         }
                         """
-                                                .formatted(post.getId(), user.getId())))
+                                                .formatted(post.id(), user.getId())))
                 .andExpect(status().isOk());
     }
 }

@@ -1,10 +1,10 @@
 package com.sivalabs.techbuzz.posts.web.controllers;
 
-import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
 import com.sivalabs.techbuzz.common.exceptions.UnauthorisedAccessException;
 import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
+import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
+import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
 import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostRequest;
 import com.sivalabs.techbuzz.users.domain.User;
@@ -28,23 +28,20 @@ public class UpdatePostController {
 
     private static final String MODEL_ATTRIBUTE_POST = "post";
 
+    private final GetPostsHandler getPostsHandler;
     private final UpdatePostHandler updatePostHandler;
 
     @GetMapping("/posts/{id}/edit")
     @AnyAuthenticatedUser
     public String editPostForm(@PathVariable Long id, @CurrentUser User loginUser, Model model) {
-        Post post = updatePostHandler.getPostById(id).orElse(null);
-        if (post == null) {
-            throw new ResourceNotFoundException("Post not found");
-        }
+        PostDTO post = getPostsHandler.getPost(id);
         this.checkPrivilege(post, loginUser);
         Long categoryId = null;
-        if (post.getCategory() != null) {
-            categoryId = post.getCategory().getId();
+        if (post.category() != null) {
+            categoryId = post.category().id();
         }
         UpdatePostRequest updatePostRequest =
-                new UpdatePostRequest(
-                        id, post.getTitle(), post.getUrl(), post.getContent(), categoryId);
+                new UpdatePostRequest(id, post.title(), post.url(), post.content(), categoryId);
 
         model.addAttribute(MODEL_ATTRIBUTE_POST, updatePostRequest);
         return "edit-post";
@@ -61,10 +58,7 @@ public class UpdatePostController {
         if (bindingResult.hasErrors()) {
             return "edit-post";
         }
-        Post post = updatePostHandler.getPostById(id).orElse(null);
-        if (post == null) {
-            throw new ResourceNotFoundException("Post not found");
-        }
+        PostDTO post = getPostsHandler.getPost(id);
         var updatePostRequest =
                 new UpdatePostRequest(
                         id,
@@ -73,14 +67,14 @@ public class UpdatePostController {
                         request.content(),
                         request.categoryId());
         this.checkPrivilege(post, loginUser);
-        Post updatedPost = updatePostHandler.updatePost(updatePostRequest);
-        log.info("Post with id: {} updated successfully", updatedPost.getId());
+        PostDTO updatedPost = updatePostHandler.updatePost(updatePostRequest);
+        log.info("Post with id: {} updated successfully", updatedPost.id());
         redirectAttributes.addFlashAttribute("message", "Post updated successfully");
-        return "redirect:/posts/" + updatedPost.getId() + "/edit";
+        return "redirect:/posts/" + updatedPost.id() + "/edit";
     }
 
-    private void checkPrivilege(Post post, User loginUser) {
-        if (!(Objects.equals(post.getCreatedBy().getId(), loginUser.getId())
+    private void checkPrivilege(PostDTO post, User loginUser) {
+        if (!(Objects.equals(post.createdBy().getId(), loginUser.getId())
                 || loginUser.isAdminOrModerator())) {
             throw new UnauthorisedAccessException("Permission Denied");
         }

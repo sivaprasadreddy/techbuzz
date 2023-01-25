@@ -2,9 +2,10 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.common.model.PagedResult;
 import com.sivalabs.techbuzz.config.logging.Loggable;
-import com.sivalabs.techbuzz.posts.domain.entities.Category;
+import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
+import com.sivalabs.techbuzz.posts.domain.models.PostUserViewDTO;
+import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
-import com.sivalabs.techbuzz.posts.usecases.getposts.PostDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ public class ViewCategoryController {
     private static final String PAGINATION_PREFIX = "paginationPrefix";
 
     private final GetPostsHandler getPostsHandler;
+    private final GetCategoriesHandler getCategoriesHandler;
 
     @GetMapping("/c/{category}")
     public String viewCategory(
@@ -29,17 +31,18 @@ public class ViewCategoryController {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             Model model) {
         log.info("Fetching posts for category {} with page: {}", categorySlug, page);
-        PagedResult<PostDTO> data = getPostsHandler.getPostsByCategorySlug(categorySlug, page);
+        PagedResult<PostUserViewDTO> data =
+                getPostsHandler.getPostsByCategorySlug(categorySlug, page);
         if (data.getData().isEmpty() && (page > 1 && page > data.getTotalPages())) {
             return "redirect:/c/" + categorySlug + "?page=" + data.getTotalPages();
         }
-        Category category = getPostsHandler.getCategory(categorySlug);
+        CategoryDTO category = getCategoriesHandler.getCategory(categorySlug);
 
         model.addAttribute("category", category);
         model.addAttribute(PAGINATION_PREFIX, "/c/" + categorySlug + "?");
 
         model.addAttribute("postsData", data);
-        model.addAttribute("categories", getPostsHandler.getAllCategories());
+        model.addAttribute("categories", getCategoriesHandler.getAllCategories());
         return "category";
     }
 }

@@ -5,7 +5,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
 import com.sivalabs.techbuzz.notifications.EmailService;
-import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserHandler;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserRequest;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,8 +47,8 @@ public class RegistrationController {
             return REGISTRATION_VIEW;
         }
         try {
-            User user = createUserHandler.createUser(createUserRequest);
-            this.sendVerificationEmail(request, user);
+            UserDTO userDTO = createUserHandler.createUser(createUserRequest);
+            this.sendVerificationEmail(request, userDTO);
             redirectAttributes.addFlashAttribute("message", "Registration is successful");
             return "redirect:/registrationStatus";
         } catch (ResourceAlreadyExistsException e) {
@@ -63,7 +63,7 @@ public class RegistrationController {
         return "registrationStatus";
     }
 
-    private void sendVerificationEmail(HttpServletRequest request, User user) {
+    private void sendVerificationEmail(HttpServletRequest request, UserDTO userDTO) {
         String baseUrl =
                 ServletUriComponentsBuilder.fromRequestUri(request)
                         .replacePath(null)
@@ -71,11 +71,11 @@ public class RegistrationController {
                         .toUriString();
         String params =
                 "email="
-                        + encode(user.getEmail(), UTF_8)
+                        + encode(userDTO.getEmail(), UTF_8)
                         + "&token="
-                        + encode(user.getVerificationToken(), UTF_8);
+                        + encode(userDTO.getVerificationToken(), UTF_8);
         String verificationUrl = baseUrl + "/verifyEmail?" + params;
-        String to = user.getEmail();
+        String to = userDTO.getEmail();
         String subject = "TechBuzz - Email verification";
         String content =
                 """
@@ -91,7 +91,7 @@ public class RegistrationController {
                 Thanks,<br/>
                 TechBuzz Team
                 """
-                        .formatted(user.getName(), verificationUrl);
+                        .formatted(userDTO.getName(), verificationUrl);
         emailService.sendEmail(to, subject, content);
     }
 }

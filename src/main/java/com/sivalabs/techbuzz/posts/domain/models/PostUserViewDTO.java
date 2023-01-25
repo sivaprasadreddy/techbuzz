@@ -1,17 +1,17 @@
-package com.sivalabs.techbuzz.posts.usecases.getposts;
+package com.sivalabs.techbuzz.posts.domain.models;
 
+import com.sivalabs.techbuzz.users.domain.UserDTO;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-public record PostDTO(
+public record PostUserViewDTO(
         Long id,
         String title,
         String url,
         String content,
-        String category,
+        CategoryDTO category,
         Set<VoteDTO> votes,
-        Long createdUserId,
-        String createdUserName,
+        UserDTO createdBy,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         boolean editable,
