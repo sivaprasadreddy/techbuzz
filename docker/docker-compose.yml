@@ -5,12 +5,19 @@ services:
     image: postgres:15.1-alpine
     container_name: techbuzz-db
     environment:
+      - POSTGRES_MULTIPLE_DATABASES=techbuzz
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
+    volumes:
+      - ./create-schemas.sh:/docker-entrypoint-initdb.d/create-schemas.sh
     ports:
       - "15432:5432"
-    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mailhog:
     image: mailhog/mailhog

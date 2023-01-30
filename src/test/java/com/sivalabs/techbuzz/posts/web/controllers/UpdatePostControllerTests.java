@@ -3,7 +3,6 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 import static org.hamcrest.Matchers.matchesPattern;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -45,7 +44,7 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
-    @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
+    @WithUserDetails(value = ADMIN_EMAIL)
     void shouldShowUpdatePostFormPage() throws Exception {
         mockMvc.perform(get("/posts/{id}/edit", post.id()))
                 .andExpect(status().isOk())
@@ -54,7 +53,7 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
-    @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
+    @WithUserDetails(value = ADMIN_EMAIL)
     void shouldUpdatePostSuccessfully() throws Exception {
         mockMvc.perform(
                         put("/posts/{id}", post.id())
@@ -69,7 +68,7 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
     }
 
     @Test
-    @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
+    @WithUserDetails(value = ADMIN_EMAIL)
     void shouldFailToUpdatePostIfDataIsInvalid() throws Exception {
         mockMvc.perform(
                         put("/posts/{id}", post.id())

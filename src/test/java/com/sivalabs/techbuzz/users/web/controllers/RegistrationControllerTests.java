@@ -61,7 +61,7 @@ class RegistrationControllerTests extends AbstractIntegrationTest {
                         post("/registration")
                                 .with(csrf())
                                 .param("name", "Siva")
-                                .param("email", "sivaprasadreddy.k@gmail.com")
+                                .param("email", ADMIN_EMAIL)
                                 .param("password", "siva"))
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrors("user", "email"))

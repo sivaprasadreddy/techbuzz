@@ -22,7 +22,7 @@ class DeletePostControllerTests extends AbstractIntegrationTest {
     @Autowired SecurityService securityService;
 
     @Test
-    @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
+    @WithUserDetails(value = ADMIN_EMAIL)
     void shouldDeletePost() throws Exception {
         CategoryDTO category = getCategoriesHandler.getCategory("java");
         User user = securityService.loginUser();

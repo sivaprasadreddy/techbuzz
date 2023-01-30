@@ -20,6 +20,7 @@ import org.testcontainers.lifecycle.Startables;
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureMockMvc
 public abstract class AbstractIntegrationTest {
+    public static final String ADMIN_EMAIL = "admin@sivalabs.com";
 
     @Autowired protected MockMvc mockMvc;
 

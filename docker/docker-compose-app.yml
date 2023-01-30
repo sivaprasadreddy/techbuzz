@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  techbuzz:
+    image: sivaprasadreddy/techbuzz
+    container_name: techbuzz
+    ports:
+      - "18080:8080"
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      #LOGGING_FILE_NAME: /logs/techbuzz-docker.log
+      MANAGEMENT_TRACING_ENABLED: 'true'
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://tempo:9411
+      SPRING_DATASOURCE_URL: jdbc:postgresql://techbuzz-db:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      MAIL_HOST: mailhog
+      MAIL_PORT: 1025
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+    labels:
+      logging: "promtail"
+

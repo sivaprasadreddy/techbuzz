@@ -1,6 +1,12 @@
 package com.sivalabs.techbuzz.notifications;
 
-import com.sendgrid.*;
+import com.sendgrid.Content;
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
+import com.sendgrid.Method;
+import com.sendgrid.Request;
+import com.sendgrid.Response;
+import com.sendgrid.SendGrid;
 import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
 import lombok.RequiredArgsConstructor;

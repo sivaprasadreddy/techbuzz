@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  prometheus:
+    image: prom/prometheus:v2.41.0
+    container_name: monitoring-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command: "--config.file=/etc/prometheus/prometheus.yml"
+
+  promtail:
+    image: grafana/promtail:2.7.1
+    container_name: monitoring-promtail
+    volumes:
+      - ./promtail/promtail-docker-config.yaml:/etc/promtail/docker-config.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../logs/:/var/log/
+    command: "--config.file=/etc/promtail/docker-config.yaml"
+
+  loki:
+    image: grafana/loki:2.7.1
+    container_name: monitoring-loki
+    command: -config.file=/etc/loki/local-config.yaml
+    ports:
+      - "3100:3100"
+    depends_on:
+    - promtail
+
+  tempo:
+    image: grafana/tempo:1.5.0
+    container_name: tempo
+    command: -config.file /etc/tempo-config.yml
+    ports:
+      - "3110:3100"     # Tempo
+      - "4317:4317"     # OTLP
+      - "9411:9411"     # Zipkin
+    volumes:
+      - ./tempo/tempo.yml:/etc/tempo-config.yml
+
+  grafana:
+    image: grafana/grafana:9.3.2
+    container_name: monitoring-grafana
+    ports:
+    - "3000:3000"
+    volumes:
+    - grafana_data:/var/lib/grafana
+    - ./grafana/provisioning/:/etc/grafana/provisioning/
+    - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+    environment:
+    - GF_SECURITY_ADMIN_PASSWORD=admin
+    - GF_SECURITY_ADMIN_USER=admin
+    - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+    - prometheus
+    - loki
+
+volumes:
+  prometheus_data: {}
+  grafana_data: {}

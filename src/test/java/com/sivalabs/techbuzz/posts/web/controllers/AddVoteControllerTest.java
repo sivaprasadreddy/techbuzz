@@ -40,7 +40,7 @@ class AddVoteControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
+    @WithUserDetails(value = ADMIN_EMAIL)
     void shouldUpVotePost() throws Exception {
         User user = securityService.loginUser();
         mockMvc.perform(

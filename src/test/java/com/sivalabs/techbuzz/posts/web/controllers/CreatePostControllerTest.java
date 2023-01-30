@@ -16,7 +16,7 @@ import org.springframework.security.test.context.support.WithUserDetails;
 class CreatePostControllerTest extends AbstractIntegrationTest {
 
     @Test
-    @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
+    @WithUserDetails(value = ADMIN_EMAIL)
     void shouldShowCreatePostFormPage() throws Exception {
         mockMvc.perform(get("/posts/new"))
                 .andExpect(status().isOk())
@@ -25,7 +25,7 @@ class CreatePostControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
+    @WithUserDetails(value = ADMIN_EMAIL)
     void shouldCreatePostSuccessfully() throws Exception {
         mockMvc.perform(
                         post("/posts")
@@ -40,7 +40,7 @@ class CreatePostControllerTest extends AbstractIntegrationTest {
     }
 
     @Test
-    @WithUserDetails(value = "sivaprasadreddy.k@gmail.com")
+    @WithUserDetails(value = ADMIN_EMAIL)
     void shouldFailToCreatePostIfDataIsInvalid() throws Exception {
         mockMvc.perform(
                         post("/posts")

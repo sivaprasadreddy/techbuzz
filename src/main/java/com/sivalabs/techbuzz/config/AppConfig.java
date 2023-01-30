@@ -1,5 +1,6 @@
 package com.sivalabs.techbuzz.config;
 
+import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.notifications.JavaEmailService;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -26,7 +27,8 @@ public class AppConfig {
 
     @Bean
     @ConditionalOnMissingBean
-    public EmailService emailService(JavaMailSender javaMailSender) {
-        return new JavaEmailService(javaMailSender);
+    public EmailService emailService(
+            JavaMailSender javaMailSender, ApplicationProperties properties) {
+        return new JavaEmailService(javaMailSender, properties);
     }
 }
