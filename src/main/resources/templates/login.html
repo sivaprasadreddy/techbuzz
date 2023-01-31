@@ -10,8 +10,8 @@
 <body>
 
 <div layout:fragment="content">
-    <div class="col-md-3 offset-5 card ">
-
+    <div class="col-md-4 offset-4">
+        <div class="card">
         <div class="card-header text-center">
             <h3>Login into TechBuzz</h3>
         </div>
@@ -30,13 +30,13 @@
                     <div class="mb-3">
                         <label for="username" class="control-label">Email*</label>
                         <input type="text" id="username" name="username"
-                               class="form-control" placeholder="Email" />
+                               class="form-control" placeholder="Enter email" />
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="control-label">Password*</label>
                         <input type="password" id="password" name="password"
-                               class="form-control" placeholder="Password" />
+                               class="form-control" placeholder="Enter password" />
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary">Login</button>
@@ -48,6 +48,7 @@
                 <h5>Or, You can </h5>
                 <a href="/oauth2/authorization/github" class="btn btn-dark">Login with GitHub <i class="fa-brands fa-github"></i></a>
             </div>
+        </div>
         </div>
     </div>
 </div>

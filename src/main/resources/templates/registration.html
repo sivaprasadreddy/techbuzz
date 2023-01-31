@@ -10,25 +10,15 @@
 <body>
 <div layout:fragment="content">
 
-    <div class="row">
-
-        <div class="col-md-4 offset-md-4">
+        <div class="col-md-4 offset-4">
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header text-center">
                     <h3>Registration Form</h3>
                 </div>
                 <div class="card-body">
                     <form id="registrationForm" method="post" th:action="@{/registration}" th:object="${user}">
-                        <div class="mb-3">
-                            <label for="name" class="control-label">Name*</label>
-                            <input type="text" id="name" name="name"
-                                   th:field="*{name}"
-                                   class="form-control"
-                                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
-                                   placeholder="Enter Name"/>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
-                        </div>
+
                         <div class="mb-3">
                             <label for="email" class="control-label">Email*</label>
                             <input type="text" id="email" name="email"
@@ -47,6 +37,15 @@
                                    placeholder="Enter password" />
                             <div class="invalid-feedback"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
                         </div>
+                        <div class="mb-3">
+                            <label for="name" class="control-label">Name*</label>
+                            <input type="text" id="name" name="name"
+                                   th:field="*{name}"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+                                   placeholder="Enter name"/>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
+                        </div>
                         <div class="col-auto">
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>
@@ -55,7 +54,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </div>
 
 </body>
