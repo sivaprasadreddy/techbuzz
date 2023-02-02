@@ -1,16 +1,14 @@
-version: '3.8'
+version: "3.6"
 services:
-
   techbuzz-db:
     image: postgres:15.1-alpine
     container_name: techbuzz-db
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=techbuzz
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_DATABASE}"
     volumes:
-      - ./create-schemas.sh:/docker-entrypoint-initdb.d/create-schemas.sh
+      - ./db-data:/var/lib/postgresql/data
     ports:
       - "15432:5432"
     healthcheck:
@@ -25,3 +23,5 @@ services:
     ports:
       - "1025:1025"
       - "8025:8025"
+    profiles:
+      - local
