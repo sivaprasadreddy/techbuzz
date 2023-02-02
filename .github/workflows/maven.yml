@@ -2,6 +2,8 @@ name: Build
 
 env:
   APP_NAME: techbuzz
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/techbuzz
 
 on:
