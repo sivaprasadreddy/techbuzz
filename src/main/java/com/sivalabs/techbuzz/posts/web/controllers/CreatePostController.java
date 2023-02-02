@@ -53,6 +53,6 @@ public class CreatePostController {
         PostDTO post = createPostHandler.createPost(createPostRequest);
         log.info("Post saved successfully with id: {}", post.id());
         redirectAttributes.addFlashAttribute("message", "Post saved successfully");
-        return "redirect:/posts/" + post.id() + "/edit";
+        return "redirect:/c/" + post.category().slug();
     }
 }

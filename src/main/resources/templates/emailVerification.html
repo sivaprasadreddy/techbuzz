@@ -10,15 +10,25 @@
 <body>
 <div layout:fragment="content">
 
-    <div class="row">
-
-        <div class="col-md-4 offset-4 text-center">
-            <div th:if="${success}">
-                <h3>Your email verified successfully</h3>
-                <h4>You can <a th:href="@{/login}">Login</a> or visit <a th:href="@{/}">Home</a> page</h4>
-            </div>
-            <div th:if="${!success}">
-                <h3>Your email verified failed</h3>
+    <div class="col-md-4 offset-4 text-center">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <div th:if="${success}">
+                        <h4>Your email is verified successfully</h4>
+                    </div>
+                    <div th:if="${!success}">
+                        <h4>Your email verification is failed</h4>
+                    </div>
+                </div>
+                <div class="card-text">
+                    <div th:if="${success}">
+                        <h5>You can <a th:href="@{/login}">Login</a> or visit <a th:href="@{/}">Home</a> page</h5>
+                    </div>
+                    <div th:if="${!success}">
+                        <h5>Please check your email and verify your account</h5>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

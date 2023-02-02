@@ -36,14 +36,13 @@ public class UpdatePostController {
     public String editPostForm(@PathVariable Long id, @CurrentUser User loginUser, Model model) {
         PostDTO post = getPostsHandler.getPost(id);
         this.checkPrivilege(post, loginUser);
-        Long categoryId = null;
-        if (post.category() != null) {
-            categoryId = post.category().id();
-        }
+        Long categoryId = post.category().id();
+
         UpdatePostRequest updatePostRequest =
                 new UpdatePostRequest(id, post.title(), post.url(), post.content(), categoryId);
 
         model.addAttribute(MODEL_ATTRIBUTE_POST, updatePostRequest);
+        model.addAttribute("categorySlug", post.category().slug());
         return "edit-post";
     }
 

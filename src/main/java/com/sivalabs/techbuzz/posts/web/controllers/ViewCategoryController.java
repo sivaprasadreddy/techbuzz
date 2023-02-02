@@ -25,9 +25,9 @@ public class ViewCategoryController {
     private final GetPostsHandler getPostsHandler;
     private final GetCategoriesHandler getCategoriesHandler;
 
-    @GetMapping("/c/{category}")
+    @GetMapping("/c/{categorySlug}")
     public String viewCategory(
-            @PathVariable(name = "category") String categorySlug,
+            @PathVariable(name = "categorySlug") String categorySlug,
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             Model model) {
         log.info("Fetching posts for category {} with page: {}", categorySlug, page);
