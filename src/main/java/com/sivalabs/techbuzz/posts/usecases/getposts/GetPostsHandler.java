@@ -10,12 +10,13 @@ import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.posts.mappers.PostDTOMapper;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.User;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,13 +43,16 @@ public class GetPostsHandler {
 
     public PagedResult<PostUserViewDTO> getPostsByCategorySlug(String category, Integer page) {
         log.debug("process=get_posts_by_category_slug, category={}, page={}", category, page);
-        return convert(postRepository.findPostsByCategorySlug(category, getPageable(page)));
+        Pageable pageable = getPageable(page);
+        Page<Long> postIds = postRepository.findPostIdsByCategorySlug(category, pageable);
+        List<Post> posts = postRepository.findPosts(postIds.getContent());
+        Page<Post> postsPage = new PageImpl<>(posts, pageable, postIds.getTotalElements());
+        return convert(postsPage);
     }
 
     private Pageable getPageable(Integer page) {
         int pageNo = page > 0 ? page - 1 : 0;
-        return PageRequest.of(
-                pageNo, properties.postsPerPage(), Sort.by(Sort.Direction.DESC, "createdAt"));
+        return PageRequest.of(pageNo, properties.postsPerPage());
     }
 
     private PagedResult<PostUserViewDTO> convert(Page<Post> postsPage) {
