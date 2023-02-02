@@ -36,7 +36,7 @@ class CreatePostControllerTest extends AbstractIntegrationTest {
                                 .param("categoryId", "1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("message", "Post saved successfully"))
-                .andExpect(view().name(matchesPattern("redirect:/posts/.*/edit")));
+                .andExpect(view().name(matchesPattern("redirect:/c/.*")));
     }
 
     @Test
