@@ -28,19 +28,17 @@
             <div>
                 <form id="loginForm" method="post" th:action="@{/login}">
                     <div class="mb-3">
-                        <label for="username" class="control-label">Email*</label>
+                        <label for="username" class="form-label">Email*</label>
                         <input type="text" id="username" name="username"
                                class="form-control" placeholder="Enter email" />
                     </div>
 
                     <div class="mb-3">
-                        <label for="password" class="control-label">Password*</label>
+                        <label for="password" class="form-label">Password*</label>
                         <input type="password" id="password" name="password"
                                class="form-control" placeholder="Enter password" />
                     </div>
-                    <div class="col-auto">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
                 </form>
             </div>
             <hr/>

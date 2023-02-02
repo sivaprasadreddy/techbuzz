@@ -20,7 +20,7 @@
                     <form id="registrationForm" method="post" th:action="@{/registration}" th:object="${user}">
 
                         <div class="mb-3">
-                            <label for="email" class="control-label">Email*</label>
+                            <label for="email" class="form-label">Email*</label>
                             <input type="text" id="email" name="email"
                                    th:field="*{email}"
                                    class="form-control"
@@ -29,7 +29,7 @@
                             <div class="invalid-feedback"  th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="control-label">Password*</label>
+                            <label for="password" class="form-label">Password*</label>
                             <input type="password" id="password" name="password"
                                    th:field="*{password}"
                                    class="form-control"
@@ -38,7 +38,7 @@
                             <div class="invalid-feedback"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
                         </div>
                         <div class="mb-3">
-                            <label for="name" class="control-label">Name*</label>
+                            <label for="name" class="form-label">Name*</label>
                             <input type="text" id="name" name="name"
                                    th:field="*{name}"
                                    class="form-control"
@@ -46,10 +46,7 @@
                                    placeholder="Enter name"/>
                             <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
                         </div>
-                        <div class="col-auto">
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
