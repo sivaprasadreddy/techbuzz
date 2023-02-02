@@ -1,9 +1,16 @@
 name: Build
 
+env:
+  APP_NAME: techbuzz
+  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}
+
 on:
   push:
     branches:
       - '**'
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
   build:
     name: Maven Build
@@ -11,9 +18,8 @@ jobs:
     strategy:
       matrix:
         distribution: [ 'temurin' ]
-        java: [ '17']
-    env:
-      DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/techbuzz
+        java: [ '19']
+
     steps:
       - uses: actions/checkout@v3
 
@@ -30,6 +36,6 @@ jobs:
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Build and Publish Docker Image
         run: |
-          ./mvnw spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=sivaprasadreddy/techbuzz
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker push $DOCKER_IMAGE_NAME --all-tags
+          ./mvnw spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=${{ env.DOCKER_IMAGE_NAME }}
+          docker login -u ${{ env.DOCKER_USERNAME }} -p ${{ env.DOCKER_PASSWORD }}
+          docker push ${{ env.DOCKER_IMAGE_NAME }}
