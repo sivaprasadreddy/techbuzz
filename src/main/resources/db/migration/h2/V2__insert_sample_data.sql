@@ -1,5 +1,7 @@
 INSERT INTO users (email, password, name, role, verified, auth_provider, created_at)
-VALUES ('admin@sivalabs.com', '$2a$10$ZuGgeoawgOg.6AM3QEGZ3O4QlBSWyRx3A70oIcBjYPpUB8mAZWY16', 'Admin', 'ROLE_ADMIN', true, 'LOCAL',
+VALUES ('admin@sivalabs.com', '$2a$10$RpvziVEv9nbYQgbGS7QiD.if5/54eT1MgaxJjsADn2TLGJUYuQbv2', 'Admin', 'ROLE_ADMIN', true, 'LOCAL',
+        CURRENT_TIMESTAMP),
+       ('sivalabs.in@gmail.com', '$2a$10$RpvziVEv9nbYQgbGS7QiD.if5/54eT1MgaxJjsADn2TLGJUYuQbv2', 'SivaLabs', 'ROLE_ADMIN', true, 'LOCAL',
         CURRENT_TIMESTAMP)
 ;
 

@@ -1,26 +1,27 @@
-version: '3.8'
-
+version: "3.6"
 services:
   techbuzz:
     image: sivaprasadreddy/techbuzz
     container_name: techbuzz
     ports:
-      - "18080:8080"
+      - "8080:8080"
     restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      #LOGGING_FILE_NAME: /logs/techbuzz-docker.log
-      MANAGEMENT_TRACING_ENABLED: 'true'
-      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: http://tempo:9411
-      SPRING_DATASOURCE_URL: jdbc:postgresql://techbuzz-db:5432/postgres
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: postgres
-      MAIL_HOST: mailhog
-      MAIL_PORT: 1025
+      LOGGING_FILE_NAME: ./logs/techbuzz-docker.log
+      MANAGEMENT_TRACING_ENABLED: "${TRACING_ENABLED}"
+      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: "${TRACING_ENDPOINT}"
+      SPRING_DATASOURCE_URL: "${DB_URL}"
+      SPRING_DATASOURCE_USERNAME: "${DB_USERNAME}"
+      SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"
+      GITHUB_CLIENT_ID: "${GITHUB_CLIENT_ID}"
+      GITHUB_CLIENT_SECRET: "${GITHUB_CLIENT_SECRET}"
+      GITHUB_REDIRECT_URI: "${GITHUB_REDIRECT_URI}"
+      EMAIL_PROVIDER: "${EMAIL_PROVIDER}"
+      SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
+      MAIL_HOST: "${MAIL_HOST}"
+      MAIL_PORT: "${MAIL_PORT}"
     deploy:
       resources:
         limits:
           memory: 700m
-    labels:
-      logging: "promtail"
-

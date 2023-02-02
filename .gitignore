@@ -32,5 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
+docker/.db-data/
 src/main/resources/application-local.properties
+docker/.env.prod
+docker/.env.aws
 .pom.xml.temp

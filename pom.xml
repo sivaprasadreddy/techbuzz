@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.1</version>
+		<version>3.0.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sivalabs</groupId>
@@ -14,7 +14,7 @@
 	<name>techbuzz</name>
 	<description>TechBuzz</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>19</java.version>
 		<hypersistence-utils.version>3.1.1</hypersistence-utils.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<webjarsLocator.version>0.46</webjarsLocator.version>
@@ -268,7 +268,7 @@
 				<version>${jib-maven-plugin.version}</version>
 				<configuration>
 					<from>
-						<image>eclipse-temurin:17-jre-focal</image>
+						<image>eclipse-temurin:19-jre-focal</image>
 					</from>
 					<to>
 						<image>${dockerImageName}</image>
