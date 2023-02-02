@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,8 @@ import lombok.Setter;
 public class Vote {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vote_id_generator")
+    @SequenceGenerator(name = "vote_id_generator", sequenceName = "vote_id_seq", allocationSize = 5)
     private Long id;
 
     @Column(name = "user_id", nullable = false)
