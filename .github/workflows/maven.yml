@@ -2,7 +2,7 @@ name: Build
 
 env:
   APP_NAME: techbuzz
-  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/${{ env.APP_NAME }}
+  DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/techbuzz
 
 on:
   push:
