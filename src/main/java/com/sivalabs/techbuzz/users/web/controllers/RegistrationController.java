@@ -10,6 +10,7 @@ import com.sivalabs.techbuzz.users.usecases.registration.CreateUserHandler;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/registrationStatus")
-    public String registrationStatus(Model model) {
+    public String registrationStatus() {
         return "registrationStatus";
     }
 
@@ -77,21 +78,8 @@ public class RegistrationController {
         String verificationUrl = baseUrl + "/verifyEmail?" + params;
         String to = userDTO.getEmail();
         String subject = "TechBuzz - Email verification";
-        String content =
-                """
-                Hi %s,
-                <br/>
-                <br/>
-                Please click on the below link to verify your account.
-                <br/>
-                <br/>
-                <a href="%s" target="_blank">Verify Email</a>
-                <br/>
-                <br/>
-                Thanks,<br/>
-                TechBuzz Team
-                """
-                        .formatted(userDTO.getName(), verificationUrl);
-        emailService.sendEmail(to, subject, content);
+        Map<String, Object> paramsMap =
+                Map.of("", userDTO.getName(), "verificationUrl", verificationUrl);
+        emailService.sendEmail("email/verifyEmail", paramsMap, to, subject);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
+import org.thymeleaf.TemplateEngine;
 
 @Configuration
 public class AppConfig {
@@ -28,7 +29,9 @@ public class AppConfig {
     @Bean
     @ConditionalOnMissingBean
     public EmailService emailService(
-            JavaMailSender javaMailSender, ApplicationProperties properties) {
-        return new JavaEmailService(javaMailSender, properties);
+            JavaMailSender javaMailSender,
+            TemplateEngine templateEngine,
+            ApplicationProperties properties) {
+        return new JavaEmailService(javaMailSender, templateEngine, properties);
     }
 }
