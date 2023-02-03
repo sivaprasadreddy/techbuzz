@@ -1,9 +1,8 @@
 #!/bin/bash
 
-declare project_dir=$(dirname "$0")
-declare dc_app_deps=${project_dir}/docker/docker-compose.yml
-declare dc_app=${project_dir}/docker/docker-compose-app.yml
-declare dc_monitoring=${project_dir}/docker/docker-compose-grafana-stack.yml
+declare dc_infra=docker/docker-compose.yml
+declare dc_app=docker/docker-compose-app.yml
+declare dc_monitoring=docker/docker-compose-grafana-stack.yml
 declare techbuzz="techbuzz"
 
 function build_image_jib() {
@@ -19,34 +18,35 @@ function build_apps() {
     build_image_jib
 }
 
-function start() {
+function start_infra() {
     echo "Starting dependent docker containers...."
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" up --build --force-recreate -d
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" logs -f
+    docker-compose --env-file .env --profile local -f "${dc_infra}" up --build --force-recreate -d
+    docker-compose --env-file .env --profile local -f "${dc_infra}" logs -f
 }
 
-function stop() {
+function stop_infra() {
     echo "Stopping dependent docker containers...."
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" stop
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" rm -f
+    docker-compose --env-file .env --profile local -f "${dc_infra}" stop
+    docker-compose --env-file .env --profile local -f "${dc_infra}" rm -f
 }
 
-function restart() {
-    stop
-    start
+function restart_infra() {
+    stop_infra
+    sleep 5
+    start_infra
 }
 
 function start_app() {
-    echo "Starting ${techbuzz} and dependencies...."
+    echo "Starting app...."
     build_apps
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" -f "${dc_app}" up --build --force-recreate -d
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" -f "${dc_app}" logs -f
+    docker-compose --env-file .env --profile local -f "${dc_app}" up --build --force-recreate -d
+    docker-compose --env-file .env --profile local -f "${dc_app}" logs -f
 }
 
 function stop_app() {
     echo 'Stopping all....'
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" -f "${dc_app}" stop
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" -f "${dc_app}" rm -f
+    docker-compose --env-file .env --profile local -f "${dc_app}" stop
+    docker-compose --env-file .env --profile local -f "${dc_app}" rm -f
 }
 
 function restart_app() {
@@ -57,30 +57,17 @@ function restart_app() {
 
 function start_grafana() {
     echo 'Starting Grafana Observability Stack....'
-    docker-compose --env-file .env -f "${dc_monitoring}" up --build --force-recreate -d
+    docker-compose --env-file .env -f "${dc_monitoring}" up --force-recreate -d
     docker-compose --env-file .env -f "${dc_monitoring}" logs -f
 }
 
-function stop_monitoring() {
+function stop_grafana() {
     echo 'Stopping Grafana Observability Stack....'
     docker-compose --env-file .env -f "${dc_monitoring}" stop
     docker-compose --env-file .env -f "${dc_monitoring}" rm -f
 }
 
-function start_all() {
-    echo "Starting ${techbuzz} and dependencies...."
-    build_apps
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" -f "${dc_app}" -f "${dc_monitoring}" up --build --force-recreate -d
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" -f "${dc_app}" -f "${dc_monitoring}" logs -f
-}
-
-function stop_all() {
-    echo 'Stopping all....'
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" -f "${dc_app}" -f "${dc_monitoring}" stop
-    docker-compose --env-file .env --profile local -f "${dc_app_deps}" -f "${dc_app}" -f "${dc_monitoring}" rm -f
-}
-
-action="start"
+action="start_app"
 
 if [[ "$#" != "0"  ]]
 then
