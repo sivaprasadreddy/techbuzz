@@ -20,7 +20,7 @@
 		<webjarsLocator.version>0.46</webjarsLocator.version>
 		<bootstrap.version>5.2.3</bootstrap.version>
 		<jquery.version>3.6.1</jquery.version>
-		<fontawesome.version>6.2.0</fontawesome.version>
+		<fontawesome.version>6.2.1</fontawesome.version>
 		<sendgrid-java.version>4.0.1</sendgrid-java.version>
 		<spotless.version>2.17.4</spotless.version>
 		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
