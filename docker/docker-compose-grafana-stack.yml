@@ -30,7 +30,7 @@ services:
     - promtail
 
   tempo:
-    image: grafana/tempo:1.5.0
+    image: grafana/tempo:2.0.0
     container_name: tempo
     command: -config.file /etc/tempo-config.yml
     ports:
