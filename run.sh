@@ -6,15 +6,15 @@ declare dc_monitoring=docker/docker-compose-grafana-stack.yml
 declare techbuzz="techbuzz"
 
 function build_image_jib() {
-    ./mvnw clean package -DskipTests jib:dockerBuild -Dimage=sivaprasadreddy/techbuzz
+    ./mvnw -pl techbuzz clean package -DskipTests jib:dockerBuild -Dimage=sivaprasadreddy/techbuzz
 }
 
 function build_apps_buildpacks() {
-    ./mvnw clean spring-boot:build-image -Dspring-boot.build-image.imageName=sivaprasadreddy/techbuzz
+    ./mvnw -pl techbuzz clean spring-boot:build-image -Dspring-boot.build-image.imageName=sivaprasadreddy/techbuzz
 }
 
 function build_apps() {
-    ./mvnw spotless:apply
+    ./mvnw -pl techbuzz spotless:apply
     build_image_jib
 }
 

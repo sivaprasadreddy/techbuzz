@@ -22,7 +22,7 @@ TechBuzz is a place to share the interesting tech news such as blog posts, video
 ## Local development
 
 ```shell
-$ docker-compose up -d
+$ ./run.sh start_infra
 $ ./mvnw spring-boot:run
 ```
 
