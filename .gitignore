@@ -2,8 +2,7 @@
 *.iml
 *.ipr
 
-docker/.db-data/
-src/main/resources/application-local.properties
+docker/db-data/
 docker/.env.prod
 docker/.env.aws
 .pom.xml.temp

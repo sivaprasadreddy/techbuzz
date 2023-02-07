@@ -25,5 +25,13 @@ $ ./run.sh start_infra
 $ ./mvnw spring-boot:run
 ```
 
+## Run using docker-compose
+
+```shell
+$ ./run.sh start_infra
+$ ./run.sh start_app
+```
+
+## Service URLs
 * App: http://localhost:8080/
 * MailHog: http://localhost:8025/
