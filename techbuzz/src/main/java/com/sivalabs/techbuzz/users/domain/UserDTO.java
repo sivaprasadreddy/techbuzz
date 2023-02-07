@@ -12,5 +12,4 @@ public class UserDTO {
     private RoleEnum role;
     private boolean verified;
     private String verificationToken;
-    private AuthProvider authProvider;
 }

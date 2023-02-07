@@ -9,12 +9,14 @@
 	<name>gatling-tests</name>
 	<description>TechBuzz gatling-tests</description>
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<gatling.version>3.9.0</gatling.version>
 		<gatling-maven-plugin.version>4.2.9</gatling-maven-plugin.version>
+		<spotless.version>2.32.0</spotless.version>
 	</properties>
 
 	<dependencies>
@@ -48,6 +50,27 @@
 				<configuration>
 					<runMultipleSimulations>true</runMultipleSimulations>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless.version}</version>
+				<configuration>
+					<java>
+						<googleJavaFormat>
+							<version>1.12.0</version>
+							<style>AOSP</style>
+						</googleJavaFormat>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

@@ -3,12 +3,13 @@ import io.gatling.core.config.GatlingPropertiesBuilder;
 
 public class Engine {
 
-  public static void main(String[] args) {
-    GatlingPropertiesBuilder props = new GatlingPropertiesBuilder()
-      .resourcesDirectory(IDEPathHelper.gradleResourcesDirectory.toString())
-      .resultsDirectory(IDEPathHelper.resultsDirectory.toString())
-      .binariesDirectory(IDEPathHelper.gradleBinariesDirectory.toString());
+    public static void main(String[] args) {
+        GatlingPropertiesBuilder props =
+                new GatlingPropertiesBuilder()
+                        .resourcesDirectory(IDEPathHelper.gradleResourcesDirectory.toString())
+                        .resultsDirectory(IDEPathHelper.resultsDirectory.toString())
+                        .binariesDirectory(IDEPathHelper.gradleBinariesDirectory.toString());
 
-    Gatling.fromMap(props.build());
-  }
+        Gatling.fromMap(props.build());
+    }
 }

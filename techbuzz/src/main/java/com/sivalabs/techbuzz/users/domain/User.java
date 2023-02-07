@@ -56,10 +56,6 @@ public class User implements Serializable {
     @Column(name = "verification_token")
     private String verificationToken;
 
-    @Column
-    @Enumerated(EnumType.STRING)
-    private AuthProvider authProvider;
-
     public boolean isAdminOrModerator() {
         return hasAnyRole(RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_MODERATOR);
     }

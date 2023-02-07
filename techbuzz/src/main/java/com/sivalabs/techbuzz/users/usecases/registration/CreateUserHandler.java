@@ -1,7 +1,6 @@
 package com.sivalabs.techbuzz.users.usecases.registration;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
-import com.sivalabs.techbuzz.users.domain.AuthProvider;
 import com.sivalabs.techbuzz.users.domain.RoleEnum;
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserDTO;
@@ -36,8 +35,7 @@ public class CreateUserHandler {
                         encPwd,
                         RoleEnum.ROLE_USER,
                         false,
-                        verificationToken,
-                        AuthProvider.LOCAL);
+                        verificationToken);
         User savedUser = userRepository.save(user);
         return userDTOMapper.toDTO(savedUser);
     }

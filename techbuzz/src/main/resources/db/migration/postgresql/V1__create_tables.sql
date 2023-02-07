@@ -9,7 +9,6 @@ create table users
     email              varchar not null,
     password           varchar not null,
     name               varchar not null,
-    auth_provider      varchar not null,
     role               varchar not null,
     verified           bool    not null default false,
     verification_token varchar,

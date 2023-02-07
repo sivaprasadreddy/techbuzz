@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class EmailVerificationController {
     private final EmailVerificationHandler emailVerificationHandler;
 
-    @GetMapping("/verifyEmail")
+    @GetMapping("/verify-email")
     public String verifyEmail(
             Model model, @RequestParam("email") String email, @RequestParam("token") String token) {
         try {
@@ -24,6 +24,6 @@ public class EmailVerificationController {
         } catch (TechBuzzException e) {
             model.addAttribute("success", false);
         }
-        return "emailVerification";
+        return "users/emailVerification";
     }
 }

@@ -24,24 +24,24 @@ class EmailVerificationControllerTest extends AbstractIntegrationTest {
         CreateUserRequest request = new CreateUserRequest("name", email, "secret");
         UserDTO user = createUserHandler.createUser(request);
         mockMvc.perform(
-                        get("/verifyEmail")
+                        get("/verify-email")
                                 .with(csrf())
                                 .param("email", email)
                                 .param("token", user.getVerificationToken()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("success", true))
-                .andExpect(view().name("emailVerification"));
+                .andExpect(view().name("users/emailVerification"));
     }
 
     @Test
     void emailVerificationShouldFailWhenEmailAndTokenNotMatched() throws Exception {
         mockMvc.perform(
-                        get("/verifyEmail")
+                        get("/verify-email")
                                 .with(csrf())
                                 .param("email", "dummy@mail.com")
                                 .param("token", "secretToken"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("success", false))
-                .andExpect(view().name("emailVerification"));
+                .andExpect(view().name("users/emailVerification"));
     }
 }

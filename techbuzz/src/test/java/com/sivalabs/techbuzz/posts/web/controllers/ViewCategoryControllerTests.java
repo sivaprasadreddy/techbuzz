@@ -16,7 +16,7 @@ class ViewCategoryControllerTests extends AbstractIntegrationTest {
     void shouldFetchPostsByCategory(String category) throws Exception {
         mockMvc.perform(get("/c/{category}", category))
                 .andExpect(status().isOk())
-                .andExpect(view().name("category"))
+                .andExpect(view().name("posts/category"))
                 .andExpect(model().attributeExists("paginationPrefix"))
                 .andExpect(model().attributeExists("category"))
                 .andExpect(model().attributeExists("postsData"))

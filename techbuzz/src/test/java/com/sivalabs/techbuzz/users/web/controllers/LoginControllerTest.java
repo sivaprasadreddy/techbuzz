@@ -11,6 +11,8 @@ class LoginControllerTest extends AbstractIntegrationTest {
 
     @Test
     void shouldShowLoginFormPage() throws Exception {
-        mockMvc.perform(get("/login")).andExpect(status().isOk()).andExpect(view().name("login"));
+        mockMvc.perform(get("/login"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("users/login"));
     }
 }

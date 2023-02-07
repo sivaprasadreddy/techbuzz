@@ -30,6 +30,6 @@ public class LoginController {
             }
             model.addAttribute("errorMessage", errorMessage);
         }
-        return "login";
+        return "users/login";
     }
 }

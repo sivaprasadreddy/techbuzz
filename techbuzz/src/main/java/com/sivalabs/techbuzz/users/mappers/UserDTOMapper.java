@@ -17,7 +17,6 @@ public class UserDTOMapper {
                 user.getEmail(),
                 user.getRole(),
                 user.isVerified(),
-                user.getVerificationToken(),
-                user.getAuthProvider());
+                user.getVerificationToken());
     }
 }

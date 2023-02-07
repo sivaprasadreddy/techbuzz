@@ -77,6 +77,66 @@
       "url": "https://reflectoring.io/laws-and-principles-of-software-development",
       "content": "This article enumerates some of the most popular laws and principles that can be applied to software development. For each law, we will quickly discuss its main proposition and then explore how we can apply it to software development (and maybe when we shouldn’t).",
       "category": "general"
+    },
+    {
+      "title": "Authentication and Authorization in a Node API using Fastify, tRPC and Supertokens",
+      "url": "https://dev.to/franciscomendes10866/authentication-and-authorization-in-a-node-api-using-fastify-trpc-and-supertokens-3cgn",
+      "content": "In this article we are going to create an API using tRPC along with a super popular Supertokens recipe to authenticate using email and password.",
+      "category": "webdev"
+    },
+    {
+      "title": "Golang tutorial series",
+      "url": "https://golangbot.com/learn-golang-series/",
+      "content": "This series consists of 36 tutorials and will give you a solid understanding of Go.",
+      "category": "go"
+    },
+    {
+      "title": "Python Tutorial - Python Full Course for Beginners",
+      "url": "https://www.youtube.com/watch?v=_uQrJ0TkZlc",
+      "content": "Python tutorial - Python full course for beginners - Go from Zero to Hero with Python (includes machine learning & web development projects).",
+      "category": "python"
+    },
+    {
+      "title": "Testcontainers for Java",
+      "url": "https://www.testcontainers.org/",
+      "content": "Testcontainers for Java is a Java library that supports JUnit tests, providing lightweight, throwaway instances of common databases, Selenium web browsers, or anything else that can run in a Docker container.",
+      "category": "testing"
+    },
+    {
+      "title": "ECS with Fargate and Terraform",
+      "url": "https://engineering.finleap.com/posts/2020-02-20-ecs-fargate-terraform/",
+      "content": "This article explains how to deploy a dockerized application on AWS ECS using Terraform",
+      "category": "devops"
+    },
+    {
+      "title": "Why I think Go is more verbose than Java",
+      "url": "https://www.sivalabs.in/why-go-is-more-verbose-than-java/",
+      "content": "In this article, author explains his perspective on why he feel Go is more verbose than Java",
+      "category": "general"
+    },
+    {
+      "title": "Spring Boot Tips - YouTube Series",
+      "url": "https://www.youtube.com/watch?v=2dPon1G5S-M&list=PLuNxlOYbv61jFFX2ARQKnBgkMF6DvEEic",
+      "content": "I am happy to announce that I am going to create “SpringBoot Tips Video Series” on my SivaLabs YouTube Channel. This “SpringBoot Tips Series” is to help people who are new to SpringBoot to learn how to use SpringBoot with a keen focus on understanding how it works behind the scenes",
+      "category": "java"
+    },
+    {
+      "title": "Spring Boot + Kubernetes Tutorial YouTube Series",
+      "url": "https://www.youtube.com/watch?v=pGbBuwzyiV4&list=PLuNxlOYbv61h66_QlcjCEkVAj6RdeplJJ",
+      "content": "This is a video tutorial on building a SpringBoot + NextJS application and deploy it on Kubernetes",
+      "category": "java"
+    },
+    {
+      "title": "How SpringBoot AutoConfiguration magic works?",
+      "url": "https://www.sivalabs.in/how-springboot-autoconfiguration-magic/",
+      "content": "In this article, author explain how SpringBoot auto-configuration works in-detail.",
+      "category": "java"
+    },
+    {
+      "title": "API with NestJS #1. Controllers, routing and the module structure",
+      "url": "https://wanago.io/2020/05/11/nestjs-api-controllers-routing-module/",
+      "content": "This is the first part of NestJS tutorial series",
+      "category": "nodejs"
     }
   ]
 }

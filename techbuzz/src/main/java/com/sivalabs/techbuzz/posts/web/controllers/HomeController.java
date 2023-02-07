@@ -13,8 +13,8 @@ public class HomeController {
     private final CategoryRepository categoryRepository;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String home(Model model) {
         model.addAttribute("categories", categoryRepository.findAll());
-        return "index";
+        return "posts/home";
     }
 }

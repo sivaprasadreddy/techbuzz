@@ -30,7 +30,7 @@ public class CreatePostController {
     @AnyAuthenticatedUser
     public String newPostForm(Model model) {
         model.addAttribute(MODEL_ATTRIBUTE_POST, new CreatePostRequest("", "", "", null, null));
-        return "add-post";
+        return "posts/add-post";
     }
 
     @PostMapping("/posts")
@@ -41,7 +41,7 @@ public class CreatePostController {
             @CurrentUser User loginUser,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "add-post";
+            return "posts/add-post";
         }
         var createPostRequest =
                 new CreatePostRequest(

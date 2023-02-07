@@ -3,7 +3,6 @@ TechBuzz is a place to share the interesting tech news such as blog posts, video
 
 ## Features
 * Login with username/password
-* Login with GitHub
 * Register with username/password
 * Email verification
 * View Posts by Category with pagination

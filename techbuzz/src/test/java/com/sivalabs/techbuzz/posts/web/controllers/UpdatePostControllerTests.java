@@ -48,7 +48,7 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
     void shouldShowUpdatePostFormPage() throws Exception {
         mockMvc.perform(get("/posts/{id}/edit", post.id()))
                 .andExpect(status().isOk())
-                .andExpect(view().name("edit-post"))
+                .andExpect(view().name("posts/edit-post"))
                 .andExpect(model().attributeExists("post"));
     }
 
@@ -81,6 +81,6 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
                 .andExpect(model().attributeHasFieldErrorCode("post", "title", "NotEmpty"))
                 .andExpect(model().attributeHasFieldErrorCode("post", "content", "NotEmpty"))
                 .andExpect(model().attributeHasFieldErrorCode("post", "categoryId", "NotNull"))
-                .andExpect(view().name("edit-post"));
+                .andExpect(view().name("posts/edit-post"));
     }
 }

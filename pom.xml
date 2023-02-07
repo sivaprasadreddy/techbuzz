@@ -11,7 +11,9 @@
 	<packaging>pom</packaging>
 	<name>techbuzz-parent</name>
 	<description>TechBuzz</description>
-
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 	<modules>
 		<module>techbuzz</module>
 		<module>gatling-tests</module>

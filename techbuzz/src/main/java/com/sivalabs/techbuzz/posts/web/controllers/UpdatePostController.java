@@ -25,7 +25,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequiredArgsConstructor
 @Slf4j
 public class UpdatePostController {
-
     private static final String MODEL_ATTRIBUTE_POST = "post";
 
     private final GetPostsHandler getPostsHandler;
@@ -43,7 +42,7 @@ public class UpdatePostController {
 
         model.addAttribute(MODEL_ATTRIBUTE_POST, updatePostRequest);
         model.addAttribute("categorySlug", post.category().slug());
-        return "edit-post";
+        return "posts/edit-post";
     }
 
     @PutMapping("/posts/{id}")
@@ -55,7 +54,7 @@ public class UpdatePostController {
             @CurrentUser User loginUser,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "edit-post";
+            return "posts/edit-post";
         }
         PostDTO post = getPostsHandler.getPost(id);
         var updatePostRequest =

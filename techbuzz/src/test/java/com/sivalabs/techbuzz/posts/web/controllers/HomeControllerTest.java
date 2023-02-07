@@ -13,7 +13,7 @@ class HomeControllerTest extends AbstractIntegrationTest {
     void shouldHomePageWithCategoriesList() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("index"))
+                .andExpect(view().name("posts/home"))
                 .andExpect(model().attributeExists("categories"));
     }
 }

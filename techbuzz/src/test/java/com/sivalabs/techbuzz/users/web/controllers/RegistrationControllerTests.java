@@ -22,7 +22,7 @@ class RegistrationControllerTests extends AbstractIntegrationTest {
     void shouldShowRegistrationFormPage() throws Exception {
         mockMvc.perform(get("/registration"))
                 .andExpect(status().isOk())
-                .andExpect(view().name("registration"))
+                .andExpect(view().name("users/registration"))
                 .andExpect(model().attributeExists("user"));
     }
 
@@ -52,7 +52,7 @@ class RegistrationControllerTests extends AbstractIntegrationTest {
                 .andExpect(model().attributeHasFieldErrorCode("user", "name", "NotBlank"))
                 .andExpect(model().attributeHasFieldErrorCode("user", "email", "NotBlank"))
                 .andExpect(model().attributeHasFieldErrorCode("user", "password", "NotBlank"))
-                .andExpect(view().name("registration"));
+                .andExpect(view().name("users/registration"));
     }
 
     @Test
@@ -66,6 +66,6 @@ class RegistrationControllerTests extends AbstractIntegrationTest {
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrors("user", "email"))
                 .andExpect(model().attributeHasFieldErrorCode("user", "email", "email.exists"))
-                .andExpect(view().name("registration"));
+                .andExpect(view().name("users/registration"));
     }
 }

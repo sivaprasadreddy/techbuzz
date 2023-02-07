@@ -27,7 +27,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RequiredArgsConstructor
 public class RegistrationController {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
-    private static final String REGISTRATION_VIEW = "registration";
+    private static final String REGISTRATION_VIEW = "users/registration";
 
     private final CreateUserHandler createUserHandler;
     private final EmailService emailService;
@@ -53,7 +53,7 @@ public class RegistrationController {
             redirectAttributes.addFlashAttribute("message", "Registration is successful");
             return "redirect:/registrationStatus";
         } catch (ResourceAlreadyExistsException e) {
-            logger.error("Registration err", e);
+            logger.error("Registration error:", e);
             bindingResult.rejectValue("email", "email.exists", e.getMessage());
             return REGISTRATION_VIEW;
         }
@@ -61,7 +61,7 @@ public class RegistrationController {
 
     @GetMapping("/registrationStatus")
     public String registrationStatus() {
-        return "registrationStatus";
+        return "users/registrationStatus";
     }
 
     private void sendVerificationEmail(HttpServletRequest request, UserDTO userDTO) {
@@ -75,11 +75,11 @@ public class RegistrationController {
                         + encode(userDTO.getEmail(), UTF_8)
                         + "&token="
                         + encode(userDTO.getVerificationToken(), UTF_8);
-        String verificationUrl = baseUrl + "/verifyEmail?" + params;
+        String verificationUrl = baseUrl + "/verify-email?" + params;
         String to = userDTO.getEmail();
         String subject = "TechBuzz - Email verification";
         Map<String, Object> paramsMap =
                 Map.of("", userDTO.getName(), "verificationUrl", verificationUrl);
-        emailService.sendEmail("email/verifyEmail", paramsMap, to, subject);
+        emailService.sendEmail("email/verify-email", paramsMap, to, subject);
     }
 }

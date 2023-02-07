@@ -29,12 +29,7 @@ public class SecurityService {
         if (principal instanceof SecurityUser securityUser) {
             String username = securityUser.getUsername();
             return userRepository.findByEmail(username).orElse(null);
-        }
-        if (principal instanceof TechBuzzUserPrincipal securityUser) {
-            String username = securityUser.getEmail();
-            return userRepository.findByEmail(username).orElse(null);
-        }
-        if (authentication instanceof UsernamePasswordAuthenticationToken) {
+        } else if (authentication instanceof UsernamePasswordAuthenticationToken) {
             UserDetails userDetails = (UserDetails) principal;
             return userRepository.findByEmail(userDetails.getUsername()).orElse(null);
         }

@@ -1,7 +1,6 @@
 package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.common.model.PagedResult;
-import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
 import com.sivalabs.techbuzz.posts.domain.models.PostUserViewDTO;
 import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
@@ -15,13 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@Loggable
 @RequiredArgsConstructor
 @Slf4j
 public class ViewCategoryController {
-
-    private static final String PAGINATION_PREFIX = "paginationPrefix";
-
     private final GetPostsHandler getPostsHandler;
     private final GetCategoriesHandler getCategoriesHandler;
 
@@ -39,10 +34,10 @@ public class ViewCategoryController {
         CategoryDTO category = getCategoriesHandler.getCategory(categorySlug);
 
         model.addAttribute("category", category);
-        model.addAttribute(PAGINATION_PREFIX, "/c/" + categorySlug + "?");
-
+        model.addAttribute("paginationPrefix", "/c/" + categorySlug + "?");
         model.addAttribute("postsData", data);
         model.addAttribute("categories", getCategoriesHandler.getAllCategories());
-        return "category";
+
+        return "posts/category";
     }
 }
