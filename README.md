@@ -16,7 +16,7 @@ TechBuzz is a place to share the interesting tech news such as blog posts, video
 * Postgres, JPA, Spring Data Jpa, FlywayDb
 * Spring Security
 * Thymeleaf, Bootstrap, jQuery
-* JUnit 5, RestAssured, Testcontainers
+* JUnit 5, Testcontainers
 
 ## Local development
 
