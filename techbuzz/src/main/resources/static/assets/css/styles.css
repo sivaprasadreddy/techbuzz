@@ -8,3 +8,13 @@ body {
 a:link {
     text-decoration: none;
 }
+
+.category-tile {
+    padding: 10px;
+}
+
+.category-img {
+    padding: 2px;
+    width: 140px;
+    height: 95px;
+}
