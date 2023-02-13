@@ -25,7 +25,7 @@ public class UpdatePostHandler {
     private final PostDTOMapper postDTOMapper;
 
     public PostDTO updatePost(UpdatePostRequest request) {
-        log.debug("process=update_post, id={}", request.id());
+        log.debug("Update post with id={}", request.id());
         Post post =
                 postRepository
                         .findById(request.id())

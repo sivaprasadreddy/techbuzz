@@ -35,6 +35,7 @@ public class GetPostsHandler {
     private final ApplicationProperties properties;
 
     public PostDTO getPost(Long postId) {
+        log.debug("Fetching post by id: {}", postId);
         return postDtoMapper.toDTO(
                 postRepository
                         .findById(postId)
@@ -42,7 +43,7 @@ public class GetPostsHandler {
     }
 
     public PagedResult<PostUserViewDTO> getPostsByCategorySlug(String category, Integer page) {
-        log.debug("process=get_posts_by_category_slug, category={}, page={}", category, page);
+        log.debug("Fetching posts by category={}, page={}", category, page);
         Pageable pageable = getPageable(page);
         Page<Long> postIds = postRepository.findPostIdsByCategorySlug(category, pageable);
         List<Post> posts = postRepository.findPosts(postIds.getContent());

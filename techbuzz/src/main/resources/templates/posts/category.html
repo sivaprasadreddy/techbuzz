@@ -16,7 +16,9 @@
     <div>
         <ul class="nav justify-content-center">
             <li class="nav-item" th:each="category: ${categories}">
-                <a class="nav-link" href="#" th:href="${'/c/'+category.slug}" th:text="${category.name}">Category</a>
+                <a class="nav-link" href="#"
+                   th:href="${'/c/'+category.slug}"
+                   th:text="${category.name}">Category</a>
             </li>
         </ul>
     </div>
@@ -61,30 +63,31 @@
                             <button class="btn btn-success"
                                     th:classappend="${post.upVoted()} ? disabled : ''"
                                     th:onclick="'javascript:addVote( \''+${post.id}+'\', 1);'" >
-                                <span th:text="${post.getUpVoteCount()}">1</span>
-                                &nbsp;&nbsp; <i class="fa-solid fa-thumbs-up"></i>
+                                <span th:text="${post.getUpVoteCount()}" class="p-2">1</span>
+                                 <i class="fa-solid fa-thumbs-up"></i>
                             </button>
 
                             <button class="btn btn-danger"
                                     th:classappend="${post.downVoted()} ? disabled : ''"
                                     th:onclick="'javascript:addVote( \''+${post.id}+'\', -1);'" >
-                                <span th:text="${post.getDownVoteCount()}">1</span>
-                                &nbsp;&nbsp; <i class="fa-solid fa-thumbs-down"></i>
+                                <span th:text="${post.getDownVoteCount()}" class="p-2">1</span>
+                                <i class="fa-solid fa-thumbs-down"></i>
                             </button>
                         </p>
                         <p sec:authorize="!isAuthenticated()" class="mt-3 mb-0" >
                             <span data-bs-toggle="tooltip" data-bs-placement="top"
                                   data-bs-title="Login to vote">
                                 <button class="btn btn-success disabled" >
-                                    <span th:text="${post.getUpVoteCount()}">1</span>
-                                    &nbsp;&nbsp; <i class="fa-solid fa-thumbs-up"></i>
+                                    <span th:text="${post.getUpVoteCount()}" class="p-2">1</span>
+                                    <i class="fa-solid fa-thumbs-up"></i>
                                 </button>
                             </span>
                             <span data-bs-toggle="tooltip" data-bs-placement="top"
                                   data-bs-title="Login to vote">
                                 <button class="btn btn-danger disabled">
-                                    <span th:text="${post.getDownVoteCount()}">1</span>
-                                    &nbsp;&nbsp; <i class="fa-solid fa-thumbs-down"></i>
+                                    <span th:text="${post.getDownVoteCount()}"
+                                    class="p-2">1</span>
+                                    <i class="fa-solid fa-thumbs-down"></i>
                                 </button>
                             </span>
                         </p>

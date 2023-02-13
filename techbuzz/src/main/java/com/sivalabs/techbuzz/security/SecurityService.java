@@ -1,7 +1,8 @@
 package com.sivalabs.techbuzz.security;
 
 import com.sivalabs.techbuzz.users.domain.User;
-import com.sivalabs.techbuzz.users.domain.UserRepository;
+import com.sivalabs.techbuzz.users.usecases.getuser.GetUserHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,13 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class SecurityService {
 
-    private final UserRepository userRepository;
-
-    public SecurityService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final GetUserHandler getUserHandler;
 
     public User loginUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -28,10 +26,10 @@ public class SecurityService {
         Object principal = authentication.getPrincipal();
         if (principal instanceof SecurityUser securityUser) {
             String username = securityUser.getUsername();
-            return userRepository.findByEmail(username).orElse(null);
+            return getUserHandler.getUserByEmail(username).orElse(null);
         } else if (authentication instanceof UsernamePasswordAuthenticationToken) {
             UserDetails userDetails = (UserDetails) principal;
-            return userRepository.findByEmail(userDetails.getUsername()).orElse(null);
+            return getUserHandler.getUserByEmail(userDetails.getUsername()).orElse(null);
         }
         return null;
     }

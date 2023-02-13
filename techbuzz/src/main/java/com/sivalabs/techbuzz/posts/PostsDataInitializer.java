@@ -7,7 +7,7 @@ import com.sivalabs.techbuzz.posts.domain.entities.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.users.domain.User;
-import com.sivalabs.techbuzz.users.domain.UserRepository;
+import com.sivalabs.techbuzz.users.usecases.getuser.GetUserHandler;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -32,7 +32,7 @@ public class PostsDataInitializer implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
 
-    private final UserRepository userRepository;
+    private final GetUserHandler getUserHandler;
 
     private final ApplicationProperties properties;
 
@@ -82,7 +82,7 @@ public class PostsDataInitializer implements CommandLineRunner {
                                             postEntry.category);
                                     return categoryRepository.findBySlug("general").orElseThrow();
                                 });
-        User user = userRepository.findByEmail(properties.adminEmail()).orElseThrow();
+        User user = getUserHandler.getUserByEmail(properties.adminEmail()).orElseThrow();
         return new Post(
                 null,
                 postEntry.title,

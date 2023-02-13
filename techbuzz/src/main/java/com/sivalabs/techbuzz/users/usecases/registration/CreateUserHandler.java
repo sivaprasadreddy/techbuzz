@@ -8,6 +8,7 @@ import com.sivalabs.techbuzz.users.domain.UserRepository;
 import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +21,7 @@ public class CreateUserHandler {
     private final UserRepository userRepository;
     private final UserDTOMapper userDTOMapper;
 
+    @CacheEvict(cacheNames = "user", allEntries = true)
     public UserDTO createUser(CreateUserRequest createUserRequest) {
         if (userRepository.existsByEmail(createUserRequest.email())) {
             throw new ResourceAlreadyExistsException(

@@ -21,6 +21,11 @@ public class VoteHandler {
     private final VoteDTOMapper voteDTOMapper;
 
     public VoteDTO addVote(CreateVoteRequest request) {
+        log.debug(
+                "Adding vote :{} for postId: {} by userId:{}",
+                request.value(),
+                request.postId(),
+                request.userId());
         Optional<Vote> voteOptional =
                 voteRepository.findByPostIdAndUserId(request.postId(), request.userId());
         if (voteOptional.isEmpty()) {
