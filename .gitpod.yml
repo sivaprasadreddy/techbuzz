@@ -1,0 +1,6 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - name: Build application
+    init: ./mvnw -B dependency:go-offline package
