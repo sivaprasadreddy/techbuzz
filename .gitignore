@@ -2,6 +2,9 @@
 *.iml
 *.ipr
 
+### VS Code ###
+.vscode/
+
 docker/db-data/
 docker/.env.prod
 docker/.env.aws
