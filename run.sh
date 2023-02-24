@@ -14,7 +14,8 @@ function build_apps_buildpacks() {
 
 function build_apps() {
     ./mvnw -pl techbuzz spotless:apply
-    build_apps_buildpacks
+    #build_apps_buildpacks
+    build_image_jib
 }
 
 function start_infra() {

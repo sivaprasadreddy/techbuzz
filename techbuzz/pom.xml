@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.2</version>
+		<version>3.0.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.sivalabs</groupId>
@@ -16,11 +16,11 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
-		<hypersistence-utils.version>3.1.2</hypersistence-utils.version>
+		<hypersistence-utils.version>3.2.0</hypersistence-utils.version>
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<bootstrap.version>5.2.3</bootstrap.version>
 		<jquery.version>3.6.3</jquery.version>
-		<fontawesome.version>6.2.1</fontawesome.version>
+		<fontawesome.version>6.3.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
 		<spotless.version>2.33.0</spotless.version>
 		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
