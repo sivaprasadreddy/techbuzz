@@ -14,7 +14,7 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
-		<gatling.version>3.9.0</gatling.version>
+		<gatling.version>3.9.2</gatling.version>
 		<gatling-maven-plugin.version>4.2.9</gatling-maven-plugin.version>
 		<spotless.version>2.33.0</spotless.version>
 	</properties>
