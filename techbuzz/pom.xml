@@ -20,7 +20,7 @@
 		<testcontainers.version>1.17.6</testcontainers.version>
 		<bootstrap.version>5.2.3</bootstrap.version>
 		<jquery.version>3.6.3</jquery.version>
-		<fontawesome.version>6.2.1</fontawesome.version>
+		<fontawesome.version>6.3.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
 		<spotless.version>2.33.0</spotless.version>
 		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
