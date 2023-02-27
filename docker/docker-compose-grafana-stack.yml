@@ -11,7 +11,7 @@ services:
     command: "--config.file=/etc/prometheus/prometheus.yml"
 
   promtail:
-    image: grafana/promtail:2.7.3
+    image: grafana/promtail:2.7.4
     container_name: monitoring-promtail
     volumes:
       - ./promtail/promtail-docker-config.yaml:/etc/promtail/docker-config.yaml
