@@ -5,6 +5,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
+
 import org.junit.jupiter.api.Test;
 
 class LoginControllerTest extends AbstractIntegrationTest {

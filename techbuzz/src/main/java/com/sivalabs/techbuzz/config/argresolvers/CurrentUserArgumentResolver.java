@@ -2,7 +2,7 @@ package com.sivalabs.techbuzz.config.argresolvers;
 
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
 import com.sivalabs.techbuzz.security.SecurityService;
-import java.lang.annotation.Annotation;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
@@ -10,6 +10,8 @@ import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import java.lang.annotation.Annotation;
 
 @Component
 public class CurrentUserArgumentResolver implements HandlerMethodArgumentResolver {

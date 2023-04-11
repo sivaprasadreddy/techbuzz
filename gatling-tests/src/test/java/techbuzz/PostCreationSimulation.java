@@ -2,6 +2,7 @@ package techbuzz;
 
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.http;
+
 import static utils.SimulationHelper.getConfig;
 
 import io.gatling.javaapi.core.ChainBuilder;
@@ -9,8 +10,10 @@ import io.gatling.javaapi.core.FeederBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
-import java.time.Duration;
+
 import utils.SimulationHelper;
+
+import java.time.Duration;
 
 public class PostCreationSimulation extends Simulation {
 

@@ -2,6 +2,7 @@ package utils;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+
 import io.gatling.javaapi.http.HttpDsl;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
 

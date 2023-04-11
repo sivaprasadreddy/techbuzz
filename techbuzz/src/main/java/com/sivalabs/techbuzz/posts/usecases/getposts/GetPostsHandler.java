@@ -10,15 +10,18 @@ import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.posts.mappers.PostDTOMapper;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.User;
-import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)

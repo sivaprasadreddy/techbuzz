@@ -2,9 +2,11 @@ package com.sivalabs.techbuzz.posts.mappers;
 
 import com.sivalabs.techbuzz.posts.domain.entities.Vote;
 import com.sivalabs.techbuzz.posts.domain.models.VoteDTO;
+
+import org.springframework.stereotype.Component;
+
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.stereotype.Component;
 
 @Component
 public class VoteDTOMapper {

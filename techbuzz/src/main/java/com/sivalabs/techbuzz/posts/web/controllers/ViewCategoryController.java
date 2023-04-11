@@ -5,8 +5,10 @@ import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
 import com.sivalabs.techbuzz.posts.domain.models.PostUserViewDTO;
 import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

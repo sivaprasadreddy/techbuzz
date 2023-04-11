@@ -3,8 +3,10 @@ package com.sivalabs.techbuzz.users.usecases.verifyemail;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

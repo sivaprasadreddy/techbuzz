@@ -5,9 +5,12 @@ import com.sivalabs.techbuzz.config.annotations.CurrentUser;
 import com.sivalabs.techbuzz.posts.usecases.createvote.CreateVoteRequest;
 import com.sivalabs.techbuzz.posts.usecases.createvote.VoteHandler;
 import com.sivalabs.techbuzz.users.domain.User;
+
 import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;

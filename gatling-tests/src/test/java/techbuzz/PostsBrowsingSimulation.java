@@ -2,12 +2,15 @@ package techbuzz;
 
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
+
 import static utils.SimulationHelper.getConfig;
 
 import io.gatling.javaapi.core.*;
 import io.gatling.javaapi.http.*;
-import java.time.Duration;
+
 import utils.SimulationHelper;
+
+import java.time.Duration;
 
 public class PostsBrowsingSimulation extends Simulation {
 

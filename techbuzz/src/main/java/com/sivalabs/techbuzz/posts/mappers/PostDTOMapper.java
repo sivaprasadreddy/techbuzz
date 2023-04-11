@@ -8,10 +8,13 @@ import com.sivalabs.techbuzz.posts.domain.models.VoteDTO;
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
+
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
 import java.util.Set;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor

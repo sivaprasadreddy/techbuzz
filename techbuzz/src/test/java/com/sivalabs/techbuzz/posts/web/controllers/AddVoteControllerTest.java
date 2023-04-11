@@ -12,6 +12,7 @@ import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
 import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.User;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

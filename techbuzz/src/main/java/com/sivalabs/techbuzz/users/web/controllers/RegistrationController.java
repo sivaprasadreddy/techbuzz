@@ -8,10 +8,12 @@ import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserHandler;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserRequest;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import java.util.Map;
+
 import lombok.RequiredArgsConstructor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor

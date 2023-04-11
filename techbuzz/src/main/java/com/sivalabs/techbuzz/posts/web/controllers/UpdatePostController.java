@@ -8,10 +8,12 @@ import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
 import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostRequest;
 import com.sivalabs.techbuzz.users.domain.User;
+
 import jakarta.validation.Valid;
-import java.util.Objects;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor

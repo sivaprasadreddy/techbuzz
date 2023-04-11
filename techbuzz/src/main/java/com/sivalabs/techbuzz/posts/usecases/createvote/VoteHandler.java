@@ -4,12 +4,15 @@ import com.sivalabs.techbuzz.posts.domain.entities.Vote;
 import com.sivalabs.techbuzz.posts.domain.models.VoteDTO;
 import com.sivalabs.techbuzz.posts.domain.repositories.VoteRepository;
 import com.sivalabs.techbuzz.posts.mappers.VoteDTOMapper;
-import java.time.LocalDateTime;
-import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 @Transactional

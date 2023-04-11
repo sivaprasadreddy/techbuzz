@@ -11,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
 import com.sivalabs.techbuzz.notifications.EmailService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 

@@ -1,12 +1,14 @@
 package com.sivalabs.techbuzz.security;
 
 import com.sivalabs.techbuzz.users.domain.UserRepository;
-import java.util.Optional;
+
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service("userDetailsService")
 public class SecurityUserDetailsService implements UserDetailsService {

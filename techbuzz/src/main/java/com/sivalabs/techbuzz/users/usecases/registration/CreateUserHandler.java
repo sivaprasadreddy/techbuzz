@@ -6,12 +6,15 @@ import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
 import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
-import java.util.UUID;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 @Transactional
