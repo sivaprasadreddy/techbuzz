@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   prometheus:
-    image: prom/prometheus:v2.42.0
+    image: prom/prometheus:v2.43.0
     container_name: monitoring-prometheus
     ports:
       - "9090:9090"
@@ -11,7 +11,7 @@ services:
     command: "--config.file=/etc/prometheus/prometheus.yml"
 
   promtail:
-    image: grafana/promtail:2.7.4
+    image: grafana/promtail:2.8.0
     container_name: monitoring-promtail
     volumes:
       - ./promtail/promtail-docker-config.yaml:/etc/promtail/docker-config.yaml
@@ -21,7 +21,7 @@ services:
     command: "--config.file=/etc/promtail/docker-config.yaml"
 
   loki:
-    image: grafana/loki:2.7.4
+    image: grafana/loki:2.8.0
     container_name: monitoring-loki
     command: -config.file=/etc/loki/local-config.yaml
     ports:
@@ -41,7 +41,7 @@ services:
       - ./tempo/tempo.yml:/etc/tempo-config.yml
 
   grafana:
-    image: grafana/grafana:9.3.6
+    image: grafana/grafana:9.4.7
     container_name: monitoring-grafana
     ports:
     - "3000:3000"
