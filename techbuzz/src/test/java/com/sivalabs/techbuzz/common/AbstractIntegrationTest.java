@@ -28,7 +28,7 @@ public abstract class AbstractIntegrationTest {
 
     @Autowired protected ObjectMapper objectMapper;
 
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.1-alpine");
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2-alpine");
 
     @LocalServerPort private Integer port;
 
