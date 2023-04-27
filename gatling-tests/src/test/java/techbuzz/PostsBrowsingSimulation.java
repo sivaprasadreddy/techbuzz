@@ -2,15 +2,12 @@ package techbuzz;
 
 import static io.gatling.javaapi.core.CoreDsl.*;
 import static io.gatling.javaapi.http.HttpDsl.*;
-
 import static utils.SimulationHelper.getConfig;
 
 import io.gatling.javaapi.core.*;
 import io.gatling.javaapi.http.*;
-
-import utils.SimulationHelper;
-
 import java.time.Duration;
+import utils.SimulationHelper;
 
 public class PostsBrowsingSimulation extends Simulation {
 
@@ -18,15 +15,11 @@ public class PostsBrowsingSimulation extends Simulation {
 
     FeederBuilder<String> categoryFeeder = csv("data/feeders/categories.csv").random();
 
-    ChainBuilder byCategory =
-            feed(categoryFeeder)
-                    .repeat(5, "n")
-                    .on(
-                            exec(session -> session.set("pageNo", (int) session.get("n") + 1))
-                                    .exec(
-                                            http("Posts By Category")
-                                                    .get("/c/#{category}?page=#{pageNo}"))
-                                    .pause(3));
+    ChainBuilder byCategory = feed(categoryFeeder)
+            .repeat(5, "n")
+            .on(exec(session -> session.set("pageNo", (int) session.get("n") + 1))
+                    .exec(http("Posts By Category").get("/c/#{category}?page=#{pageNo}"))
+                    .pause(3));
 
     ChainBuilder browsePosts = exec(byCategory);
 

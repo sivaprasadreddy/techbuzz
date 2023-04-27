@@ -5,8 +5,7 @@
 	<parent>
 		<groupId>com.sivalabs</groupId>
 		<artifactId>techbuzz-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-		<relativePath/>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>techbuzz</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
