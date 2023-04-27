@@ -27,11 +27,7 @@ public class WebSecurityConfig {
         "/error",
         "/403",
         "/404",
-        "/actuator/health",
-        "/actuator/loggers",
-        "/actuator/info",
-        "/actuator/metrics",
-        "/actuator/prometheus",
+        "/actuator/**",
         "/api/categories",
         "/login",
         "/registration",
@@ -42,22 +38,17 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests()
-                .requestMatchers(PUBLIC_RESOURCES)
-                .permitAll()
-                .anyRequest()
-                .authenticated();
+        http.authorizeHttpRequests(c ->
+                c.requestMatchers(PUBLIC_RESOURCES).permitAll().anyRequest().authenticated());
 
-        http.formLogin()
-                .loginPage("/login")
+        http.formLogin(c -> c.loginPage("/login")
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error")
-                .permitAll();
+                .permitAll());
 
-        http.logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        http.logout(c -> c.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .permitAll()
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/"));
 
         return http.build();
     }
