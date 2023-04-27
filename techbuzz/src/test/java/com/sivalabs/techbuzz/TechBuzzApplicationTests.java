@@ -4,7 +4,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
-
 import org.junit.jupiter.api.Test;
 
 class TechBuzzApplicationTests extends AbstractIntegrationTest {

@@ -8,15 +8,12 @@ import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.posts.mappers.PostDTOMapper;
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -37,17 +34,16 @@ public class CreatePostHandler {
         log.info("process=create_post, title={}", title);
         Category category = categoryRepository.getReferenceById(createPostRequest.categoryId());
         User user = userRepository.getReferenceById(createPostRequest.createdUserId());
-        Post post =
-                new Post(
-                        null,
-                        title,
-                        createPostRequest.url(),
-                        createPostRequest.content(),
-                        category,
-                        user,
-                        Set.of(),
-                        LocalDateTime.now(),
-                        null);
+        Post post = new Post(
+                null,
+                title,
+                createPostRequest.url(),
+                createPostRequest.content(),
+                category,
+                user,
+                Set.of(),
+                LocalDateTime.now(),
+                null);
         return postDTOMapper.toDTO(postRepository.save(post));
     }
 }

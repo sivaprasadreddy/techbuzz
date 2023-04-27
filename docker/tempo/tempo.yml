@@ -30,4 +30,4 @@ storage:
       max_workers: 100
       queue_depth: 10000
 
-search_enabled: true
+#search_enabled: true

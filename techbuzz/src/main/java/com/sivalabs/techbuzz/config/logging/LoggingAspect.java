@@ -16,18 +16,16 @@ public class LoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
-    @Pointcut(
-            "within(@org.springframework.stereotype.Repository *)"
-                    + " || within(@org.springframework.stereotype.Service *)"
-                    + " || within(@org.springframework.stereotype.Controller *)"
-                    + " || within(@org.springframework.web.bind.annotation.RestController *)")
+    @Pointcut("within(@org.springframework.stereotype.Repository *)"
+            + " || within(@org.springframework.stereotype.Service *)"
+            + " || within(@org.springframework.stereotype.Controller *)"
+            + " || within(@org.springframework.web.bind.annotation.RestController *)")
     public void springBeanPointcut() {
         // pointcut definition
     }
 
-    @Pointcut(
-            "@within(com.sivalabs.techbuzz.config.logging.Loggable) || "
-                    + "@annotation(com.sivalabs.techbuzz.config.logging.Loggable)")
+    @Pointcut("@within(com.sivalabs.techbuzz.config.logging.Loggable) || "
+            + "@annotation(com.sivalabs.techbuzz.config.logging.Loggable)")
     public void applicationPackagePointcut() {
         // pointcut definition
     }

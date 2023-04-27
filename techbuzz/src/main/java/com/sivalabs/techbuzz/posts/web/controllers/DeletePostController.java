@@ -7,16 +7,13 @@ import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
 import com.sivalabs.techbuzz.posts.usecases.deletepost.DeletePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
 import com.sivalabs.techbuzz.users.domain.User;
-
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,8 +33,7 @@ public class DeletePostController {
     }
 
     private void checkPrivilege(PostDTO post, User loginUser) {
-        if (!(Objects.equals(post.createdBy().getId(), loginUser.getId())
-                || loginUser.isAdminOrModerator())) {
+        if (!(Objects.equals(post.createdBy().getId(), loginUser.getId()) || loginUser.isAdminOrModerator())) {
             throw new UnauthorisedAccessException("Permission Denied");
         }
     }

@@ -11,13 +11,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
 import com.sivalabs.techbuzz.notifications.EmailService;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 class RegistrationControllerTests extends AbstractIntegrationTest {
 
-    @MockBean EmailService emailService;
+    @MockBean
+    EmailService emailService;
 
     @Test
     void shouldShowRegistrationFormPage() throws Exception {
@@ -29,12 +29,11 @@ class RegistrationControllerTests extends AbstractIntegrationTest {
 
     @Test
     void shouldRegisterSuccessfully() throws Exception {
-        mockMvc.perform(
-                        post("/registration")
-                                .with(csrf())
-                                .param("name", "dummy")
-                                .param("email", "dummy@mail.com")
-                                .param("password", "admin1234"))
+        mockMvc.perform(post("/registration")
+                        .with(csrf())
+                        .param("name", "dummy")
+                        .param("email", "dummy@mail.com")
+                        .param("password", "admin1234"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("message", "Registration is successful"))
                 .andExpect(header().string("Location", "/registrationStatus"));
@@ -42,12 +41,11 @@ class RegistrationControllerTests extends AbstractIntegrationTest {
 
     @Test
     void shouldRedisplayRegistrationFormPageWhenSubmittedInvalidData() throws Exception {
-        mockMvc.perform(
-                        post("/registration")
-                                .with(csrf())
-                                .param("name", "")
-                                .param("email", "")
-                                .param("password", ""))
+        mockMvc.perform(post("/registration")
+                        .with(csrf())
+                        .param("name", "")
+                        .param("email", "")
+                        .param("password", ""))
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrors("user", "name", "email", "password"))
                 .andExpect(model().attributeHasFieldErrorCode("user", "name", "NotBlank"))
@@ -58,12 +56,11 @@ class RegistrationControllerTests extends AbstractIntegrationTest {
 
     @Test
     void shouldRedisplayRegistrationFormPageWhenEmailAlreadyExists() throws Exception {
-        mockMvc.perform(
-                        post("/registration")
-                                .with(csrf())
-                                .param("name", "Siva")
-                                .param("email", ADMIN_EMAIL)
-                                .param("password", "siva"))
+        mockMvc.perform(post("/registration")
+                        .with(csrf())
+                        .param("name", "Siva")
+                        .param("email", ADMIN_EMAIL)
+                        .param("password", "siva"))
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrors("user", "email"))
                 .andExpect(model().attributeHasFieldErrorCode("user", "email", "email.exists"))

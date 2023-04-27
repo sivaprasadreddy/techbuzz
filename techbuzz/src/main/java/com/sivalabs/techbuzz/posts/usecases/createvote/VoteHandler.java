@@ -4,15 +4,12 @@ import com.sivalabs.techbuzz.posts.domain.entities.Vote;
 import com.sivalabs.techbuzz.posts.domain.models.VoteDTO;
 import com.sivalabs.techbuzz.posts.domain.repositories.VoteRepository;
 import com.sivalabs.techbuzz.posts.mappers.VoteDTOMapper;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -24,22 +21,10 @@ public class VoteHandler {
     private final VoteDTOMapper voteDTOMapper;
 
     public VoteDTO addVote(CreateVoteRequest request) {
-        log.debug(
-                "Adding vote :{} for postId: {} by userId:{}",
-                request.value(),
-                request.postId(),
-                request.userId());
-        Optional<Vote> voteOptional =
-                voteRepository.findByPostIdAndUserId(request.postId(), request.userId());
+        log.debug("Adding vote :{} for postId: {} by userId:{}", request.value(), request.postId(), request.userId());
+        Optional<Vote> voteOptional = voteRepository.findByPostIdAndUserId(request.postId(), request.userId());
         if (voteOptional.isEmpty()) {
-            Vote vote =
-                    new Vote(
-                            null,
-                            request.userId(),
-                            request.postId(),
-                            request.value(),
-                            LocalDateTime.now(),
-                            null);
+            Vote vote = new Vote(null, request.userId(), request.postId(), request.value(), LocalDateTime.now(), null);
             Vote savedVote = voteRepository.save(vote);
             log.info("Vote saved successfully");
             return voteDTOMapper.toDTO(savedVote);

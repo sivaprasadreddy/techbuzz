@@ -1,9 +1,7 @@
 package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

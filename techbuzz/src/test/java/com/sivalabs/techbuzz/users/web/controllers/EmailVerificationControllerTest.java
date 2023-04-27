@@ -10,25 +10,24 @@ import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
 import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserHandler;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserRequest;
-
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 class EmailVerificationControllerTest extends AbstractIntegrationTest {
 
-    @Autowired CreateUserHandler createUserHandler;
+    @Autowired
+    CreateUserHandler createUserHandler;
 
     @Test
     void shouldVerifyEmailSuccessfully() throws Exception {
         String email = RandomStringUtils.random(15, true, false) + "@gmail.com";
         CreateUserRequest request = new CreateUserRequest("name", email, "secret");
         UserDTO user = createUserHandler.createUser(request);
-        mockMvc.perform(
-                        get("/verify-email")
-                                .with(csrf())
-                                .param("email", email)
-                                .param("token", user.getVerificationToken()))
+        mockMvc.perform(get("/verify-email")
+                        .with(csrf())
+                        .param("email", email)
+                        .param("token", user.getVerificationToken()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("success", true))
                 .andExpect(view().name("users/emailVerification"));
@@ -36,11 +35,10 @@ class EmailVerificationControllerTest extends AbstractIntegrationTest {
 
     @Test
     void emailVerificationShouldFailWhenEmailAndTokenNotMatched() throws Exception {
-        mockMvc.perform(
-                        get("/verify-email")
-                                .with(csrf())
-                                .param("email", "dummy@mail.com")
-                                .param("token", "secretToken"))
+        mockMvc.perform(get("/verify-email")
+                        .with(csrf())
+                        .param("email", "dummy@mail.com")
+                        .param("token", "secretToken"))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("success", false))
                 .andExpect(view().name("users/emailVerification"));

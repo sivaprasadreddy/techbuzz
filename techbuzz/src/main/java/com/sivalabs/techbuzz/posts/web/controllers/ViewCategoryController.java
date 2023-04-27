@@ -5,10 +5,8 @@ import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
 import com.sivalabs.techbuzz.posts.domain.models.PostUserViewDTO;
 import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +26,7 @@ public class ViewCategoryController {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             Model model) {
         log.info("Fetching posts for category {} with page: {}", categorySlug, page);
-        PagedResult<PostUserViewDTO> data =
-                getPostsHandler.getPostsByCategorySlug(categorySlug, page);
+        PagedResult<PostUserViewDTO> data = getPostsHandler.getPostsByCategorySlug(categorySlug, page);
         if (data.getData().isEmpty() && (page > 1 && page > data.getTotalPages())) {
             return "redirect:/c/" + categorySlug + "?page=" + data.getTotalPages();
         }

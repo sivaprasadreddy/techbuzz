@@ -39,14 +39,14 @@ function restart_infra() {
 function start_app() {
     echo "Starting app...."
     build_apps
-    docker-compose -f "${dc_app}" up --build --force-recreate -d
-    docker-compose -f "${dc_app}" logs -f
+    docker-compose -f "${dc_infra}" -f "${dc_app}" up --build --force-recreate -d
+    docker-compose -f "${dc_infra}" -f "${dc_app}" logs -f
 }
 
 function stop_app() {
     echo 'Stopping app....'
-    docker-compose -f "${dc_app}" stop
-    docker-compose -f "${dc_app}" rm -f
+    docker-compose -f "${dc_infra}" -f "${dc_app}" stop
+    docker-compose -f "${dc_infra}" -f "${dc_app}" rm -f
 }
 
 function restart_app() {
@@ -65,6 +65,12 @@ function stop_grafana() {
     echo 'Stopping Grafana Observability Stack....'
     docker-compose -f "${dc_monitoring}" stop
     docker-compose -f "${dc_monitoring}" rm -f
+}
+
+function restart_grafana() {
+    stop_grafana
+    sleep 5
+    start_grafana
 }
 
 action="start_app"

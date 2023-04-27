@@ -6,15 +6,12 @@ import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
 import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
-
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.UUID;
 
 @Service
 @Transactional
@@ -32,15 +29,14 @@ public class CreateUserHandler {
         }
         String encPwd = passwordEncoder.encode(createUserRequest.password());
         String verificationToken = UUID.randomUUID().toString();
-        User user =
-                new User(
-                        null,
-                        createUserRequest.name(),
-                        createUserRequest.email(),
-                        encPwd,
-                        RoleEnum.ROLE_USER,
-                        false,
-                        verificationToken);
+        User user = new User(
+                null,
+                createUserRequest.name(),
+                createUserRequest.email(),
+                encPwd,
+                RoleEnum.ROLE_USER,
+                false,
+                verificationToken);
         User savedUser = userRepository.save(user);
         return userDTOMapper.toDTO(savedUser);
     }

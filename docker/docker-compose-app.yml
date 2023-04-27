@@ -20,6 +20,8 @@ services:
       SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
       MAIL_HOST: "${MAIL_HOST}"
       MAIL_PORT: "${MAIL_PORT}"
+    labels:
+      logging: "promtail"
     deploy:
       resources:
         limits:

@@ -17,16 +17,20 @@ import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
 import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.User;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithUserDetails;
 
 class UpdatePostControllerTests extends AbstractIntegrationTest {
-    @Autowired CreatePostHandler createPostHandler;
-    @Autowired GetCategoriesHandler getCategoriesHandler;
-    @Autowired SecurityService securityService;
+    @Autowired
+    CreatePostHandler createPostHandler;
+
+    @Autowired
+    GetCategoriesHandler getCategoriesHandler;
+
+    @Autowired
+    SecurityService securityService;
 
     PostDTO post = null;
 
@@ -35,12 +39,7 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
         CategoryDTO category = getCategoriesHandler.getCategory("java");
         User user = securityService.loginUser();
         CreatePostRequest request =
-                new CreatePostRequest(
-                        "title",
-                        "https://sivalabs.in",
-                        "test content",
-                        category.id(),
-                        user.getId());
+                new CreatePostRequest("title", "https://sivalabs.in", "test content", category.id(), user.getId());
         post = createPostHandler.createPost(request);
     }
 
@@ -56,13 +55,12 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
     @Test
     @WithUserDetails(value = ADMIN_EMAIL)
     void shouldUpdatePostSuccessfully() throws Exception {
-        mockMvc.perform(
-                        put("/posts/{id}", post.id())
-                                .with(csrf())
-                                .param("url", "https://sivalabs.in")
-                                .param("title", "SivaLabs")
-                                .param("content", "demo content")
-                                .param("categoryId", "1"))
+        mockMvc.perform(put("/posts/{id}", post.id())
+                        .with(csrf())
+                        .param("url", "https://sivalabs.in")
+                        .param("title", "SivaLabs")
+                        .param("content", "demo content")
+                        .param("categoryId", "1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("message", "Post updated successfully"))
                 .andExpect(view().name(matchesPattern("redirect:/posts/.*/edit")));
@@ -71,13 +69,12 @@ class UpdatePostControllerTests extends AbstractIntegrationTest {
     @Test
     @WithUserDetails(value = ADMIN_EMAIL)
     void shouldFailToUpdatePostIfDataIsInvalid() throws Exception {
-        mockMvc.perform(
-                        put("/posts/{id}", post.id())
-                                .with(csrf())
-                                .param("url", "")
-                                .param("title", "")
-                                .param("content", "")
-                                .param("categoryId", ""))
+        mockMvc.perform(put("/posts/{id}", post.id())
+                        .with(csrf())
+                        .param("url", "")
+                        .param("title", "")
+                        .param("content", "")
+                        .param("categoryId", ""))
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrorCode("post", "title", "NotEmpty"))
                 .andExpect(model().attributeHasFieldErrorCode("post", "content", "NotEmpty"))

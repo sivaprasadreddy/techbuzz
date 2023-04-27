@@ -1,12 +1,14 @@
+import static java.util.Objects.requireNonNull;
+
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class IDEPathHelper {
 
-    static final Path gradleSourcesDirectory;
-    static final Path gradleResourcesDirectory;
-    static final Path gradleBinariesDirectory;
+    static final Path mavenSourcesDirectory;
+    static final Path mavenResourcesDirectory;
+    static final Path mavenBinariesDirectory;
     static final Path resultsDirectory;
     static final Path recorderConfigFile;
 
@@ -14,23 +16,21 @@ public class IDEPathHelper {
         try {
             Path projectRootDir =
                     Paths.get(
-                                    IDEPathHelper.class
-                                            .getClassLoader()
-                                            .getResource("gatling.conf")
+                                    requireNonNull(
+                                                    IDEPathHelper.class.getResource("gatling.conf"),
+                                                    "Couldn't locate gatling.conf")
                                             .toURI())
                             .getParent()
                             .getParent()
-                            .getParent()
                             .getParent();
-            Path gradleBuildDirectory = projectRootDir.resolve("build");
-            Path gradleSrcDirectory = projectRootDir.resolve("src").resolve("gatling");
+            Path mavenTargetDirectory = projectRootDir.resolve("target");
+            Path mavenSrcTestDirectory = projectRootDir.resolve("src").resolve("test");
 
-            gradleSourcesDirectory = gradleSrcDirectory.resolve("java");
-            gradleResourcesDirectory = gradleSrcDirectory.resolve("resources");
-            gradleBinariesDirectory =
-                    gradleBuildDirectory.resolve("classes").resolve("java").resolve("gatling");
-            resultsDirectory = gradleBuildDirectory.resolve("reports").resolve("gatling");
-            recorderConfigFile = gradleResourcesDirectory.resolve("recorder.conf");
+            mavenSourcesDirectory = mavenSrcTestDirectory.resolve("java");
+            mavenResourcesDirectory = mavenSrcTestDirectory.resolve("resources");
+            mavenBinariesDirectory = mavenTargetDirectory.resolve("test-classes");
+            resultsDirectory = mavenTargetDirectory.resolve("gatling");
+            recorderConfigFile = mavenResourcesDirectory.resolve("recorder.conf");
         } catch (URISyntaxException e) {
             throw new ExceptionInInitializerError(e);
         }

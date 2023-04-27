@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.security.test.context.support.WithUserDetails;
 
@@ -28,13 +27,12 @@ class CreatePostControllerTest extends AbstractIntegrationTest {
     @Test
     @WithUserDetails(value = ADMIN_EMAIL)
     void shouldCreatePostSuccessfully() throws Exception {
-        mockMvc.perform(
-                        post("/posts")
-                                .with(csrf())
-                                .param("url", "https://sivalabs.in")
-                                .param("title", "SivaLabs")
-                                .param("content", "demo content")
-                                .param("categoryId", "1"))
+        mockMvc.perform(post("/posts")
+                        .with(csrf())
+                        .param("url", "https://sivalabs.in")
+                        .param("title", "SivaLabs")
+                        .param("content", "demo content")
+                        .param("categoryId", "1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(flash().attribute("message", "Post saved successfully"))
                 .andExpect(view().name(matchesPattern("redirect:/c/.*")));
@@ -43,13 +41,12 @@ class CreatePostControllerTest extends AbstractIntegrationTest {
     @Test
     @WithUserDetails(value = ADMIN_EMAIL)
     void shouldFailToCreatePostIfDataIsInvalid() throws Exception {
-        mockMvc.perform(
-                        post("/posts")
-                                .with(csrf())
-                                .param("url", "")
-                                .param("title", "")
-                                .param("content", "")
-                                .param("categoryId", ""))
+        mockMvc.perform(post("/posts")
+                        .with(csrf())
+                        .param("url", "")
+                        .param("title", "")
+                        .param("content", "")
+                        .param("categoryId", ""))
                 .andExpect(model().hasErrors())
                 .andExpect(model().attributeHasFieldErrorCode("post", "title", "NotEmpty"))
                 .andExpect(model().attributeHasFieldErrorCode("post", "content", "NotEmpty"))

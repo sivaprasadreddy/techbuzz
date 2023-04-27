@@ -3,12 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.6</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<groupId>com.sivalabs</groupId>
+		<artifactId>techbuzz-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>com.sivalabs</groupId>
 	<artifactId>techbuzz</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>techbuzz</name>
@@ -20,9 +18,8 @@
 		<testcontainers.version>1.18.0</testcontainers.version>
 		<bootstrap.version>5.2.3</bootstrap.version>
 		<jquery.version>3.6.4</jquery.version>
-		<fontawesome.version>6.3.0</fontawesome.version>
+		<fontawesome.version>6.4.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
-		<spotless.version>2.36.0</spotless.version>
 		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
 		<dockerUserName>sivaprasadreddy</dockerUserName>
 		<dockerImageName>${dockerUserName}/${project.artifactId}</dockerImageName>
@@ -247,27 +244,6 @@
 						<includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
 					</includeOnlyProperties>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.diffplug.spotless</groupId>
-				<artifactId>spotless-maven-plugin</artifactId>
-				<version>${spotless.version}</version>
-				<configuration>
-					<java>
-						<googleJavaFormat>
-							<version>1.12.0</version>
-							<style>AOSP</style>
-						</googleJavaFormat>
-					</java>
-				</configuration>
-				<executions>
-					<execution>
-						<phase>compile</phase>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>com.google.cloud.tools</groupId>

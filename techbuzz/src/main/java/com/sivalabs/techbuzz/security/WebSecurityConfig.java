@@ -1,7 +1,6 @@
 package com.sivalabs.techbuzz.security;
 
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -32,6 +31,7 @@ public class WebSecurityConfig {
         "/actuator/loggers",
         "/actuator/info",
         "/actuator/metrics",
+        "/actuator/prometheus",
         "/api/categories",
         "/login",
         "/registration",

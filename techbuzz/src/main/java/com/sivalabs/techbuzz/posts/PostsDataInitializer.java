@@ -8,22 +8,19 @@ import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.usecases.getuser.GetUserHandler;
-
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 @Transactional
@@ -75,16 +72,10 @@ public class PostsDataInitializer implements CommandLineRunner {
     }
 
     private Post convertToPost(PostEntry postEntry) {
-        Category category =
-                categoryRepository
-                        .findBySlug(postEntry.category)
-                        .orElseGet(
-                                () -> {
-                                    log.info(
-                                            "Category :{} doesn't exist, so saving into 'general' category",
-                                            postEntry.category);
-                                    return categoryRepository.findBySlug("general").orElseThrow();
-                                });
+        Category category = categoryRepository.findBySlug(postEntry.category).orElseGet(() -> {
+            log.info("Category :{} doesn't exist, so saving into 'general' category", postEntry.category);
+            return categoryRepository.findBySlug("general").orElseThrow();
+        });
         User user = getUserHandler.getUserByEmail(properties.adminEmail()).orElseThrow();
         return new Post(
                 null,

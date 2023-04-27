@@ -2,7 +2,6 @@ package com.sivalabs.techbuzz.posts.mappers;
 
 import com.sivalabs.techbuzz.posts.domain.entities.Category;
 import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
-
 import org.springframework.stereotype.Component;
 
 @Component

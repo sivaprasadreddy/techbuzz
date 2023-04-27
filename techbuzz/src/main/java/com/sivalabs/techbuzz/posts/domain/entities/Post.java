@@ -1,7 +1,6 @@
 package com.sivalabs.techbuzz.posts.domain.entities;
 
 import com.sivalabs.techbuzz.users.domain.User;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -16,14 +15,12 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
-
+import java.time.LocalDateTime;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
-import java.util.Set;
 
 @Entity
 @Table(name = "posts")
@@ -42,9 +39,11 @@ public class Post {
     @NotEmpty()
     private String title;
 
-    @Column private String url;
+    @Column
+    private String url;
 
-    @Column private String content;
+    @Column
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cat_id")

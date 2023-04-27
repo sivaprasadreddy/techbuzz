@@ -6,9 +6,9 @@ public class Engine {
     public static void main(String[] args) {
         GatlingPropertiesBuilder props =
                 new GatlingPropertiesBuilder()
-                        .resourcesDirectory(IDEPathHelper.gradleResourcesDirectory.toString())
+                        .resourcesDirectory(IDEPathHelper.mavenResourcesDirectory.toString())
                         .resultsDirectory(IDEPathHelper.resultsDirectory.toString())
-                        .binariesDirectory(IDEPathHelper.gradleBinariesDirectory.toString());
+                        .binariesDirectory(IDEPathHelper.mavenBinariesDirectory.toString());
 
         Gatling.fromMap(props.build());
     }

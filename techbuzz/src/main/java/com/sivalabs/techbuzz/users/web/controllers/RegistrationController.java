@@ -8,12 +8,10 @@ import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserHandler;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserRequest;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,8 +22,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -69,21 +65,18 @@ public class RegistrationController {
     }
 
     private void sendVerificationEmail(HttpServletRequest request, UserDTO userDTO) {
-        String baseUrl =
-                ServletUriComponentsBuilder.fromRequestUri(request)
-                        .replacePath(null)
-                        .build()
-                        .toUriString();
-        String params =
-                "email="
-                        + encode(userDTO.getEmail(), UTF_8)
-                        + "&token="
-                        + encode(userDTO.getVerificationToken(), UTF_8);
+        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                .replacePath(null)
+                .build()
+                .toUriString();
+        String params = "email="
+                + encode(userDTO.getEmail(), UTF_8)
+                + "&token="
+                + encode(userDTO.getVerificationToken(), UTF_8);
         String verificationUrl = baseUrl + "/verify-email?" + params;
         String to = userDTO.getEmail();
         String subject = "TechBuzz - Email verification";
-        Map<String, Object> paramsMap =
-                Map.of("", userDTO.getName(), "verificationUrl", verificationUrl);
+        Map<String, Object> paramsMap = Map.of("", userDTO.getName(), "verificationUrl", verificationUrl);
         emailService.sendEmail("email/verify-email", paramsMap, to, subject);
     }
 }

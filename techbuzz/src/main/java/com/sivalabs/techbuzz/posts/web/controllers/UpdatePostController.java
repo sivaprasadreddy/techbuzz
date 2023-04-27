@@ -8,12 +8,10 @@ import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
 import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostRequest;
 import com.sivalabs.techbuzz.users.domain.User;
-
 import jakarta.validation.Valid;
-
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,8 +20,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.Objects;
 
 @Controller
 @RequiredArgsConstructor
@@ -62,12 +58,7 @@ public class UpdatePostController {
         }
         PostDTO post = getPostsHandler.getPost(id);
         var updatePostRequest =
-                new UpdatePostRequest(
-                        id,
-                        request.title(),
-                        request.url(),
-                        request.content(),
-                        request.categoryId());
+                new UpdatePostRequest(id, request.title(), request.url(), request.content(), request.categoryId());
         this.checkPrivilege(post, loginUser);
         PostDTO updatedPost = updatePostHandler.updatePost(updatePostRequest);
         log.info("Post with id: {} updated successfully", updatedPost.id());
@@ -76,8 +67,7 @@ public class UpdatePostController {
     }
 
     private void checkPrivilege(PostDTO post, User loginUser) {
-        if (!(Objects.equals(post.createdBy().getId(), loginUser.getId())
-                || loginUser.isAdminOrModerator())) {
+        if (!(Objects.equals(post.createdBy().getId(), loginUser.getId()) || loginUser.isAdminOrModerator())) {
             throw new UnauthorisedAccessException("Permission Denied");
         }
     }

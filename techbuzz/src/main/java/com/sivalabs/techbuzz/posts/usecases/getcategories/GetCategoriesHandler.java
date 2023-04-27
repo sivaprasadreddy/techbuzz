@@ -3,16 +3,13 @@ package com.sivalabs.techbuzz.posts.usecases.getcategories;
 import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.mappers.CategoryDTOMapper;
-
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -33,6 +30,7 @@ public class GetCategoriesHandler {
     @Cacheable(value = "category")
     public CategoryDTO getCategory(String categorySlug) {
         log.debug("Fetching category by slug: {}", categorySlug);
-        return categoryDTOMapper.toDTO(categoryRepository.findBySlug(categorySlug).orElseThrow());
+        return categoryDTOMapper.toDTO(
+                categoryRepository.findBySlug(categorySlug).orElseThrow());
     }
 }

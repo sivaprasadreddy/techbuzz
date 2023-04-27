@@ -6,12 +6,9 @@ import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
 import com.sivalabs.techbuzz.users.domain.User;
-
 import jakarta.validation.Valid;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,13 +43,8 @@ public class CreatePostController {
         if (bindingResult.hasErrors()) {
             return "posts/add-post";
         }
-        var createPostRequest =
-                new CreatePostRequest(
-                        request.title(),
-                        request.url(),
-                        request.content(),
-                        request.categoryId(),
-                        loginUser.getId());
+        var createPostRequest = new CreatePostRequest(
+                request.title(), request.url(), request.content(), request.categoryId(), loginUser.getId());
         PostDTO post = createPostHandler.createPost(createPostRequest);
         log.info("Post saved successfully with id: {}", post.id());
         redirectAttributes.addFlashAttribute("message", "Post saved successfully");

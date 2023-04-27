@@ -8,13 +8,10 @@ import com.sivalabs.techbuzz.posts.domain.models.VoteDTO;
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
-
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Component;
-
 import java.util.Objects;
 import java.util.Set;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
@@ -67,16 +64,12 @@ public class PostDTOMapper {
             return false;
         }
         return post.getVotes().stream()
-                .anyMatch(
-                        v ->
-                                Objects.equals(v.getUserId(), loginUser.getId())
-                                        && v.getValue() == vote);
+                .anyMatch(v -> Objects.equals(v.getUserId(), loginUser.getId()) && v.getValue() == vote);
     }
 
     public boolean canCurrentUserEditPost(User loginUser, Post post) {
         return loginUser != null
                 && post != null
-                && (Objects.equals(post.getCreatedBy().getId(), loginUser.getId())
-                        || loginUser.isAdminOrModerator());
+                && (Objects.equals(post.getCreatedBy().getId(), loginUser.getId()) || loginUser.isAdminOrModerator());
     }
 }

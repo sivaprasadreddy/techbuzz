@@ -3,9 +3,7 @@ package com.sivalabs.techbuzz.common;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.restassured.RestAssured;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -24,13 +22,16 @@ import org.testcontainers.lifecycle.Startables;
 public abstract class AbstractIntegrationTest {
     public static final String ADMIN_EMAIL = "admin@gmail.com";
 
-    @Autowired protected MockMvc mockMvc;
+    @Autowired
+    protected MockMvc mockMvc;
 
-    @Autowired protected ObjectMapper objectMapper;
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2-alpine");
 
-    @LocalServerPort private Integer port;
+    @LocalServerPort
+    private Integer port;
 
     @BeforeEach
     void setUp() {

@@ -10,13 +10,11 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
-
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "categories")
@@ -28,10 +26,7 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_id_generator")
-    @SequenceGenerator(
-            name = "category_id_generator",
-            sequenceName = "category_id_seq",
-            allocationSize = 5)
+    @SequenceGenerator(name = "category_id_generator", sequenceName = "category_id_seq", allocationSize = 5)
     private Long id;
 
     @Column(nullable = false, unique = true)

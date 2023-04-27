@@ -2,9 +2,7 @@ package com.sivalabs.techbuzz.security;
 
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.usecases.getuser.GetUserHandler;
-
 import lombok.RequiredArgsConstructor;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
