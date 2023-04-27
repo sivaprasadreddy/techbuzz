@@ -3,5 +3,11 @@
   "extends": [
     "config:base",
     "schedule:earlyMondays"
+  ],
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["^com.sivalabs:"],
+      "ignoreLookupWarnings": true
+    }
   ]
 }
