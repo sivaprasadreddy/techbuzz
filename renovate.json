@@ -3,13 +3,5 @@
   "extends": [
     "config:base",
     "schedule:earlyMondays"
-  ],
-  "packageRules": [
-    {
-      "matchPackageNames": [
-        "com.sivalabs:techbuzz-parent"
-      ],
-      "enabled": false
-    }
   ]
 }

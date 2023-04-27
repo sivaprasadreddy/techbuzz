@@ -4,11 +4,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 	https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.sivalabs</groupId>
-		<artifactId>techbuzz-parent</artifactId>
-		<version>0.0.1</version>
-	</parent>
 	<groupId>com.sivalabs.techbuzz</groupId>
 	<artifactId>gatling-tests</artifactId>
 	<version>0.0.1</version>
@@ -44,7 +39,6 @@
 			<version>1.4.2</version>
 			<scope>test</scope>
 		</dependency>
-
 	</dependencies>
 
 	<build>
@@ -63,10 +57,9 @@
 				<version>${spotless.version}</version>
 				<configuration>
 					<java>
-						<googleJavaFormat>
-							<version>1.12.0</version>
-							<style>AOSP</style>
-						</googleJavaFormat>
+						<palantirJavaFormat>
+							<version>2.30.0</version>
+						</palantirJavaFormat>
 					</java>
 				</configuration>
 				<executions>

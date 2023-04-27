@@ -3,12 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.sivalabs</groupId>
-		<artifactId>techbuzz-parent</artifactId>
-		<version>0.0.1</version>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.0.6</version>
+		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<artifactId>techbuzz</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>techbuzz</name>
 	<description>TechBuzz</description>
 	<properties>
@@ -20,6 +21,7 @@
 		<jquery.version>3.6.4</jquery.version>
 		<fontawesome.version>6.4.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
+		<spotless.version>2.36.0</spotless.version>
 		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
 		<dockerUserName>sivaprasadreddy</dockerUserName>
 		<dockerImageName>${dockerUserName}/${project.artifactId}</dockerImageName>
@@ -265,6 +267,26 @@
 						</ports>
 					</container>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>${spotless.version}</version>
+				<configuration>
+					<java>
+						<palantirJavaFormat>
+							<version>2.30.0</version>
+						</palantirJavaFormat>
+					</java>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
