@@ -6,8 +6,10 @@
   ],
   "packageRules": [
     {
-      "matchPackagePatterns": ["^com.sivalabs:"],
-      "ignoreLookupWarnings": true
+      "matchPackageNames": [
+        "com.sivalabs:techbuzz-parent"
+      ],
+      "enabled": false
     }
   ]
 }
