@@ -1,5 +1,6 @@
 package com.sivalabs.techbuzz.users.web.controllers;
 
+import com.sivalabs.techbuzz.config.logging.Loggable;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.AuthenticationException;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@Loggable
 public class LoginController {
 
     @GetMapping("/login")

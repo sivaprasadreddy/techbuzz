@@ -1,44 +1,25 @@
 package com.sivalabs.techbuzz.posts.domain.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "categories")
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_id_generator")
-    @SequenceGenerator(name = "category_id_generator", sequenceName = "category_id_seq", allocationSize = 5)
     private Long id;
 
-    @Column(nullable = false, unique = true)
     @NotEmpty
     private String name;
 
-    @Column(nullable = false, unique = true)
     @NotEmpty
     private String slug;
 
-    @Column(nullable = false, unique = true)
     @NotEmpty
     private String description;
 
     private String image;
     private Integer displayOrder;
 
-    @Column(updatable = false)
     protected LocalDateTime createdAt;
 
-    @Column(insertable = false)
     protected LocalDateTime updatedAt;
 
     public Category() {}
@@ -60,16 +41,6 @@ public class Category {
         this.displayOrder = displayOrder;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-    }
-
-    @PrePersist
-    public void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void onUpdate() {
-        updatedAt = LocalDateTime.now();
     }
 
     public void setId(final Long id) {

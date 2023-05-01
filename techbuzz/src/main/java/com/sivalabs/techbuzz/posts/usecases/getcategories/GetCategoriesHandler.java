@@ -7,7 +7,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +27,7 @@ public class GetCategoriesHandler {
     @Cacheable("categories")
     public List<CategoryDTO> getAllCategories() {
         log.debug("Fetching all categories");
-        return categoryRepository.findAll(Sort.by("displayOrder")).stream()
+        return categoryRepository.findAll().stream()
                 .map(categoryDTOMapper::toDTO)
                 .toList();
     }

@@ -1,22 +1,21 @@
 package com.sivalabs.techbuzz.posts.domain.repositories;
 
+import com.sivalabs.techbuzz.common.model.PagedResult;
 import com.sivalabs.techbuzz.posts.domain.entities.Post;
 import java.util.List;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import java.util.Optional;
 
-@Repository
-public interface PostRepository extends JpaRepository<Post, Long> {
+public interface PostRepository {
 
-    @Query(
-            value = "select distinct p.id from Post p join p.category c where c.slug=?1 order by p.id desc",
-            countQuery = "select count(p.id) from Post p join p.category c where c.slug=?1")
-    Page<Long> findPostIdsByCategorySlug(String categorySlug, Pageable pageable);
+    PagedResult<Post> findByCategorySlug(String categorySlug, Integer page);
 
-    @Query(
-            "select distinct p from Post p join p.category c join fetch p.createdBy u left join fetch p.votes where p.id in ?1 order by p.id desc")
     List<Post> findPosts(List<Long> postIds);
+
+    Optional<Post> findById(Long postId);
+
+    Post save(Post post);
+
+    void delete(Long postId);
+
+    long count();
 }

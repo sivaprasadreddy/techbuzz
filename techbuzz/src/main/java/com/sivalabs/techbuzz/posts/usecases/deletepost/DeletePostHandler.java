@@ -26,6 +26,6 @@ public class DeletePostHandler {
         log.debug("Deleting post with id: {}", postId);
         Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
         voteRepository.deleteVotesForPost(postId);
-        postRepository.delete(post);
+        postRepository.delete(postId);
     }
 }

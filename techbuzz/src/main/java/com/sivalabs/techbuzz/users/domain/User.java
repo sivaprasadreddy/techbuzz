@@ -1,50 +1,29 @@
 package com.sivalabs.techbuzz.users.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Arrays;
 
-@Entity
-@Table(name = "users")
 public class User implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
-    @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 5)
     private Long id;
 
-    @Column(nullable = false)
     @NotEmpty
     private String name;
 
-    @Column(nullable = false, unique = true)
     @NotEmpty
     @Email(message = "Invalid email")
     private String email;
 
-    @Column(nullable = false)
     @NotEmpty
     @Size(min = 4)
     private String password;
 
-    @Column
-    @Enumerated(EnumType.STRING)
     private RoleEnum role;
 
-    @Column(nullable = false)
     private boolean verified;
 
-    @Column(name = "verification_token")
     private String verificationToken;
 
     public User() {}
@@ -55,7 +34,7 @@ public class User implements Serializable {
             final String email,
             final String password,
             final RoleEnum role,
-            final boolean verified,
+            final Boolean verified,
             final String verificationToken) {
         this.id = id;
         this.name = name;
@@ -94,7 +73,7 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public void setVerified(final boolean verified) {
+    public void setVerified(final Boolean verified) {
         this.verified = verified;
     }
 
@@ -122,7 +101,7 @@ public class User implements Serializable {
         return this.role;
     }
 
-    public boolean isVerified() {
+    public Boolean isVerified() {
         return this.verified;
     }
 

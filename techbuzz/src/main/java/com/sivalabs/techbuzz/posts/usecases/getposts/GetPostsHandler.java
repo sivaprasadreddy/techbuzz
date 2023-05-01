@@ -13,10 +13,6 @@ import com.sivalabs.techbuzz.users.domain.User;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -49,21 +45,23 @@ public class GetPostsHandler {
 
     public PagedResult<PostUserViewDTO> getPostsByCategorySlug(String category, Integer page) {
         log.debug("Fetching posts by category={}, page={}", category, page);
-        Pageable pageable = getPageable(page);
-        Page<Long> postIds = postRepository.findPostIdsByCategorySlug(category, pageable);
-        List<Post> posts = postRepository.findPosts(postIds.getContent());
-        Page<Post> postsPage = new PageImpl<>(posts, pageable, postIds.getTotalElements());
-        return convert(postsPage);
+        PagedResult<Post> postPagedResult = postRepository.findByCategorySlug(category, page);
+        return convert(postPagedResult);
     }
 
-    private Pageable getPageable(Integer page) {
-        int pageNo = page > 0 ? page - 1 : 0;
-        return PageRequest.of(pageNo, properties.postsPerPage());
-    }
-
-    private PagedResult<PostUserViewDTO> convert(Page<Post> postsPage) {
+    private PagedResult<PostUserViewDTO> convert(PagedResult<Post> postsPage) {
         User loginUser = securityService.loginUser();
-        Page<PostUserViewDTO> postDTOPage = postsPage.map(post -> postDtoMapper.toPostUserViewDTO(loginUser, post));
-        return new PagedResult<>(postDTOPage);
+        List<PostUserViewDTO> postDTOs = postsPage.getData().stream()
+                .map(post -> postDtoMapper.toPostUserViewDTO(loginUser, post))
+                .toList();
+        return new PagedResult<>(
+                postDTOs,
+                postsPage.getTotalElements(),
+                postsPage.getPageNumber(),
+                postsPage.getTotalPages(),
+                postsPage.isFirst(),
+                postsPage.isLast(),
+                postsPage.isHasNext(),
+                postsPage.isHasPrevious());
     }
 }

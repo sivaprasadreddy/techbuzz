@@ -40,7 +40,8 @@ public class CreatePostHandler {
         String title = createPostRequest.title();
         log.info("process=create_post, title={}", title);
         Category category = categoryRepository.getReferenceById(createPostRequest.categoryId());
-        User user = userRepository.getReferenceById(createPostRequest.createdUserId());
+        User user = new User();
+        user.setId(createPostRequest.createdUserId());
         Post post = new Post(
                 null,
                 title,

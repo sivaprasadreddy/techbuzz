@@ -23,6 +23,6 @@ public class EmailVerificationHandler {
                 .orElseThrow(() -> new TechBuzzException("Invalid email verification request"));
         user.setVerified(true);
         user.setVerificationToken(null);
-        userRepository.save(user);
+        userRepository.update(user);
     }
 }

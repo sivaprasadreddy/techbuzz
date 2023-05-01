@@ -2,7 +2,6 @@ package com.sivalabs.techbuzz.common.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import org.springframework.data.domain.Page;
 
 public class PagedResult<T> {
     private List<T> data;
@@ -22,15 +21,23 @@ public class PagedResult<T> {
     @JsonProperty("hasPrevious")
     private boolean hasPrevious;
 
-    public PagedResult(Page<T> page) {
-        this.setData(page.getContent());
-        this.setTotalElements(page.getTotalElements());
-        this.setPageNumber(page.getNumber() + 1); // 1 - based page numbering
-        this.setTotalPages(page.getTotalPages());
-        this.setFirst(page.isFirst());
-        this.setLast(page.isLast());
-        this.setHasNext(page.hasNext());
-        this.setHasPrevious(page.hasPrevious());
+    public PagedResult(
+            List<T> data,
+            long totalElements,
+            int pageNumber,
+            int totalPages,
+            boolean isFirst,
+            boolean isLast,
+            boolean hasNext,
+            boolean hasPrevious) {
+        this.data = data;
+        this.totalElements = totalElements;
+        this.pageNumber = pageNumber;
+        this.totalPages = totalPages;
+        this.isFirst = isFirst;
+        this.isLast = isLast;
+        this.hasNext = hasNext;
+        this.hasPrevious = hasPrevious;
     }
 
     public void setData(final List<T> data) {
