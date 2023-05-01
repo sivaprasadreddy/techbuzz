@@ -4,20 +4,23 @@ import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
 import com.sivalabs.techbuzz.posts.domain.entities.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.VoteRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
-@Slf4j
 public class DeletePostHandler {
+    private static final Logger log = LoggerFactory.getLogger(DeletePostHandler.class);
 
     private final PostRepository postRepository;
-
     private final VoteRepository voteRepository;
+
+    public DeletePostHandler(final PostRepository postRepository, final VoteRepository voteRepository) {
+        this.postRepository = postRepository;
+        this.voteRepository = voteRepository;
+    }
 
     public void deletePost(Long postId) {
         log.debug("Deleting post with id: {}", postId);

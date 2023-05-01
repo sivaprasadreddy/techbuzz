@@ -11,7 +11,6 @@ import com.sivalabs.techbuzz.users.usecases.registration.CreateUserRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -24,13 +23,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
-@RequiredArgsConstructor
 public class RegistrationController {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
-    private static final String REGISTRATION_VIEW = "users/registration";
 
+    private static final String REGISTRATION_VIEW = "users/registration";
     private final CreateUserHandler createUserHandler;
     private final EmailService emailService;
+
+    public RegistrationController(final CreateUserHandler createUserHandler, final EmailService emailService) {
+        this.createUserHandler = createUserHandler;
+        this.emailService = emailService;
+    }
 
     @GetMapping("/registration")
     public String registrationForm(Model model) {
@@ -69,9 +72,7 @@ public class RegistrationController {
                 .replacePath(null)
                 .build()
                 .toUriString();
-        String params = "email="
-                + encode(userDTO.getEmail(), UTF_8)
-                + "&token="
+        String params = "email=" + encode(userDTO.getEmail(), UTF_8) + "&token="
                 + encode(userDTO.getVerificationToken(), UTF_8);
         String verificationUrl = baseUrl + "/verify-email?" + params;
         String to = userDTO.getEmail();

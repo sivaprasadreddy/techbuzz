@@ -10,24 +10,31 @@ import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Set;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
-@Slf4j
 public class CreatePostHandler {
+    private static final Logger log = LoggerFactory.getLogger(CreatePostHandler.class);
 
     private final PostRepository postRepository;
-
     private final CategoryRepository categoryRepository;
-
     private final UserRepository userRepository;
-
     private final PostDTOMapper postDTOMapper;
+
+    public CreatePostHandler(
+            PostRepository postRepository,
+            CategoryRepository categoryRepository,
+            UserRepository userRepository,
+            PostDTOMapper postDTOMapper) {
+        this.postRepository = postRepository;
+        this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
+        this.postDTOMapper = postDTOMapper;
+    }
 
     public PostDTO createPost(CreatePostRequest createPostRequest) {
         String title = createPostRequest.title();

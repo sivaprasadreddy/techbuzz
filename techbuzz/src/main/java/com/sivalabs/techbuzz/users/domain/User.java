@@ -14,26 +14,17 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Arrays;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "users")
-@Setter
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 public class User implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
     @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_seq", allocationSize = 5)
     private Long id;
 
     @Column(nullable = false)
-    @NotEmpty()
+    @NotEmpty
     private String name;
 
     @Column(nullable = false, unique = true)
@@ -56,11 +47,86 @@ public class User implements Serializable {
     @Column(name = "verification_token")
     private String verificationToken;
 
+    public User() {}
+
+    public User(
+            final Long id,
+            final String name,
+            final String email,
+            final String password,
+            final RoleEnum role,
+            final boolean verified,
+            final String verificationToken) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.verified = verified;
+        this.verificationToken = verificationToken;
+    }
+
     public boolean isAdminOrModerator() {
         return hasAnyRole(RoleEnum.ROLE_ADMIN, RoleEnum.ROLE_MODERATOR);
     }
 
     public boolean hasAnyRole(RoleEnum... roles) {
         return Arrays.asList(roles).contains(this.getRole());
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public void setPassword(final String password) {
+        this.password = password;
+    }
+
+    public void setRole(final RoleEnum role) {
+        this.role = role;
+    }
+
+    public void setVerified(final boolean verified) {
+        this.verified = verified;
+    }
+
+    public void setVerificationToken(final String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public RoleEnum getRole() {
+        return this.role;
+    }
+
+    public boolean isVerified() {
+        return this.verified;
+    }
+
+    public String getVerificationToken() {
+        return this.verificationToken;
     }
 }

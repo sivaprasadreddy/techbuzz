@@ -8,7 +8,7 @@
 	<artifactId>gatling-tests</artifactId>
 	<version>0.0.1</version>
 	<name>gatling-tests</name>
-	<description>TechBuzz gatling-tests</description>
+	<description>TechBuzz Gatling Tests</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
@@ -57,9 +57,12 @@
 				<version>${spotless.version}</version>
 				<configuration>
 					<java>
+						<importOrder />
+						<removeUnusedImports />
 						<palantirJavaFormat>
 							<version>2.30.0</version>
 						</palantirJavaFormat>
+						<formatAnnotations />
 					</java>
 				</configuration>
 				<executions>

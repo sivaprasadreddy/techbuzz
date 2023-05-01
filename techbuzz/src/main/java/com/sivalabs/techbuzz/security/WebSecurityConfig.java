@@ -1,6 +1,5 @@
 package com.sivalabs.techbuzz.security;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,7 +13,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class WebSecurityConfig {
 
     private static final String[] PUBLIC_RESOURCES = {
@@ -27,11 +25,7 @@ public class WebSecurityConfig {
         "/error",
         "/403",
         "/404",
-        "/actuator/health",
-        "/actuator/loggers",
-        "/actuator/info",
-        "/actuator/metrics",
-        "/actuator/prometheus",
+        "/actuator/**",
         "/api/categories",
         "/login",
         "/registration",
@@ -42,23 +36,15 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests()
-                .requestMatchers(PUBLIC_RESOURCES)
-                .permitAll()
-                .anyRequest()
-                .authenticated();
-
-        http.formLogin()
-                .loginPage("/login")
+        http.authorizeHttpRequests(c ->
+                c.requestMatchers(PUBLIC_RESOURCES).permitAll().anyRequest().authenticated());
+        http.formLogin(c -> c.loginPage("/login")
                 .defaultSuccessUrl("/")
                 .failureUrl("/login?error")
-                .permitAll();
-
-        http.logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .permitAll());
+        http.logout(c -> c.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .permitAll()
-                .logoutSuccessUrl("/");
-
+                .logoutSuccessUrl("/"));
         return http.build();
     }
 

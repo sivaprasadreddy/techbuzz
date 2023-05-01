@@ -1,4 +1,4 @@
-version: "3.6"
+version: "3.8"
 services:
   techbuzz:
     image: sivaprasadreddy/techbuzz
@@ -8,9 +8,6 @@ services:
     restart: unless-stopped
     environment:
       SPRING_PROFILES_ACTIVE: docker
-      LOGGING_FILE_NAME: ./logs/techbuzz-docker.log
-      MANAGEMENT_TRACING_ENABLED: "${TRACING_ENABLED}"
-      MANAGEMENT_ZIPKIN_TRACING_ENDPOINT: "${TRACING_ENDPOINT}"
       DB_HOST: "${DB_HOST}"
       DB_PORT: "${DB_PORT}"
       DB_DATABASE: "${DB_DATABASE}"
@@ -20,9 +17,30 @@ services:
       SENDGRID_API_KEY: "${SENDGRID_API_KEY}"
       MAIL_HOST: "${MAIL_HOST}"
       MAIL_PORT: "${MAIL_PORT}"
-    labels:
-      logging: "promtail"
     deploy:
       resources:
         limits:
           memory: 1024m
+
+  techbuzz-db:
+    image: postgres:15.2-alpine
+    container_name: techbuzz-db
+    environment:
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_DATABASE}"
+    ports:
+      - "15432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mailhog:
+    image: mailhog/mailhog
+    platform: linux/x86_64
+    container_name: mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"

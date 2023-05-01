@@ -10,8 +10,8 @@ import com.sendgrid.helpers.mail.objects.Email;
 import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
@@ -19,23 +19,26 @@ import org.thymeleaf.context.Context;
 
 @Component
 @ConditionalOnProperty(name = "techbuzz.email-provider", havingValue = "sendgrid")
-@RequiredArgsConstructor
-@Slf4j
 public class SendGridEmailService implements EmailService {
+    private static final Logger log = LoggerFactory.getLogger(SendGridEmailService.class);
+
     private final TemplateEngine templateEngine;
     private final ApplicationProperties properties;
+
+    public SendGridEmailService(final TemplateEngine templateEngine, final ApplicationProperties properties) {
+        this.templateEngine = templateEngine;
+        this.properties = properties;
+    }
 
     public void sendEmail(String template, Map<String, Object> params, String to, String subject) {
         try {
             Context context = new Context();
             context.setVariables(params);
             String content = templateEngine.process(template, context);
-
             Email from = new Email(properties.adminEmail());
             Email emailTo = new Email(to);
             Content emailContent = new Content("text/html", content);
             Mail mail = new Mail(from, subject, emailTo, emailContent);
-
             SendGrid sg = new SendGrid(properties.sendgridApiKey());
             Request request = new Request();
             request.setMethod(Method.POST);

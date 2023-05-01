@@ -30,9 +30,12 @@
 				<version>${spotless.version}</version>
 				<configuration>
 					<java>
+						<importOrder />
+						<removeUnusedImports />
 						<palantirJavaFormat>
 							<version>2.30.0</version>
 						</palantirJavaFormat>
+						<formatAnnotations />
 					</java>
 				</configuration>
 				<executions>
