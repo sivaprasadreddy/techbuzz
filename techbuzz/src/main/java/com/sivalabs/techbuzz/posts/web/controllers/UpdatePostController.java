@@ -10,8 +10,8 @@ import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostRequest;
 import com.sivalabs.techbuzz.users.domain.User;
 import jakarta.validation.Valid;
 import java.util.Objects;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +22,17 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequiredArgsConstructor
-@Slf4j
 public class UpdatePostController {
-    private static final String MODEL_ATTRIBUTE_POST = "post";
+    private static final Logger log = LoggerFactory.getLogger(UpdatePostController.class);
 
+    private static final String MODEL_ATTRIBUTE_POST = "post";
     private final GetPostsHandler getPostsHandler;
     private final UpdatePostHandler updatePostHandler;
+
+    public UpdatePostController(final GetPostsHandler getPostsHandler, final UpdatePostHandler updatePostHandler) {
+        this.getPostsHandler = getPostsHandler;
+        this.updatePostHandler = updatePostHandler;
+    }
 
     @GetMapping("/posts/{id}/edit")
     @AnyAuthenticatedUser
@@ -36,10 +40,8 @@ public class UpdatePostController {
         PostDTO post = getPostsHandler.getPost(id);
         this.checkPrivilege(post, loginUser);
         Long categoryId = post.category().id();
-
         UpdatePostRequest updatePostRequest =
                 new UpdatePostRequest(id, post.title(), post.url(), post.content(), categoryId);
-
         model.addAttribute(MODEL_ATTRIBUTE_POST, updatePostRequest);
         model.addAttribute("categorySlug", post.category().slug());
         return "posts/edit-post";

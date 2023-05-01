@@ -7,8 +7,8 @@ import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
 import com.sivalabs.techbuzz.users.domain.User;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,13 +18,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-@RequiredArgsConstructor
-@Slf4j
 public class CreatePostController {
+    private static final Logger log = LoggerFactory.getLogger(CreatePostController.class);
 
     private static final String MODEL_ATTRIBUTE_POST = "post";
-
     private final CreatePostHandler createPostHandler;
+
+    public CreatePostController(final CreatePostHandler createPostHandler) {
+        this.createPostHandler = createPostHandler;
+    }
 
     @GetMapping("/posts/new")
     @AnyAuthenticatedUser

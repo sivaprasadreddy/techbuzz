@@ -4,19 +4,28 @@ import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-@RequiredArgsConstructor
-@Slf4j
 public class JavaEmailService implements EmailService {
+    private static final Logger log = LoggerFactory.getLogger(JavaEmailService.class);
+
     private final JavaMailSender emailSender;
     private final TemplateEngine templateEngine;
     private final ApplicationProperties properties;
+
+    public JavaEmailService(
+            final JavaMailSender emailSender,
+            final TemplateEngine templateEngine,
+            final ApplicationProperties properties) {
+        this.emailSender = emailSender;
+        this.templateEngine = templateEngine;
+        this.properties = properties;
+    }
 
     public void sendEmail(String template, Map<String, Object> params, String to, String subject) {
         try {

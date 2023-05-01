@@ -7,7 +7,6 @@ import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.domain.UserRepository;
 import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
 import java.util.UUID;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,11 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class CreateUserHandler {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserDTOMapper userDTOMapper;
+
+    public CreateUserHandler(
+            final PasswordEncoder passwordEncoder,
+            final UserRepository userRepository,
+            final UserDTOMapper userDTOMapper) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.userDTOMapper = userDTOMapper;
+    }
 
     @CacheEvict(cacheNames = "user", allEntries = true)
     public UserDTO createUser(CreateUserRequest createUserRequest) {

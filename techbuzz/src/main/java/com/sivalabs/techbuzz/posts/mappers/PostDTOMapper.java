@@ -10,15 +10,22 @@ import com.sivalabs.techbuzz.users.domain.UserDTO;
 import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
 import java.util.Objects;
 import java.util.Set;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class PostDTOMapper {
     private final CategoryDTOMapper categoryDTOMapper;
     private final VoteDTOMapper voteDTOMapper;
     private final UserDTOMapper userDTOMapper;
+
+    public PostDTOMapper(
+            final CategoryDTOMapper categoryDTOMapper,
+            final VoteDTOMapper voteDTOMapper,
+            final UserDTOMapper userDTOMapper) {
+        this.categoryDTOMapper = categoryDTOMapper;
+        this.voteDTOMapper = voteDTOMapper;
+        this.userDTOMapper = userDTOMapper;
+    }
 
     public PostDTO toDTO(Post post) {
         CategoryDTO category = categoryDTOMapper.toDTO(post.getCategory());
@@ -43,7 +50,6 @@ public class PostDTOMapper {
         boolean editable = this.canCurrentUserEditPost(loginUser, post);
         boolean upVoted = isVotedByUser(post, loginUser, 1);
         boolean downVoted = isVotedByUser(post, loginUser, -1);
-
         return new PostUserViewDTO(
                 post.getId(),
                 post.getTitle(),

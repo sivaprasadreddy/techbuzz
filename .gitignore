@@ -7,6 +7,6 @@ logs/
 .vscode/
 
 docker/db-data/
-docker/.env.prod
+deployment/docker-compose/.env.prod
 docker/.env.aws
 .pom.xml.temp

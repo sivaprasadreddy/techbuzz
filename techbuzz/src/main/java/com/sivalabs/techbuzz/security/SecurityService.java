@@ -2,7 +2,6 @@ package com.sivalabs.techbuzz.security;
 
 import com.sivalabs.techbuzz.users.domain.User;
 import com.sivalabs.techbuzz.users.usecases.getuser.GetUserHandler;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 public class SecurityService {
-
     private final GetUserHandler getUserHandler;
+
+    public SecurityService(GetUserHandler getUserHandler) {
+        this.getUserHandler = getUserHandler;
+    }
 
     public User loginUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

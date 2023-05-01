@@ -11,8 +11,8 @@ import com.sivalabs.techbuzz.posts.mappers.PostDTOMapper;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.User;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -22,17 +22,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
-@RequiredArgsConstructor
-@Slf4j
 public class GetPostsHandler {
+    private static final Logger log = LoggerFactory.getLogger(GetPostsHandler.class);
 
     private final PostRepository postRepository;
-
     private final PostDTOMapper postDtoMapper;
-
     private final SecurityService securityService;
-
     private final ApplicationProperties properties;
+
+    public GetPostsHandler(
+            PostRepository postRepository,
+            PostDTOMapper postDtoMapper,
+            SecurityService securityService,
+            ApplicationProperties properties) {
+        this.postRepository = postRepository;
+        this.postDtoMapper = postDtoMapper;
+        this.securityService = securityService;
+        this.properties = properties;
+    }
 
     public PostDTO getPost(Long postId) {
         log.debug("Fetching post by id: {}", postId);

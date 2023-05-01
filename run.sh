@@ -1,8 +1,6 @@
 #!/bin/bash
 
-declare dc_infra=docker/docker-compose.yml
-declare dc_app=docker/docker-compose-app.yml
-declare dc_monitoring=docker/docker-compose-grafana-stack.yml
+declare dc_file=deployment/docker-compose/docker-compose.yml
 
 function build_image_jib() {
     ./mvnw -pl techbuzz clean package -DskipTests jib:dockerBuild -Dimage=sivaprasadreddy/techbuzz
@@ -14,20 +12,20 @@ function build_apps_buildpacks() {
 
 function build_apps() {
     ./mvnw -pl techbuzz spotless:apply
-    #build_apps_buildpacks
-    build_image_jib
+    build_apps_buildpacks
+    #build_image_jib
 }
 
 function start_infra() {
     echo "Starting dependent docker containers...."
-    docker-compose -f "${dc_infra}" up --build --force-recreate -d
-    docker-compose -f "${dc_infra}" logs -f
+    docker-compose -f "${dc_file}" up --build --force-recreate techbuzz-db mailhog -d
+    docker-compose -f "${dc_file}" logs -f
 }
 
 function stop_infra() {
     echo "Stopping dependent docker containers...."
-    docker-compose -f "${dc_infra}" stop
-    docker-compose -f "${dc_infra}" rm -f
+    docker-compose -f "${dc_file}" stop
+    docker-compose -f "${dc_file}" rm -f
 }
 
 function restart_infra() {
@@ -36,44 +34,26 @@ function restart_infra() {
     start_infra
 }
 
-function start_app() {
+function start() {
     echo "Starting app...."
     build_apps
-    docker-compose -f "${dc_infra}" -f "${dc_app}" up --build --force-recreate -d
-    docker-compose -f "${dc_infra}" -f "${dc_app}" logs -f
+    docker-compose -f "${dc_file}" up --build --force-recreate -d
+    docker-compose -f "${dc_file}" logs -f
 }
 
-function stop_app() {
+function stop() {
     echo 'Stopping app....'
-    docker-compose -f "${dc_infra}" -f "${dc_app}" stop
-    docker-compose -f "${dc_infra}" -f "${dc_app}" rm -f
+    docker-compose -f "${dc_file}" stop
+    docker-compose -f "${dc_file}" rm -f
 }
 
-function restart_app() {
-    stop_app
+function restart() {
+    stop
     sleep 3
-    start_app
+    start
 }
 
-function start_grafana() {
-    echo 'Starting Grafana Observability Stack....'
-    docker-compose -f "${dc_monitoring}" up --force-recreate -d
-    docker-compose -f "${dc_monitoring}" logs -f
-}
-
-function stop_grafana() {
-    echo 'Stopping Grafana Observability Stack....'
-    docker-compose -f "${dc_monitoring}" stop
-    docker-compose -f "${dc_monitoring}" rm -f
-}
-
-function restart_grafana() {
-    stop_grafana
-    sleep 5
-    start_grafana
-}
-
-action="start_app"
+action="start"
 
 if [[ "$#" != "0"  ]]
 then
