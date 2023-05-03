@@ -2,10 +2,10 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
-import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
+import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
-import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,9 +47,9 @@ public class CreatePostController {
         }
         var createPostRequest = new CreatePostRequest(
                 request.title(), request.url(), request.content(), request.categoryId(), loginUser.getId());
-        PostDTO post = createPostHandler.createPost(createPostRequest);
-        log.info("Post saved successfully with id: {}", post.id());
+        Post post = createPostHandler.createPost(createPostRequest);
+        log.info("Post saved successfully with id: {}", post.getId());
         redirectAttributes.addFlashAttribute("message", "Post saved successfully");
-        return "redirect:/c/" + post.category().slug();
+        return "redirect:/c/" + post.getCategory().getSlug();
     }
 }

@@ -7,6 +7,7 @@ package com.sivalabs.techbuzz.jooq.tables;
 import com.sivalabs.techbuzz.jooq.Keys;
 import com.sivalabs.techbuzz.jooq.Public;
 import com.sivalabs.techbuzz.jooq.tables.records.UsersRecord;
+import com.sivalabs.techbuzz.users.domain.models.RoleEnum;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -28,6 +29,7 @@ import org.jooq.TableField;
 import org.jooq.TableOptions;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
+import org.jooq.impl.EnumConverter;
 import org.jooq.impl.SQLDataType;
 import org.jooq.impl.TableImpl;
 
@@ -76,7 +78,7 @@ public class Users extends TableImpl<UsersRecord> {
     /**
      * The column <code>public.users.role</code>.
      */
-    public final TableField<UsersRecord, String> ROLE = createField(DSL.name("role"), SQLDataType.VARCHAR.nullable(false), this, "");
+    public final TableField<UsersRecord, RoleEnum> ROLE = createField(DSL.name("role"), SQLDataType.VARCHAR.nullable(false), this, "", new EnumConverter<String, RoleEnum>(String.class, RoleEnum.class));
 
     /**
      * The column <code>public.users.verified</code>.
@@ -195,14 +197,14 @@ public class Users extends TableImpl<UsersRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row9<Long, String, String, String, String, Boolean, String, LocalDateTime, LocalDateTime> fieldsRow() {
+    public Row9<Long, String, String, String, RoleEnum, Boolean, String, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row9) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function9<? super Long, ? super String, ? super String, ? super String, ? super String, ? super Boolean, ? super String, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function9<? super Long, ? super String, ? super String, ? super String, ? super RoleEnum, ? super Boolean, ? super String, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -210,7 +212,7 @@ public class Users extends TableImpl<UsersRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function9<? super Long, ? super String, ? super String, ? super String, ? super String, ? super Boolean, ? super String, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function9<? super Long, ? super String, ? super String, ? super String, ? super RoleEnum, ? super Boolean, ? super String, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

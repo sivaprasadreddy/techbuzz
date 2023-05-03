@@ -1,6 +1,6 @@
-package com.sivalabs.techbuzz.posts.domain.entities;
+package com.sivalabs.techbuzz.posts.domain.models;
 
-import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import jakarta.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.Set;

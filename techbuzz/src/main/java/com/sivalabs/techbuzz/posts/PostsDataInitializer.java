@@ -2,11 +2,11 @@ package com.sivalabs.techbuzz.posts;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sivalabs.techbuzz.ApplicationProperties;
-import com.sivalabs.techbuzz.posts.domain.entities.Category;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
+import com.sivalabs.techbuzz.posts.domain.models.Category;
+import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
-import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.usecases.getuser.GetUserHandler;
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,21 +66,21 @@ public class PostsDataInitializer implements CommandLineRunner {
     public long importPosts(InputStream is) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         PostsData postsData = objectMapper.readValue(is, PostsData.class);
+        User user = getUserHandler.getUserByEmail(properties.adminEmail()).orElseThrow();
         long count = 0L;
         for (PostEntry postEntry : postsData.posts) {
-            Post post = convertToPost(postEntry);
+            Post post = convertToPost(postEntry, user);
             postRepository.save(post);
             count++;
         }
         return count;
     }
 
-    private Post convertToPost(PostEntry postEntry) {
+    private Post convertToPost(PostEntry postEntry, User user) {
         Category category = categoryRepository.findBySlug(postEntry.category).orElseGet(() -> {
             log.info("Category :{} doesn't exist, so saving into 'general' category", postEntry.category);
             return categoryRepository.findBySlug("general").orElseThrow();
         });
-        User user = getUserHandler.getUserByEmail(properties.adminEmail()).orElseThrow();
         return new Post(
                 null,
                 postEntry.title,
@@ -93,55 +93,7 @@ public class PostsDataInitializer implements CommandLineRunner {
                 null);
     }
 
-    static class PostsData {
+    record PostsData(List<PostEntry> posts) {}
 
-        private List<PostEntry> posts;
-
-        public void setPosts(final List<PostEntry> posts) {
-            this.posts = posts;
-        }
-
-        public List<PostEntry> getPosts() {
-            return this.posts;
-        }
-    }
-
-    static class PostEntry {
-        private String title;
-        private String url;
-        private String content;
-        private String category;
-
-        public void setTitle(final String title) {
-            this.title = title;
-        }
-
-        public void setUrl(final String url) {
-            this.url = url;
-        }
-
-        public void setContent(final String content) {
-            this.content = content;
-        }
-
-        public void setCategory(final String category) {
-            this.category = category;
-        }
-
-        public String getTitle() {
-            return this.title;
-        }
-
-        public String getUrl() {
-            return this.url;
-        }
-
-        public String getContent() {
-            return this.content;
-        }
-
-        public String getCategory() {
-            return this.category;
-        }
-    }
+    record PostEntry(String title, String url, String content, String category) {}
 }

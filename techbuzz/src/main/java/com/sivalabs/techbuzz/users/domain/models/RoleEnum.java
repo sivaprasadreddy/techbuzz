@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.users.domain;
+package com.sivalabs.techbuzz.users.domain.models;
 
 public enum RoleEnum {
     ROLE_ADMIN,

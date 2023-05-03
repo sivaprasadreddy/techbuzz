@@ -1,18 +1,13 @@
-package com.sivalabs.techbuzz.posts.domain.entities;
+package com.sivalabs.techbuzz.posts.domain.models;
 
 import java.time.LocalDateTime;
 
 public class Vote {
     private Long id;
-
     private Long userId;
-
     private Long postId;
-
     private Integer value;
-
     protected LocalDateTime createdAt;
-
     protected LocalDateTime updatedAt;
 
     public Vote() {}

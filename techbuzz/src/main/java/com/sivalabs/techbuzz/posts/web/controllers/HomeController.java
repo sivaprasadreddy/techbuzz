@@ -1,21 +1,21 @@
 package com.sivalabs.techbuzz.posts.web.controllers;
 
-import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
+import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class HomeController {
-    private final CategoryRepository categoryRepository;
+class HomeController {
+    private final GetCategoriesHandler getCategoriesHandler;
 
-    public HomeController(final CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public HomeController(GetCategoriesHandler getCategoriesHandler) {
+        this.getCategoriesHandler = getCategoriesHandler;
     }
 
     @GetMapping("/")
     public String home(Model model) {
-        model.addAttribute("categories", categoryRepository.findAll());
+        model.addAttribute("categories", getCategoriesHandler.getAllCategories());
         return "posts/home";
     }
 }

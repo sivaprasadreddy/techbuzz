@@ -1,10 +1,10 @@
 package com.sivalabs.techbuzz.users.usecases.registration;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
-import com.sivalabs.techbuzz.users.domain.RoleEnum;
-import com.sivalabs.techbuzz.users.domain.User;
-import com.sivalabs.techbuzz.users.domain.UserDTO;
-import com.sivalabs.techbuzz.users.domain.UserRepository;
+import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
+import com.sivalabs.techbuzz.users.domain.models.RoleEnum;
+import com.sivalabs.techbuzz.users.domain.models.User;
+import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
 import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
 import java.util.UUID;
 import org.springframework.cache.annotation.CacheEvict;

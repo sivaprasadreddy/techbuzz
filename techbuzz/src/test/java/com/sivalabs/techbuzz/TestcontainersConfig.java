@@ -3,6 +3,7 @@ package com.sivalabs.techbuzz;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.DynamicPropertyRegistry;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.PostgreSQLContainer;
 
@@ -10,15 +11,21 @@ import org.testcontainers.containers.PostgreSQLContainer;
 public class TestcontainersConfig {
     @Bean
     @ServiceConnection
-    public PostgreSQLContainer<?> postgreSQLContainer() {
+    PostgreSQLContainer<?> postgreSQLContainer() {
         return new PostgreSQLContainer<>("postgres:15.2-alpine");
     }
 
-    static GenericContainer<?> mailhog = new GenericContainer("mailhog/mailhog").withExposedPorts(1025);
+    @Bean
+    GenericContainer<?> mailhogContainer(DynamicPropertyRegistry registry) {
+        var container = new GenericContainer("mailhog/mailhog").withExposedPorts(1025);
+        registry.add("spring.mail.host", container::getHost);
+        registry.add("spring.mail.port", () -> String.valueOf(container.getMappedPort(1025)));
+        return container;
+    }
 
-    static {
+    /*static {
         mailhog.start();
         System.setProperty("spring.mail.host", mailhog.getHost());
         System.setProperty("spring.mail.port", String.valueOf(mailhog.getMappedPort(1025)));
-    }
+    }*/
 }

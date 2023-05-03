@@ -1,7 +1,7 @@
 package com.sivalabs.techbuzz.users.usecases.getuser;
 
-import com.sivalabs.techbuzz.users.domain.User;
-import com.sivalabs.techbuzz.users.domain.UserRepository;
+import com.sivalabs.techbuzz.users.domain.models.User;
+import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
 import java.util.Optional;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;

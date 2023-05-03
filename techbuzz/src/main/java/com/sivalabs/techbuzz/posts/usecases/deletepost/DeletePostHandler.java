@@ -1,7 +1,7 @@
 package com.sivalabs.techbuzz.posts.usecases.deletepost;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
+import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.VoteRepository;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class DeletePostHandler {
     public void deletePost(Long postId) {
         log.debug("Deleting post with id: {}", postId);
         Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
-        voteRepository.deleteVotesForPost(postId);
-        postRepository.delete(postId);
+        voteRepository.deleteVotesForPost(post.getId());
+        postRepository.delete(post.getId());
     }
 }

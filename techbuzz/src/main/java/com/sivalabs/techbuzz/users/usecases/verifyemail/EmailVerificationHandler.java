@@ -1,8 +1,8 @@
 package com.sivalabs.techbuzz.users.usecases.verifyemail;
 
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
-import com.sivalabs.techbuzz.users.domain.User;
-import com.sivalabs.techbuzz.users.domain.UserRepository;
+import com.sivalabs.techbuzz.users.domain.models.User;
+import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +23,6 @@ public class EmailVerificationHandler {
                 .orElseThrow(() -> new TechBuzzException("Invalid email verification request"));
         user.setVerified(true);
         user.setVerificationToken(null);
-        userRepository.update(user);
+        userRepository.updateVerificationStatus(user);
     }
 }

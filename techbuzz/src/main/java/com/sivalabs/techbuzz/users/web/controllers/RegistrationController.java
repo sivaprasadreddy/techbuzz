@@ -5,7 +5,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
 import com.sivalabs.techbuzz.notifications.EmailService;
-import com.sivalabs.techbuzz.users.domain.UserDTO;
+import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserHandler;
 import com.sivalabs.techbuzz.users.usecases.registration.CreateUserRequest;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,10 +23,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
-public class RegistrationController {
+class RegistrationController {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
-
     private static final String REGISTRATION_VIEW = "users/registration";
+
     private final CreateUserHandler createUserHandler;
     private final EmailService emailService;
 
@@ -56,7 +56,7 @@ public class RegistrationController {
             redirectAttributes.addFlashAttribute("message", "Registration is successful");
             return "redirect:/registrationStatus";
         } catch (ResourceAlreadyExistsException e) {
-            logger.error("Registration error:", e);
+            logger.error("Registration error: {}", e.getMessage());
             bindingResult.rejectValue("email", "email.exists", e.getMessage());
             return REGISTRATION_VIEW;
         }
@@ -72,12 +72,12 @@ public class RegistrationController {
                 .replacePath(null)
                 .build()
                 .toUriString();
-        String params = "email=" + encode(userDTO.getEmail(), UTF_8) + "&token="
-                + encode(userDTO.getVerificationToken(), UTF_8);
+        String params =
+                "email=" + encode(userDTO.email(), UTF_8) + "&token=" + encode(userDTO.verificationToken(), UTF_8);
         String verificationUrl = baseUrl + "/verify-email?" + params;
-        String to = userDTO.getEmail();
+        String to = userDTO.email();
         String subject = "TechBuzz - Email verification";
-        Map<String, Object> paramsMap = Map.of("", userDTO.getName(), "verificationUrl", verificationUrl);
+        Map<String, Object> paramsMap = Map.of("", userDTO.name(), "verificationUrl", verificationUrl);
         emailService.sendEmail("email/verify-email", paramsMap, to, subject);
     }
 }

@@ -1,6 +1,6 @@
 package com.sivalabs.techbuzz.security;
 
-import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.usecases.getuser.GetUserHandler;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

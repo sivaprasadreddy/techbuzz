@@ -1,12 +1,10 @@
 package com.sivalabs.techbuzz.posts.usecases.updatepost;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
-import com.sivalabs.techbuzz.posts.domain.entities.Category;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
-import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
+import com.sivalabs.techbuzz.posts.domain.models.Category;
+import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
-import com.sivalabs.techbuzz.posts.mappers.PostDTOMapper;
 import java.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,28 +18,23 @@ public class UpdatePostHandler {
 
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
-    private final PostDTOMapper postDTOMapper;
 
-    public UpdatePostHandler(
-            final PostRepository postRepository,
-            final CategoryRepository categoryRepository,
-            final PostDTOMapper postDTOMapper) {
+    public UpdatePostHandler(final PostRepository postRepository, final CategoryRepository categoryRepository) {
         this.postRepository = postRepository;
         this.categoryRepository = categoryRepository;
-        this.postDTOMapper = postDTOMapper;
     }
 
-    public PostDTO updatePost(UpdatePostRequest request) {
+    public Post updatePost(UpdatePostRequest request) {
         log.debug("Update post with id={}", request.id());
         Post post = postRepository
                 .findById(request.id())
                 .orElseThrow(() -> new ResourceNotFoundException("Post with id: " + request.id() + " not found"));
-        Category category = categoryRepository.getReferenceById(request.categoryId());
+        Category category = new Category(request.categoryId());
         post.setCategory(category);
         post.setTitle(request.title());
         post.setUrl(request.url());
         post.setContent(request.content());
         post.setUpdatedAt(LocalDateTime.now());
-        return postDTOMapper.toDTO(postRepository.save(post));
+        return postRepository.update(post);
     }
 }

@@ -8,7 +8,6 @@ import com.sivalabs.techbuzz.jooq.Keys;
 import com.sivalabs.techbuzz.jooq.Public;
 import com.sivalabs.techbuzz.jooq.tables.records.CategoriesRecord;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -82,7 +81,7 @@ public class Categories extends TableImpl<CategoriesRecord> {
     /**
      * The column <code>public.categories.display_order</code>.
      */
-    public final TableField<CategoriesRecord, BigDecimal> DISPLAY_ORDER = createField(DSL.name("display_order"), SQLDataType.NUMERIC.nullable(false), this, "");
+    public final TableField<CategoriesRecord, Integer> DISPLAY_ORDER = createField(DSL.name("display_order"), SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.categories.created_at</code>.
@@ -191,14 +190,14 @@ public class Categories extends TableImpl<CategoriesRecord> {
     // -------------------------------------------------------------------------
 
     @Override
-    public Row8<Long, String, String, String, String, BigDecimal, LocalDateTime, LocalDateTime> fieldsRow() {
+    public Row8<Long, String, String, String, String, Integer, LocalDateTime, LocalDateTime> fieldsRow() {
         return (Row8) super.fieldsRow();
     }
 
     /**
      * Convenience mapping calling {@link SelectField#convertFrom(Function)}.
      */
-    public <U> SelectField<U> mapping(Function8<? super Long, ? super String, ? super String, ? super String, ? super String, ? super BigDecimal, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Function8<? super Long, ? super String, ? super String, ? super String, ? super String, ? super Integer, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(Records.mapping(from));
     }
 
@@ -206,7 +205,7 @@ public class Categories extends TableImpl<CategoriesRecord> {
      * Convenience mapping calling {@link SelectField#convertFrom(Class,
      * Function)}.
      */
-    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Long, ? super String, ? super String, ? super String, ? super String, ? super BigDecimal, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
+    public <U> SelectField<U> mapping(Class<U> toType, Function8<? super Long, ? super String, ? super String, ? super String, ? super String, ? super Integer, ? super LocalDateTime, ? super LocalDateTime, ? extends U> from) {
         return convertFrom(toType, Records.mapping(from));
     }
 }

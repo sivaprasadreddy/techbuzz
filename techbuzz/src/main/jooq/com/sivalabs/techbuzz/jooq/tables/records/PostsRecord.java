@@ -5,7 +5,6 @@ package com.sivalabs.techbuzz.jooq.tables.records;
 
 
 import com.sivalabs.techbuzz.jooq.tables.Posts;
-import com.sivalabs.techbuzz.jooq.tables.pojos.JooqPosts;
 
 import java.time.LocalDateTime;
 
@@ -366,24 +365,5 @@ public class PostsRecord extends UpdatableRecordImpl<PostsRecord> implements Rec
         setCreatedAt(createdAt);
         setUpdatedAt(updatedAt);
         resetChangedOnNotNull();
-    }
-
-    /**
-     * Create a detached, initialised PostsRecord
-     */
-    public PostsRecord(JooqPosts value) {
-        super(Posts.POSTS);
-
-        if (value != null) {
-            setId(value.getId());
-            setTitle(value.getTitle());
-            setUrl(value.getUrl());
-            setContent(value.getContent());
-            setCreatedBy(value.getCreatedBy());
-            setCatId(value.getCatId());
-            setCreatedAt(value.getCreatedAt());
-            setUpdatedAt(value.getUpdatedAt());
-            resetChangedOnNotNull();
-        }
     }
 }

@@ -4,7 +4,7 @@ import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
 import com.sivalabs.techbuzz.posts.usecases.createvote.CreateVoteRequest;
 import com.sivalabs.techbuzz.posts.usecases.createvote.VoteHandler;
-import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
-public class AddVoteController {
+class AddVoteController {
     private final VoteHandler voteHandler;
 
     public AddVoteController(final VoteHandler voteHandler) {

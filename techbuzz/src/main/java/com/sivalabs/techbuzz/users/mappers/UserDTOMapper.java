@@ -1,7 +1,7 @@
 package com.sivalabs.techbuzz.users.mappers;
 
-import com.sivalabs.techbuzz.users.domain.User;
-import com.sivalabs.techbuzz.users.domain.UserDTO;
+import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import org.springframework.stereotype.Component;
 
 @Component

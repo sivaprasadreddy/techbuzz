@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.posts.domain.entities;
+package com.sivalabs.techbuzz.posts.domain.models;
 
 import jakarta.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
@@ -23,6 +23,10 @@ public class Category {
     protected LocalDateTime updatedAt;
 
     public Category() {}
+
+    public Category(final Long id) {
+        this.id = id;
+    }
 
     public Category(
             final Long id,

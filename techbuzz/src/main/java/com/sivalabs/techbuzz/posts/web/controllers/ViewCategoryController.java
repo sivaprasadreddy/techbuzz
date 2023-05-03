@@ -1,8 +1,8 @@
 package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.common.model.PagedResult;
-import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
-import com.sivalabs.techbuzz.posts.domain.models.PostUserViewDTO;
+import com.sivalabs.techbuzz.posts.domain.dtos.PostUserViewDTO;
+import com.sivalabs.techbuzz.posts.domain.models.Category;
 import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class ViewCategoryController {
         if (data.getData().isEmpty() && (page > 1 && page > data.getTotalPages())) {
             return "redirect:/c/" + categorySlug + "?page=" + data.getTotalPages();
         }
-        CategoryDTO category = getCategoriesHandler.getCategory(categorySlug);
+        Category category = getCategoriesHandler.getCategory(categorySlug);
         model.addAttribute("category", category);
         model.addAttribute("paginationPrefix", "/c/" + categorySlug + "?");
         model.addAttribute("postsData", data);

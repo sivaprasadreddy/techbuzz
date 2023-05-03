@@ -1,6 +1,6 @@
 package com.sivalabs.techbuzz.security;
 
-import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import java.util.Set;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 

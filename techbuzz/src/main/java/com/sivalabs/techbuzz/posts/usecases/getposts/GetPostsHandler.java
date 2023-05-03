@@ -1,15 +1,13 @@
 package com.sivalabs.techbuzz.posts.usecases.getposts;
 
-import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
 import com.sivalabs.techbuzz.common.model.PagedResult;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
-import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
-import com.sivalabs.techbuzz.posts.domain.models.PostUserViewDTO;
+import com.sivalabs.techbuzz.posts.domain.dtos.PostUserViewDTO;
+import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
-import com.sivalabs.techbuzz.posts.mappers.PostDTOMapper;
+import com.sivalabs.techbuzz.posts.mappers.PostMapper;
 import com.sivalabs.techbuzz.security.SecurityService;
-import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,25 +20,18 @@ public class GetPostsHandler {
     private static final Logger log = LoggerFactory.getLogger(GetPostsHandler.class);
 
     private final PostRepository postRepository;
-    private final PostDTOMapper postDtoMapper;
+    private final PostMapper postMapper;
     private final SecurityService securityService;
-    private final ApplicationProperties properties;
 
-    public GetPostsHandler(
-            PostRepository postRepository,
-            PostDTOMapper postDtoMapper,
-            SecurityService securityService,
-            ApplicationProperties properties) {
+    public GetPostsHandler(PostRepository postRepository, PostMapper postMapper, SecurityService securityService) {
         this.postRepository = postRepository;
-        this.postDtoMapper = postDtoMapper;
+        this.postMapper = postMapper;
         this.securityService = securityService;
-        this.properties = properties;
     }
 
-    public PostDTO getPost(Long postId) {
+    public Post getPost(Long postId) {
         log.debug("Fetching post by id: {}", postId);
-        return postDtoMapper.toDTO(
-                postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found")));
+        return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
     }
 
     public PagedResult<PostUserViewDTO> getPostsByCategorySlug(String category, Integer page) {
@@ -52,7 +43,7 @@ public class GetPostsHandler {
     private PagedResult<PostUserViewDTO> convert(PagedResult<Post> postsPage) {
         User loginUser = securityService.loginUser();
         List<PostUserViewDTO> postDTOs = postsPage.getData().stream()
-                .map(post -> postDtoMapper.toPostUserViewDTO(loginUser, post))
+                .map(post -> postMapper.toPostUserViewDTO(loginUser, post))
                 .toList();
         return new PagedResult<>(
                 postDTOs,

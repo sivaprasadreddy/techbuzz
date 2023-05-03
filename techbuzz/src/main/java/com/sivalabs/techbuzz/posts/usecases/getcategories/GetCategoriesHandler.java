@@ -1,8 +1,7 @@
 package com.sivalabs.techbuzz.posts.usecases.getcategories;
 
-import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
+import com.sivalabs.techbuzz.posts.domain.models.Category;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
-import com.sivalabs.techbuzz.posts.mappers.CategoryDTOMapper;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,26 +15,20 @@ public class GetCategoriesHandler {
     private static final Logger log = LoggerFactory.getLogger(GetCategoriesHandler.class);
 
     private final CategoryRepository categoryRepository;
-    private final CategoryDTOMapper categoryDTOMapper;
 
-    public GetCategoriesHandler(
-            final CategoryRepository categoryRepository, final CategoryDTOMapper categoryDTOMapper) {
+    public GetCategoriesHandler(final CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.categoryDTOMapper = categoryDTOMapper;
     }
 
     @Cacheable("categories")
-    public List<CategoryDTO> getAllCategories() {
+    public List<Category> getAllCategories() {
         log.debug("Fetching all categories");
-        return categoryRepository.findAll().stream()
-                .map(categoryDTOMapper::toDTO)
-                .toList();
+        return categoryRepository.findAll();
     }
 
     @Cacheable("category")
-    public CategoryDTO getCategory(String categorySlug) {
+    public Category getCategory(String categorySlug) {
         log.debug("Fetching category by slug: {}", categorySlug);
-        return categoryDTOMapper.toDTO(
-                categoryRepository.findBySlug(categorySlug).orElseThrow());
+        return categoryRepository.findBySlug(categorySlug).orElseThrow();
     }
 }

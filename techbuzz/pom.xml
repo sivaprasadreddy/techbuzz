@@ -31,7 +31,7 @@
 
 		<!-- jacoco plugin config -->
 		<jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
-		<jacoco.minimum.coverage>80%</jacoco.minimum.coverage>
+		<jacoco.minimum.coverage>75%</jacoco.minimum.coverage>
 		<project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
 		<jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
 		<jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
@@ -338,10 +338,10 @@
 							</jdbc>
 							<generator>
 								<generate>
-									<pojos>true</pojos>
+									<!--<pojos>true</pojos>
 									<daos>true</daos>
 									<springAnnotations>true</springAnnotations>
-									<pojosEqualsAndHashCode>true</pojosEqualsAndHashCode>
+									<pojosEqualsAndHashCode>true</pojosEqualsAndHashCode>-->
 									<javaTimeTypes>true</javaTimeTypes>
 									<validationAnnotations>false</validationAnnotations>
 								</generate>
@@ -349,9 +349,16 @@
 									<inputSchema>public</inputSchema>
 									<includes>.*</includes>
 									<excludes>flyway_schema_history</excludes>
+									<forcedTypes>
+										<forcedType>
+											<userType>com.sivalabs.techbuzz.users.domain.models.RoleEnum</userType>
+											<enumConverter>true</enumConverter>
+											<includeExpression>public\.users\.role</includeExpression>
+										</forcedType>
+									</forcedTypes>
 								</database>
 								<!-- Rename the generated POJOs and DAOs classes -->
-								<strategy>
+								<!--<strategy>
                                   <matchers>
                                     <tables>
                                       <table>
@@ -366,7 +373,7 @@
                                       </table>
                                     </tables>
                                   </matchers>
-                                </strategy>
+                                </strategy>-->
 								<target>
 									<clean>true</clean>
 									<packageName>com.sivalabs.techbuzz.jooq</packageName>

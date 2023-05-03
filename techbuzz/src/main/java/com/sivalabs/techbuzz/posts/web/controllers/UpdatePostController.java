@@ -3,11 +3,11 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 import com.sivalabs.techbuzz.common.exceptions.UnauthorisedAccessException;
 import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
-import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
+import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
 import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostHandler;
 import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostRequest;
-import com.sivalabs.techbuzz.users.domain.User;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import jakarta.validation.Valid;
 import java.util.Objects;
 import org.slf4j.Logger;
@@ -37,13 +37,13 @@ public class UpdatePostController {
     @GetMapping("/posts/{id}/edit")
     @AnyAuthenticatedUser
     public String editPostForm(@PathVariable Long id, @CurrentUser User loginUser, Model model) {
-        PostDTO post = getPostsHandler.getPost(id);
+        Post post = getPostsHandler.getPost(id);
         this.checkPrivilege(post, loginUser);
-        Long categoryId = post.category().id();
+        Long categoryId = post.getCategory().getId();
         UpdatePostRequest updatePostRequest =
-                new UpdatePostRequest(id, post.title(), post.url(), post.content(), categoryId);
+                new UpdatePostRequest(id, post.getTitle(), post.getUrl(), post.getContent(), categoryId);
         model.addAttribute(MODEL_ATTRIBUTE_POST, updatePostRequest);
-        model.addAttribute("categorySlug", post.category().slug());
+        model.addAttribute("categorySlug", post.getCategory().getSlug());
         return "posts/edit-post";
     }
 
@@ -58,18 +58,18 @@ public class UpdatePostController {
         if (bindingResult.hasErrors()) {
             return "posts/edit-post";
         }
-        PostDTO post = getPostsHandler.getPost(id);
+        Post post = getPostsHandler.getPost(id);
         var updatePostRequest =
                 new UpdatePostRequest(id, request.title(), request.url(), request.content(), request.categoryId());
         this.checkPrivilege(post, loginUser);
-        PostDTO updatedPost = updatePostHandler.updatePost(updatePostRequest);
-        log.info("Post with id: {} updated successfully", updatedPost.id());
+        Post updatedPost = updatePostHandler.updatePost(updatePostRequest);
+        log.info("Post with id: {} updated successfully", updatedPost.getId());
         redirectAttributes.addFlashAttribute("message", "Post updated successfully");
-        return "redirect:/posts/" + updatedPost.id() + "/edit";
+        return "redirect:/posts/" + updatedPost.getId() + "/edit";
     }
 
-    private void checkPrivilege(PostDTO post, User loginUser) {
-        if (!(Objects.equals(post.createdBy().getId(), loginUser.getId()) || loginUser.isAdminOrModerator())) {
+    private void checkPrivilege(Post post, User loginUser) {
+        if (!(Objects.equals(post.getCreatedBy().getId(), loginUser.getId()) || loginUser.isAdminOrModerator())) {
             throw new UnauthorisedAccessException("Permission Denied");
         }
     }

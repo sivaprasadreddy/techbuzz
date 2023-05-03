@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.users.domain;
+package com.sivalabs.techbuzz.users.domain.models;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -27,6 +27,10 @@ public class User implements Serializable {
     private String verificationToken;
 
     public User() {}
+
+    public User(final Long id) {
+        this.id = id;
+    }
 
     public User(
             final Long id,

@@ -1,6 +1,6 @@
 package com.sivalabs.techbuzz.security;
 
-import com.sivalabs.techbuzz.users.domain.UserRepository;
+import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
 import java.util.Optional;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.userdetails.UserDetails;

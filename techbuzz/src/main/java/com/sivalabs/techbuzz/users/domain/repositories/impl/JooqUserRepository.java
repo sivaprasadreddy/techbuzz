@@ -1,8 +1,10 @@
-package com.sivalabs.techbuzz.users.domain;
+package com.sivalabs.techbuzz.users.domain.repositories.impl;
 
 import static com.sivalabs.techbuzz.jooq.tables.Users.USERS;
 
 import com.sivalabs.techbuzz.jooq.tables.records.UsersRecord;
+import com.sivalabs.techbuzz.users.domain.models.User;
+import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.jooq.DSLContext;
@@ -18,7 +20,7 @@ class JooqUserRepository implements UserRepository {
     }
 
     public Optional<User> findByEmail(String email) {
-        return this.dsl.selectFrom(USERS).where(USERS.EMAIL.eq(email)).fetchOptional(mapToUser());
+        return this.dsl.selectFrom(USERS).where(USERS.EMAIL.eq(email)).fetchOptional(UserRecordMapper.INSTANCE);
     }
 
     public boolean existsByEmail(String email) {
@@ -30,26 +32,26 @@ class JooqUserRepository implements UserRepository {
                 .selectFrom(USERS)
                 .where(USERS.EMAIL.eq(email))
                 .and(USERS.VERIFICATION_TOKEN.eq(token))
-                .fetchOptional(mapToUser());
+                .fetchOptional(UserRecordMapper.INSTANCE);
     }
 
     @Override
     public User save(User user) {
-        this.dsl
+        return this.dsl
                 .insertInto(USERS)
                 .set(USERS.EMAIL, user.getEmail())
                 .set(USERS.PASSWORD, user.getPassword())
                 .set(USERS.NAME, user.getName())
-                .set(USERS.ROLE, user.getRole().name())
+                .set(USERS.ROLE, user.getRole())
                 .set(USERS.VERIFIED, user.isVerified())
                 .set(USERS.VERIFICATION_TOKEN, user.getVerificationToken())
                 .set(USERS.CREATED_AT, LocalDateTime.now())
-                .execute();
-        return findByEmail(user.getEmail()).orElseThrow();
+                .returning()
+                .fetchOne(UserRecordMapper.INSTANCE);
     }
 
     @Override
-    public void update(User user) {
+    public void updateVerificationStatus(User user) {
         this.dsl
                 .update(USERS)
                 .set(USERS.VERIFIED, user.isVerified())
@@ -58,14 +60,21 @@ class JooqUserRepository implements UserRepository {
                 .execute();
     }
 
-    private static RecordMapper<UsersRecord, User> mapToUser() {
-        return r -> new User(
-                r.getId(),
-                r.getName(),
-                r.getEmail(),
-                r.getPassword(),
-                r.getRole() != null ? RoleEnum.valueOf(r.getRole()) : null,
-                r.getVerified() != null,
-                r.getVerificationToken());
+    static class UserRecordMapper implements RecordMapper<UsersRecord, User> {
+        static final UserRecordMapper INSTANCE = new UserRecordMapper();
+
+        private UserRecordMapper() {}
+
+        @Override
+        public User map(UsersRecord r) {
+            return new User(
+                    r.getId(),
+                    r.getName(),
+                    r.getEmail(),
+                    r.getPassword(),
+                    r.getRole(),
+                    r.getVerified() != null,
+                    r.getVerificationToken());
+        }
     }
 }

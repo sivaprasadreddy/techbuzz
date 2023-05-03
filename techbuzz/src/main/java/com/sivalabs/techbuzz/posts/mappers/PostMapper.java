@@ -1,51 +1,27 @@
 package com.sivalabs.techbuzz.posts.mappers;
 
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
-import com.sivalabs.techbuzz.posts.domain.models.CategoryDTO;
-import com.sivalabs.techbuzz.posts.domain.models.PostDTO;
-import com.sivalabs.techbuzz.posts.domain.models.PostUserViewDTO;
-import com.sivalabs.techbuzz.posts.domain.models.VoteDTO;
-import com.sivalabs.techbuzz.users.domain.User;
-import com.sivalabs.techbuzz.users.domain.UserDTO;
+import com.sivalabs.techbuzz.posts.domain.dtos.PostUserViewDTO;
+import com.sivalabs.techbuzz.posts.domain.models.Category;
+import com.sivalabs.techbuzz.posts.domain.models.Post;
+import com.sivalabs.techbuzz.posts.domain.models.Vote;
+import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
 import java.util.Objects;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PostDTOMapper {
-    private final CategoryDTOMapper categoryDTOMapper;
-    private final VoteDTOMapper voteDTOMapper;
+public class PostMapper {
     private final UserDTOMapper userDTOMapper;
 
-    public PostDTOMapper(
-            final CategoryDTOMapper categoryDTOMapper,
-            final VoteDTOMapper voteDTOMapper,
-            final UserDTOMapper userDTOMapper) {
-        this.categoryDTOMapper = categoryDTOMapper;
-        this.voteDTOMapper = voteDTOMapper;
+    public PostMapper(final UserDTOMapper userDTOMapper) {
         this.userDTOMapper = userDTOMapper;
     }
 
-    public PostDTO toDTO(Post post) {
-        CategoryDTO category = categoryDTOMapper.toDTO(post.getCategory());
-        Set<VoteDTO> voteDTOS = voteDTOMapper.toDTOs(post.getVotes());
-        UserDTO user = userDTOMapper.toDTO(post.getCreatedBy());
-        return new PostDTO(
-                post.getId(),
-                post.getTitle(),
-                post.getUrl(),
-                post.getContent(),
-                category,
-                voteDTOS,
-                user,
-                post.getCreatedAt(),
-                post.getUpdatedAt());
-    }
-
     public PostUserViewDTO toPostUserViewDTO(User loginUser, Post post) {
-        CategoryDTO category = categoryDTOMapper.toDTO(post.getCategory());
-        Set<VoteDTO> voteDTOS = voteDTOMapper.toDTOs(post.getVotes());
+        Category category = post.getCategory();
+        Set<Vote> voteDTOS = post.getVotes();
         UserDTO user = userDTOMapper.toDTO(post.getCreatedBy());
         boolean editable = this.canCurrentUserEditPost(loginUser, post);
         boolean upVoted = isVotedByUser(post, loginUser, 1);

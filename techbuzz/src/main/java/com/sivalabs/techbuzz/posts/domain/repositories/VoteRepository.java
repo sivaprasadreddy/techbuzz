@@ -1,6 +1,6 @@
 package com.sivalabs.techbuzz.posts.domain.repositories;
 
-import com.sivalabs.techbuzz.posts.domain.entities.Vote;
+import com.sivalabs.techbuzz.posts.domain.models.Vote;
 import java.util.Optional;
 
 public interface VoteRepository {
@@ -10,4 +10,6 @@ public interface VoteRepository {
     void deleteVotesForPost(Long postId);
 
     Vote save(Vote vote);
+
+    void update(Vote vote);
 }

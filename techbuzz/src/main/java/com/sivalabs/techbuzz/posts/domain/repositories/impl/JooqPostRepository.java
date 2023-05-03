@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.posts.domain.repositories;
+package com.sivalabs.techbuzz.posts.domain.repositories.impl;
 
 import static com.sivalabs.techbuzz.jooq.Tables.CATEGORIES;
 import static com.sivalabs.techbuzz.jooq.Tables.VOTES;
@@ -8,13 +8,14 @@ import static org.jooq.impl.DSL.multiset;
 import static org.jooq.impl.DSL.row;
 import static org.jooq.impl.DSL.select;
 
+import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.common.model.PagedResult;
 import com.sivalabs.techbuzz.jooq.tables.records.PostsRecord;
-import com.sivalabs.techbuzz.posts.domain.entities.Category;
-import com.sivalabs.techbuzz.posts.domain.entities.Post;
-import com.sivalabs.techbuzz.posts.domain.entities.Vote;
-import com.sivalabs.techbuzz.users.domain.User;
-import java.math.BigDecimal;
+import com.sivalabs.techbuzz.posts.domain.models.Category;
+import com.sivalabs.techbuzz.posts.domain.models.Post;
+import com.sivalabs.techbuzz.posts.domain.models.Vote;
+import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
+import com.sivalabs.techbuzz.users.domain.models.User;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
@@ -30,40 +31,33 @@ import org.springframework.stereotype.Repository;
 @Repository
 class JooqPostRepository implements PostRepository {
     private final DSLContext dsl;
+    private final ApplicationProperties properties;
 
-    JooqPostRepository(DSLContext dsl) {
+    JooqPostRepository(DSLContext dsl, ApplicationProperties properties) {
         this.dsl = dsl;
+        this.properties = properties;
     }
 
     @Override
     public PagedResult<Post> findByCategorySlug(String categorySlug, Integer page) {
-        int totalElements = this.dsl
-                .selectCount()
-                .from(POSTS)
-                .join(CATEGORIES)
-                .on(POSTS.CAT_ID.eq(CATEGORIES.ID))
-                .where(CATEGORIES.SLUG.eq(categorySlug))
-                .execute();
+        int totalElements = this.dsl.fetchCount(
+                POSTS.join(CATEGORIES).on(POSTS.CAT_ID.eq(CATEGORIES.ID)).where(CATEGORIES.SLUG.eq(categorySlug)));
 
         List<Long> postIds = this.dsl
-                .select(POSTS.ID)
+                .selectDistinct(POSTS.ID, POSTS.CREATED_AT)
                 .from(POSTS)
                 .join(CATEGORIES)
                 .on(POSTS.CAT_ID.eq(CATEGORIES.ID))
                 .where(CATEGORIES.SLUG.eq(categorySlug))
-                .fetch()
-                .getValues(POSTS.ID);
+                .orderBy(POSTS.CREATED_AT.desc())
+                .limit(properties.postsPerPage())
+                .offset((page - 1) * properties.postsPerPage())
+                .fetch(POSTS.ID);
+
         List<Post> posts = findPosts(postIds);
-        int totalPages = totalElements / 10;
+        int totalPages = (int) Math.ceil((double) totalElements / (double) properties.postsPerPage());
         return new PagedResult<>(
-                posts,
-                totalElements,
-                page,
-                totalPages,
-                page == 1,
-                totalPages == page,
-                totalPages > page,
-                totalPages < page);
+                posts, totalElements, page, totalPages, page == 1, totalPages == page, totalPages > page, page > 1);
     }
 
     @Override
@@ -124,8 +118,8 @@ class JooqPostRepository implements PostRepository {
                 .from(POSTS);
     }
 
-    private static Function4<Long, Long, Long, BigDecimal, Vote> mapToVote() {
-        return (id, userId, postId, val) -> new Vote(id, userId, postId, val.intValue(), null, null);
+    private static Function4<Long, Long, Long, Integer, Vote> mapToVote() {
+        return (id, userId, postId, val) -> new Vote(id, userId, postId, val, null, null);
     }
 
     private static Function3<Long, String, String, Category> mapToCategory() {
@@ -149,6 +143,20 @@ class JooqPostRepository implements PostRepository {
                 .returning(POSTS.ID)
                 .fetchSingle();
         return findById(postsRecord.getId()).orElseThrow();
+    }
+
+    @Override
+    public Post update(Post post) {
+        this.dsl
+                .update(POSTS)
+                .set(POSTS.TITLE, post.getTitle())
+                .set(POSTS.URL, post.getUrl())
+                .set(POSTS.CONTENT, post.getContent())
+                .set(POSTS.CAT_ID, post.getCategory().getId())
+                .set(POSTS.UPDATED_AT, post.getUpdatedAt())
+                .where(POSTS.ID.eq(post.getId()))
+                .execute();
+        return findById(post.getId()).orElseThrow();
     }
 
     @Override
