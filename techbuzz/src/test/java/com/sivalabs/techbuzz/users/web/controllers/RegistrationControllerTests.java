@@ -14,9 +14,6 @@ import org.junit.jupiter.api.Test;
 
 class RegistrationControllerTests extends AbstractIntegrationTest {
 
-    // @MockBean
-    // EmailService emailService;
-
     @Test
     void shouldShowRegistrationFormPage() throws Exception {
         mockMvc.perform(get("/registration"))

@@ -1,8 +1,6 @@
 package com.sivalabs.techbuzz.config.logging;
 
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -28,16 +26,6 @@ public class LoggingAspect {
             + "@annotation(com.sivalabs.techbuzz.config.logging.Loggable)")
     public void applicationPackagePointcut() {
         // pointcut definition
-    }
-
-    @AfterThrowing(pointcut = "applicationPackagePointcut()", throwing = "e")
-    public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
-        logger.error(
-                "Exception in {}.{}() with cause = '{}'",
-                joinPoint.getSignature().getDeclaringTypeName(),
-                joinPoint.getSignature().getName(),
-                e.getCause() == null ? "NULL" : e.getCause(),
-                e);
     }
 
     @Around("applicationPackagePointcut()")

@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.users.domain.repositories.impl;
+package com.sivalabs.techbuzz.users.adapter.repositories;
 
 import static com.sivalabs.techbuzz.jooq.tables.Users.USERS;
 

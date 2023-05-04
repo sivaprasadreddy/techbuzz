@@ -3,10 +3,9 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 import com.sivalabs.techbuzz.common.exceptions.UnauthorisedAccessException;
 import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
+import com.sivalabs.techbuzz.posts.domain.dtos.UpdatePostRequest;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
-import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
-import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostHandler;
-import com.sivalabs.techbuzz.posts.usecases.updatepost.UpdatePostRequest;
+import com.sivalabs.techbuzz.posts.domain.services.PostService;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import jakarta.validation.Valid;
 import java.util.Objects;
@@ -26,18 +25,16 @@ public class UpdatePostController {
     private static final Logger log = LoggerFactory.getLogger(UpdatePostController.class);
 
     private static final String MODEL_ATTRIBUTE_POST = "post";
-    private final GetPostsHandler getPostsHandler;
-    private final UpdatePostHandler updatePostHandler;
+    private final PostService postService;
 
-    public UpdatePostController(final GetPostsHandler getPostsHandler, final UpdatePostHandler updatePostHandler) {
-        this.getPostsHandler = getPostsHandler;
-        this.updatePostHandler = updatePostHandler;
+    public UpdatePostController(PostService postService) {
+        this.postService = postService;
     }
 
     @GetMapping("/posts/{id}/edit")
     @AnyAuthenticatedUser
     public String editPostForm(@PathVariable Long id, @CurrentUser User loginUser, Model model) {
-        Post post = getPostsHandler.getPost(id);
+        Post post = postService.getPost(id);
         this.checkPrivilege(post, loginUser);
         Long categoryId = post.getCategory().getId();
         UpdatePostRequest updatePostRequest =
@@ -58,11 +55,11 @@ public class UpdatePostController {
         if (bindingResult.hasErrors()) {
             return "posts/edit-post";
         }
-        Post post = getPostsHandler.getPost(id);
+        Post post = postService.getPost(id);
         var updatePostRequest =
                 new UpdatePostRequest(id, request.title(), request.url(), request.content(), request.categoryId());
         this.checkPrivilege(post, loginUser);
-        Post updatedPost = updatePostHandler.updatePost(updatePostRequest);
+        Post updatedPost = postService.updatePost(updatePostRequest);
         log.info("Post with id: {} updated successfully", updatedPost.getId());
         redirectAttributes.addFlashAttribute("message", "Post updated successfully");
         return "redirect:/posts/" + updatedPost.getId() + "/edit";

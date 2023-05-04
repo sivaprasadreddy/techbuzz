@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.posts.domain.repositories.impl;
+package com.sivalabs.techbuzz.posts.adapter.repositories;
 
 import static com.sivalabs.techbuzz.jooq.tables.Votes.VOTES;
 

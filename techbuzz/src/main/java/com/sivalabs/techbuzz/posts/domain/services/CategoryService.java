@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.posts.usecases.getcategories;
+package com.sivalabs.techbuzz.posts.domain.services;
 
 import com.sivalabs.techbuzz.posts.domain.models.Category;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
@@ -11,12 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class GetCategoriesHandler {
-    private static final Logger log = LoggerFactory.getLogger(GetCategoriesHandler.class);
-
+public class CategoryService {
+    private static final Logger log = LoggerFactory.getLogger(CategoryService.class);
     private final CategoryRepository categoryRepository;
 
-    public GetCategoriesHandler(final CategoryRepository categoryRepository) {
+    public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 

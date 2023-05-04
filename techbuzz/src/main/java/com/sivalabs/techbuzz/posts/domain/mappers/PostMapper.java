@@ -1,12 +1,12 @@
-package com.sivalabs.techbuzz.posts.mappers;
+package com.sivalabs.techbuzz.posts.domain.mappers;
 
 import com.sivalabs.techbuzz.posts.domain.dtos.PostViewDTO;
 import com.sivalabs.techbuzz.posts.domain.models.Category;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.models.Vote;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
+import com.sivalabs.techbuzz.users.domain.mappers.UserDTOMapper;
 import com.sivalabs.techbuzz.users.domain.models.User;
-import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 

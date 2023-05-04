@@ -2,8 +2,8 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
-import com.sivalabs.techbuzz.posts.usecases.createvote.CreateVoteRequest;
-import com.sivalabs.techbuzz.posts.usecases.createvote.VoteHandler;
+import com.sivalabs.techbuzz.posts.domain.dtos.CreateVoteRequest;
+import com.sivalabs.techbuzz.posts.domain.services.PostService;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
 class AddVoteController {
-    private final VoteHandler voteHandler;
+    private final PostService postService;
 
-    public AddVoteController(final VoteHandler voteHandler) {
-        this.voteHandler = voteHandler;
+    AddVoteController(PostService postService) {
+        this.postService = postService;
     }
 
     @PostMapping("/api/votes")
@@ -25,7 +25,7 @@ class AddVoteController {
     @AnyAuthenticatedUser
     public ResponseEntity<Void> createVote(@Valid @RequestBody CreateVoteRequest request, @CurrentUser User loginUser) {
         var createVoteRequest = new CreateVoteRequest(request.postId(), loginUser.getId(), request.value());
-        voteHandler.addVote(createVoteRequest);
+        postService.addVote(createVoteRequest);
         return ResponseEntity.ok().build();
     }
 }

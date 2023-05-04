@@ -3,10 +3,11 @@ package com.sivalabs.techbuzz.posts.mappers;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sivalabs.techbuzz.posts.domain.dtos.PostViewDTO;
+import com.sivalabs.techbuzz.posts.domain.mappers.PostMapper;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.models.Vote;
+import com.sivalabs.techbuzz.users.domain.mappers.UserDTOMapper;
 import com.sivalabs.techbuzz.users.domain.models.User;
-import com.sivalabs.techbuzz.users.mappers.UserDTOMapper;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

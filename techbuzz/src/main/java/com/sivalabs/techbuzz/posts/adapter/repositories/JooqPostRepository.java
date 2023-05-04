@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.posts.domain.repositories.impl;
+package com.sivalabs.techbuzz.posts.adapter.repositories;
 
 import static com.sivalabs.techbuzz.jooq.Tables.CATEGORIES;
 import static com.sivalabs.techbuzz.jooq.Tables.VOTES;

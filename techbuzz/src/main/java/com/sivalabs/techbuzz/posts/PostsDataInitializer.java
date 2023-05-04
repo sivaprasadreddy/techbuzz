@@ -7,7 +7,7 @@ import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.users.domain.models.User;
-import com.sivalabs.techbuzz.users.usecases.getuser.GetUserHandler;
+import com.sivalabs.techbuzz.users.domain.services.UserService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -27,17 +27,17 @@ public class PostsDataInitializer implements CommandLineRunner {
 
     private final PostRepository postRepository;
     private final CategoryRepository categoryRepository;
-    private final GetUserHandler getUserHandler;
+    private final UserService userService;
     private final ApplicationProperties properties;
 
     public PostsDataInitializer(
             final PostRepository postRepository,
             final CategoryRepository categoryRepository,
-            final GetUserHandler getUserHandler,
+            final UserService userService,
             final ApplicationProperties properties) {
         this.postRepository = postRepository;
         this.categoryRepository = categoryRepository;
-        this.getUserHandler = getUserHandler;
+        this.userService = userService;
         this.properties = properties;
     }
 
@@ -66,7 +66,7 @@ public class PostsDataInitializer implements CommandLineRunner {
     public long importPosts(InputStream is) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         PostsData postsData = objectMapper.readValue(is, PostsData.class);
-        User user = getUserHandler.getUserByEmail(properties.adminEmail()).orElseThrow();
+        User user = userService.getUserByEmail(properties.adminEmail()).orElseThrow();
         long count = 0L;
         for (PostEntry postEntry : postsData.posts) {
             Post post = convertToPost(postEntry, user);

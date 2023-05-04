@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.users.mappers;
+package com.sivalabs.techbuzz.users.domain.mappers;
 
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.models.User;

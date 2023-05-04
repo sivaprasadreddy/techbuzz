@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.users.usecases.registration;
+package com.sivalabs.techbuzz.users.domain.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

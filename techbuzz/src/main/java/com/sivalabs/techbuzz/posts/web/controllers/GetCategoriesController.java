@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class GetCategoriesController {
     private final CategoryRepository categoryRepository;
 
+    public GetCategoriesController(final CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
     @GetMapping
     public List<Category> allCategories() {
         return categoryRepository.findAll();
-    }
-
-    public GetCategoriesController(final CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
     }
 }

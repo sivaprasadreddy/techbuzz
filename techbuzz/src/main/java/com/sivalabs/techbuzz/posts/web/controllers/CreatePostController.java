@@ -2,9 +2,9 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
+import com.sivalabs.techbuzz.posts.domain.dtos.CreatePostRequest;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
-import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostHandler;
-import com.sivalabs.techbuzz.posts.usecases.createpost.CreatePostRequest;
+import com.sivalabs.techbuzz.posts.domain.services.PostService;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -22,10 +22,10 @@ public class CreatePostController {
     private static final Logger log = LoggerFactory.getLogger(CreatePostController.class);
 
     private static final String MODEL_ATTRIBUTE_POST = "post";
-    private final CreatePostHandler createPostHandler;
+    private final PostService postService;
 
-    public CreatePostController(final CreatePostHandler createPostHandler) {
-        this.createPostHandler = createPostHandler;
+    public CreatePostController(PostService postService) {
+        this.postService = postService;
     }
 
     @GetMapping("/posts/new")
@@ -47,7 +47,7 @@ public class CreatePostController {
         }
         var createPostRequest = new CreatePostRequest(
                 request.title(), request.url(), request.content(), request.categoryId(), loginUser.getId());
-        Post post = createPostHandler.createPost(createPostRequest);
+        Post post = postService.createPost(createPostRequest);
         log.info("Post saved successfully with id: {}", post.getId());
         redirectAttributes.addFlashAttribute("message", "Post saved successfully");
         return "redirect:/c/" + post.getCategory().getSlug();

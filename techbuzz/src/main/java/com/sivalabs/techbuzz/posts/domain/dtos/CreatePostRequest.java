@@ -1,4 +1,4 @@
-package com.sivalabs.techbuzz.posts.usecases.createpost;
+package com.sivalabs.techbuzz.posts.domain.dtos;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

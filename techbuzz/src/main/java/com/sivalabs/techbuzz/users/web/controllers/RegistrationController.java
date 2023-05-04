@@ -5,9 +5,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
 import com.sivalabs.techbuzz.notifications.EmailService;
+import com.sivalabs.techbuzz.users.domain.dtos.CreateUserRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
-import com.sivalabs.techbuzz.users.usecases.registration.CreateUserHandler;
-import com.sivalabs.techbuzz.users.usecases.registration.CreateUserRequest;
+import com.sivalabs.techbuzz.users.domain.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.Map;
@@ -27,11 +27,11 @@ class RegistrationController {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
     private static final String REGISTRATION_VIEW = "users/registration";
 
-    private final CreateUserHandler createUserHandler;
+    private final UserService userService;
     private final EmailService emailService;
 
-    public RegistrationController(final CreateUserHandler createUserHandler, final EmailService emailService) {
-        this.createUserHandler = createUserHandler;
+    public RegistrationController(final UserService userService, final EmailService emailService) {
+        this.userService = userService;
         this.emailService = emailService;
     }
 
@@ -51,7 +51,7 @@ class RegistrationController {
             return REGISTRATION_VIEW;
         }
         try {
-            UserDTO userDTO = createUserHandler.createUser(createUserRequest);
+            UserDTO userDTO = userService.createUser(createUserRequest);
             this.sendVerificationEmail(request, userDTO);
             redirectAttributes.addFlashAttribute("message", "Registration is successful");
             return "redirect:/registrationStatus";
