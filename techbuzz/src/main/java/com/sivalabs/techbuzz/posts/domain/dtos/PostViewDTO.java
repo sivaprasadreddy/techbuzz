@@ -6,7 +6,7 @@ import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import java.time.LocalDateTime;
 import java.util.Set;
 
-public record PostUserViewDTO(
+public record PostViewDTO(
         Long id,
         String title,
         String url,

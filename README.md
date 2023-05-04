@@ -1,6 +1,8 @@
 # TechBuzz
 TechBuzz is a place to share the interesting tech news such as blog posts, videos, release news etc.
 
+[![Build](https://github.com/sivaprasadreddy/techbuzz/actions/workflows/maven.yml/badge.svg)](https://github.com/sivaprasadreddy/techbuzz/actions/workflows/maven.yml)
+
 ## Features
 * Login with username/password
 * Register with username/password
@@ -13,7 +15,7 @@ TechBuzz is a place to share the interesting tech news such as blog posts, video
 
 ## Tech Stack
 * Java, SpringBoot
-* Postgres, JPA, Spring Data Jpa, FlywayDb
+* Postgres, jOOQ, FlywayDb
 * Spring Security
 * Thymeleaf, Bootstrap, jQuery
 * JUnit 5, Testcontainers

@@ -31,7 +31,7 @@
 
 		<!-- jacoco plugin config -->
 		<jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
-		<jacoco.minimum.coverage>75%</jacoco.minimum.coverage>
+		<jacoco.minimum.coverage>80%</jacoco.minimum.coverage>
 		<project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
 		<jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
 		<jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>

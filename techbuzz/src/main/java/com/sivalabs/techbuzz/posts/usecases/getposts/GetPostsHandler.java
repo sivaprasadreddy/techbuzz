@@ -2,7 +2,7 @@ package com.sivalabs.techbuzz.posts.usecases.getposts;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
 import com.sivalabs.techbuzz.common.model.PagedResult;
-import com.sivalabs.techbuzz.posts.domain.dtos.PostUserViewDTO;
+import com.sivalabs.techbuzz.posts.domain.dtos.PostViewDTO;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.posts.mappers.PostMapper;
@@ -34,16 +34,16 @@ public class GetPostsHandler {
         return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
     }
 
-    public PagedResult<PostUserViewDTO> getPostsByCategorySlug(String category, Integer page) {
+    public PagedResult<PostViewDTO> getPostsByCategorySlug(String category, Integer page) {
         log.debug("Fetching posts by category={}, page={}", category, page);
         PagedResult<Post> postPagedResult = postRepository.findByCategorySlug(category, page);
         return convert(postPagedResult);
     }
 
-    private PagedResult<PostUserViewDTO> convert(PagedResult<Post> postsPage) {
+    private PagedResult<PostViewDTO> convert(PagedResult<Post> postsPage) {
         User loginUser = securityService.loginUser();
-        List<PostUserViewDTO> postDTOs = postsPage.getData().stream()
-                .map(post -> postMapper.toPostUserViewDTO(loginUser, post))
+        List<PostViewDTO> postDTOs = postsPage.getData().stream()
+                .map(post -> postMapper.toPostViewDTO(loginUser, post))
                 .toList();
         return new PagedResult<>(
                 postDTOs,

@@ -3,6 +3,7 @@ package com.sivalabs.techbuzz.posts.domain.models;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import jakarta.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 
 public class Post {
@@ -46,6 +47,27 @@ public class Post {
         this.votes = votes;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    public boolean canEditByUser(User loginUser) {
+        return loginUser != null
+                && (Objects.equals(this.getCreatedBy().getId(), loginUser.getId()) || loginUser.isAdminOrModerator());
+    }
+
+    public boolean isUpVotedByUser(User loginUser) {
+        return this.isVotedByUser(loginUser, 1);
+    }
+
+    public boolean isDownVotedByUser(User loginUser) {
+        return this.isVotedByUser(loginUser, -1);
+    }
+
+    private boolean isVotedByUser(User loginUser, int vote) {
+        if (loginUser == null || this.getVotes() == null) {
+            return false;
+        }
+        return this.getVotes().stream()
+                .anyMatch(v -> Objects.equals(v.getUserId(), loginUser.getId()) && v.getValue() == vote);
     }
 
     public void setId(final Long id) {

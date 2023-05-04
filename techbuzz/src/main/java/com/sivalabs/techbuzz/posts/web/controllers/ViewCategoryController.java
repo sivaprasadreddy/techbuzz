@@ -1,7 +1,7 @@
 package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.common.model.PagedResult;
-import com.sivalabs.techbuzz.posts.domain.dtos.PostUserViewDTO;
+import com.sivalabs.techbuzz.posts.domain.dtos.PostViewDTO;
 import com.sivalabs.techbuzz.posts.domain.models.Category;
 import com.sivalabs.techbuzz.posts.usecases.getcategories.GetCategoriesHandler;
 import com.sivalabs.techbuzz.posts.usecases.getposts.GetPostsHandler;
@@ -32,7 +32,7 @@ public class ViewCategoryController {
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             Model model) {
         log.info("Fetching posts for category {} with page: {}", categorySlug, page);
-        PagedResult<PostUserViewDTO> data = getPostsHandler.getPostsByCategorySlug(categorySlug, page);
+        PagedResult<PostViewDTO> data = getPostsHandler.getPostsByCategorySlug(categorySlug, page);
         if (data.getData().isEmpty() && (page > 1 && page > data.getTotalPages())) {
             return "redirect:/c/" + categorySlug + "?page=" + data.getTotalPages();
         }

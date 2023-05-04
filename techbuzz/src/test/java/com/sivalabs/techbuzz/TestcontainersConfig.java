@@ -22,10 +22,4 @@ public class TestcontainersConfig {
         registry.add("spring.mail.port", () -> String.valueOf(container.getMappedPort(1025)));
         return container;
     }
-
-    /*static {
-        mailhog.start();
-        System.setProperty("spring.mail.host", mailhog.getHost());
-        System.setProperty("spring.mail.port", String.valueOf(mailhog.getMappedPort(1025)));
-    }*/
 }
