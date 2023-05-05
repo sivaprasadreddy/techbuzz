@@ -64,6 +64,7 @@ class JooqPostRepository implements PostRepository {
     public List<Post> findPosts(List<Long> postIds) {
         return selectPostSpec()
                 .where(POSTS.ID.in(postIds))
+                .orderBy(POSTS.CREATED_AT.desc())
                 .fetch(r -> new Post(
                         r.value1(),
                         r.value2(),
