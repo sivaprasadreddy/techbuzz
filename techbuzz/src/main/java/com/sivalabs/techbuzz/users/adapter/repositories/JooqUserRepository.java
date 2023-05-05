@@ -73,7 +73,7 @@ class JooqUserRepository implements UserRepository {
                     r.getEmail(),
                     r.getPassword(),
                     r.getRole(),
-                    r.getVerified() != null,
+                    r.getVerified() != null && r.getVerified(),
                     r.getVerificationToken());
         }
     }
