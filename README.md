@@ -38,7 +38,7 @@ $ ./mvnw spring-boot:run
 ## Run application using docker-compose
 
 ```shell
-$ ./run.sh start_app
+$ ./run.sh start
 ```
 * App: http://localhost:8080/
 * MailHog: http://localhost:8025/
