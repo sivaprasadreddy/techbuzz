@@ -10,6 +10,15 @@ on:
   push:
     branches:
       - '**'
+
+    paths-ignore:
+      - 'README.md'
+      - 'adr/**'
+      - 'deployment/**'
+      - '.gitpod.*'
+      - '.devcontainer/**'
+      - 'run.sh'
+
   pull_request:
     branches: [ "main" ]
 
