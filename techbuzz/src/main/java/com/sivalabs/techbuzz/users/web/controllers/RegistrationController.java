@@ -4,6 +4,7 @@ import static java.net.URLEncoder.encode;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
+import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.dtos.CreateUserRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
+@Loggable
 class RegistrationController {
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
     private static final String REGISTRATION_VIEW = "users/registration";

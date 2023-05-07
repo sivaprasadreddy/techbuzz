@@ -2,6 +2,7 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
+import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.posts.domain.dtos.CreateVoteRequest;
 import com.sivalabs.techbuzz.posts.domain.services.PostService;
 import com.sivalabs.techbuzz.users.domain.models.User;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Controller
+@Loggable
 class AddVoteController {
     private final PostService postService;
 

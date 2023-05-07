@@ -3,6 +3,7 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 import com.sivalabs.techbuzz.common.exceptions.UnauthorisedAccessException;
 import com.sivalabs.techbuzz.config.annotations.AnyAuthenticatedUser;
 import com.sivalabs.techbuzz.config.annotations.CurrentUser;
+import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.posts.domain.dtos.UpdatePostRequest;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.services.PostService;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@Loggable
 public class UpdatePostController {
     private static final Logger log = LoggerFactory.getLogger(UpdatePostController.class);
 

@@ -21,6 +21,7 @@
 		<jquery.version>3.6.4</jquery.version>
 		<fontawesome.version>6.4.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
+		<instancio.version>2.15.0</instancio.version>
 
 		<!-- plugins config -->
 		<spotless-maven-plugin.version>2.36.0</spotless-maven-plugin.version>
@@ -169,6 +170,11 @@
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.instancio</groupId>
+			<artifactId>instancio-junit</artifactId>
+			<version>${instancio.version}</version>
 		</dependency>
 	</dependencies>
 
