@@ -25,6 +25,21 @@ TechBuzz is a place to share the interesting tech news such as blog posts, video
 * [Technology selection for UI](adr/ui-tech-selection.md)
 * [Tech selection for database persistence](adr/persistence-library-selection.md)
 
+### Install Prerequisites
+
+1. Install Java, Maven using SDKMAN
+    ```shell
+    $ curl -s "https://get.sdkman.io" | bash
+    $ source "$HOME/.sdkman/bin/sdkman-init.sh"
+    $ sdk version
+    $ sdk env install
+    $ java -version
+    $ mvn --version
+    ```
+2. Install Docker
+
+    Follow https://docs.docker.com/engine/install/ for installing Docker for your OS.
+
 ## HOW TO?
 
 ### Run Unit / Integration Tests
@@ -47,10 +62,10 @@ and run the application locally:
 
 ```shell
 $ ./run.sh start_infra
-$ ./mvnw spring-boot:run
+$ ./mvnw -pl techbuzz spring-boot:run
 ```
 
-Instead, you can simply run `./mvnw spring-boot:test-run` which will automatically spin up the required services 
+Instead, you can simply run `./mvnw -pl techbuzz spring-boot:test-run` which will automatically spin up the required services 
 as docker containers using Testcontainers and starts the application.
 
 ## Run application using docker-compose
@@ -60,6 +75,13 @@ $ ./run.sh start
 ```
 * App: http://localhost:8080/
 * MailHog: http://localhost:8025/
+
+### Run PlayWright E2E Tests
+Make sure the application is running and configure correct values in `src/test/resources/config.json` file.
+
+```shell
+$ ./mvnw -pl e2e-tests test -DskipTests=false
+```
 
 ### Run Gatling Tests
 

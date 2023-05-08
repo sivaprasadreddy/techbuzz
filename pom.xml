@@ -19,6 +19,7 @@
 
 	<modules>
 		<module>techbuzz</module>
+		<module>e2e-tests</module>
 		<module>gatling-tests</module>
 	</modules>
 

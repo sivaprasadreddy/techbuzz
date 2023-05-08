@@ -1,0 +1,9 @@
+{
+  "rootUrl": "http://localhost:18080",
+  "headlessMode": true,
+  "slowMo": 1000,
+  "adminUserEmail": "admin@gmail.com",
+  "adminUserPassword": "admin",
+  "normalUserEmail": "siva@gmail.com",
+  "normalUserPassword": "siva"
+}
