@@ -6,7 +6,6 @@ import static utils.SimulationHelper.getConfig;
 
 import io.gatling.javaapi.core.*;
 import io.gatling.javaapi.http.*;
-import java.time.Duration;
 import utils.SimulationHelper;
 
 public class PostsBrowsingSimulation extends Simulation {
@@ -23,10 +22,10 @@ public class PostsBrowsingSimulation extends Simulation {
 
     ChainBuilder browsePosts = exec(byCategory);
 
-    ScenarioBuilder scnBrowsePosts =
-            scenario("Browse Posts").during(Duration.ofMinutes(2), "Counter").on(browsePosts);
+    // ScenarioBuilder scnBrowsePosts =
+    //        scenario("Browse Posts").during(Duration.ofMinutes(2), "Counter").on(browsePosts);
 
-    // ScenarioBuilder scnBrowsePosts = scenario("Browse Posts").exec(browsePosts);
+    ScenarioBuilder scnBrowsePosts = scenario("Browse Posts").exec(browsePosts);
 
     {
         setUp(scnBrowsePosts.injectOpen(rampUsers(getConfig().getInt("users")).during(10)))
