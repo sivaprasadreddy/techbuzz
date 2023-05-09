@@ -4,6 +4,6 @@
   "slowMo": 1000,
   "adminUserEmail": "admin@gmail.com",
   "adminUserPassword": "admin",
-  "normalUserEmail": "siva@gmail.com",
-  "normalUserPassword": "siva"
+  "normalUserEmail": "user@gmail.com",
+  "normalUserPassword": "user"
 }
