@@ -1,9 +1,8 @@
-package com.sivalabs.techbuzz.posts.mappers;
+package com.sivalabs.techbuzz.posts.domain.mappers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.sivalabs.techbuzz.posts.domain.dtos.PostViewDTO;
-import com.sivalabs.techbuzz.posts.domain.mappers.PostMapper;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.models.Vote;
 import com.sivalabs.techbuzz.users.domain.mappers.UserDTOMapper;
