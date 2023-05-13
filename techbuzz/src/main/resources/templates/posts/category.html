@@ -60,19 +60,28 @@
                                 <i class="fas fa-trash-alt" ></i> Delete
                             </button>
 
-                            <button class="btn btn-success"
+                            <div id="up-down-vote-container">
+                                <div th:id="'vote-container-' + ${post.id}" sec:authorize="isAuthenticated()">
+                                    <button class="btn btn-success" 
+                                    id="upVoteButton" 
                                     th:classappend="${post.upVoted()} ? disabled : ''"
-                                    th:onclick="'javascript:addVote( \''+${post.id}+'\', 1);'" >
-                                <span th:text="${post.getUpVoteCount()}" class="p-2">1</span>
-                                 <i class="fa-solid fa-thumbs-up"></i>
-                            </button>
+                                    hx-trigger="click" th:attr="hx-get=@{/api/hx/votes/update/1/{postId}(postId=${post.id})}, hx-target=@{#vote-container-{postId}(postId=${post.id})}"
+                                    hx-swap="outerHTML">
+                                        <span th:text="${post.getUpVoteCount()}" class="p-2 successCount">1</span>
+                                        <i class="fa-solid fa-thumbs-up"></i>
+                                    </button>
 
-                            <button class="btn btn-danger"
+                                    <button class="btn btn-danger" 
+                                    id="downVoteButton" 
                                     th:classappend="${post.downVoted()} ? disabled : ''"
-                                    th:onclick="'javascript:addVote( \''+${post.id}+'\', -1);'" >
-                                <span th:text="${post.getDownVoteCount()}" class="p-2">1</span>
-                                <i class="fa-solid fa-thumbs-down"></i>
-                            </button>
+                                    hx-trigger="click" th:attr="hx-get=@{/api/hx/votes/update/-1/{postId}(postId=${post.id})}, hx-target=@{#vote-container-{postId}(postId=${post.id})}"
+                                    hx-target="'#vote-container-' + ${post.id}"
+                                    hx-swap="outerHTML">
+                                        <span th:text="${post.getDownVoteCount()}" class="p-2 downvoteCount" >1</span>
+                                        <i class="fa-solid fa-thumbs-down"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </p>
                         <p sec:authorize="!isAuthenticated()" class="mt-3 mb-0" >
                             <span data-bs-toggle="tooltip" data-bs-placement="top"
