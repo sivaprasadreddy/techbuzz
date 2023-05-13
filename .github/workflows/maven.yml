@@ -5,12 +5,12 @@ env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   DOCKER_IMAGE_NAME: ${{ secrets.DOCKER_USERNAME }}/techbuzz
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 on:
   push:
     branches:
       - '**'
-
     paths-ignore:
       - 'README.md'
       - 'adr/**'
@@ -39,6 +39,11 @@ jobs:
 
       - name: Build with Maven
         run: ./mvnw verify
+
+      - if: ${{ github.ref == 'refs/heads/main' }}
+        name: Sonar Scan
+        run: ./mvnw initialize sonar:sonar -Dsonar.login=${{ env.SONAR_TOKEN }}
+        working-directory: techbuzz
 
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Build and Publish Docker Image

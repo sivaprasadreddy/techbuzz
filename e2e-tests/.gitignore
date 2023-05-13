@@ -1,0 +1,12 @@
+target/
+src/test/resources/local.json
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### VS Code ###
+.vscode/
+

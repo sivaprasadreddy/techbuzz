@@ -9,7 +9,6 @@ import io.gatling.javaapi.core.FeederBuilder;
 import io.gatling.javaapi.core.ScenarioBuilder;
 import io.gatling.javaapi.core.Simulation;
 import io.gatling.javaapi.http.HttpProtocolBuilder;
-import java.time.Duration;
 import utils.SimulationHelper;
 
 public class PostCreationSimulation extends Simulation {
@@ -48,10 +47,10 @@ public class PostCreationSimulation extends Simulation {
 
     ChainBuilder createPostFlow = exec(login).pause(2).exec(createPost);
 
-    ScenarioBuilder scnCreatePost =
-            scenario("Create Post").during(Duration.ofMinutes(2), "Counter").on(createPostFlow);
+    // ScenarioBuilder scnCreatePost =
+    //        scenario("Create Post").during(Duration.ofMinutes(2), "Counter").on(createPostFlow);
 
-    // ScenarioBuilder scnCreatePost = scenario("Create Post").exec(createPostFlow);
+    ScenarioBuilder scnCreatePost = scenario("Create Post").exec(createPostFlow);
 
     {
         setUp(scnCreatePost.injectOpen(rampUsers(getConfig().getInt("users")).during(10)))

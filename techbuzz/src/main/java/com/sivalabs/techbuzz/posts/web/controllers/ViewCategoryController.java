@@ -1,6 +1,7 @@
 package com.sivalabs.techbuzz.posts.web.controllers;
 
 import com.sivalabs.techbuzz.common.model.PagedResult;
+import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.posts.domain.dtos.PostViewDTO;
 import com.sivalabs.techbuzz.posts.domain.models.Category;
 import com.sivalabs.techbuzz.posts.domain.services.CategoryService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@Loggable
 public class ViewCategoryController {
     private static final Logger log = LoggerFactory.getLogger(ViewCategoryController.class);
 

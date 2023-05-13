@@ -67,7 +67,6 @@ public class Public extends SchemaImpl {
     @Override
     public final List<Sequence<?>> getSequences() {
         return Arrays.asList(
-            Sequences.CATEGORY_ID_SEQ,
             Sequences.POST_ID_SEQ,
             Sequences.USER_ID_SEQ,
             Sequences.VOTE_ID_SEQ

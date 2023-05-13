@@ -12,7 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 class ViewCategoryControllerTests extends AbstractIntegrationTest {
 
     @ParameterizedTest
-    @CsvSource({"java"})
+    @CsvSource({"go", "java"})
     void shouldFetchPostsByCategory(String category) throws Exception {
         mockMvc.perform(get("/c/{category}", category))
                 .andExpect(status().isOk())

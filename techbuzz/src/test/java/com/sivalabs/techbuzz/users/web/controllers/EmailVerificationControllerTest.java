@@ -10,7 +10,7 @@ import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
 import com.sivalabs.techbuzz.users.domain.dtos.CreateUserRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
-import org.apache.commons.lang3.RandomStringUtils;
+import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,12 +21,11 @@ class EmailVerificationControllerTest extends AbstractIntegrationTest {
 
     @Test
     void shouldVerifyEmailSuccessfully() throws Exception {
-        String email = RandomStringUtils.random(15, true, false) + "@gmail.com";
-        CreateUserRequest request = new CreateUserRequest("name", email, "secret");
+        CreateUserRequest request = Instancio.create(CreateUserRequest.class);
         UserDTO user = userService.createUser(request);
         mockMvc.perform(get("/verify-email")
                         .with(csrf())
-                        .param("email", email)
+                        .param("email", request.email())
                         .param("token", user.verificationToken()))
                 .andExpect(status().isOk())
                 .andExpect(model().attribute("success", true))
