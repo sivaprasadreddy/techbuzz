@@ -22,11 +22,8 @@ class AddVoteController {
 
     @PostMapping("/partials/add-vote")
     @AnyAuthenticatedUser
-    public String createVote(@Valid @RequestBody CreateVoteRequest request,
-                             @CurrentUser User loginUser,
-                             Model model) {
-        var createVoteRequest = new CreateVoteRequest(
-                request.postId(), loginUser.getId(), request.value());
+    public String createVote(@Valid @RequestBody CreateVoteRequest request, @CurrentUser User loginUser, Model model) {
+        var createVoteRequest = new CreateVoteRequest(request.postId(), loginUser.getId(), request.value());
         postService.addVote(createVoteRequest);
         PostViewDTO post = postService.getPostViewDTO(request.postId());
         model.addAttribute("post", post);
