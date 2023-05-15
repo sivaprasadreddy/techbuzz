@@ -22,23 +22,16 @@ class AddVoteController {
         this.postService = postService;
     }
 
-    @PostMapping("/api/votes")
-    @ResponseStatus
-    @AnyAuthenticatedUser
-    public ResponseEntity<Void> createVote(@Valid @RequestBody CreateVoteRequest request, @CurrentUser User loginUser) {
-        var createVoteRequest = new CreateVoteRequest(request.postId(), loginUser.getId(), request.value());
-        postService.addVote(createVoteRequest);
-        return ResponseEntity.ok().build();
-    }
-
     @PostMapping("/partials/add-vote")
     @AnyAuthenticatedUser
-    public String createVote(@Valid @RequestBody CreateVoteRequest request, @CurrentUser User loginUser, Model model) {
-        var createVoteRequest = new CreateVoteRequest(request.postId(), loginUser.getId(), request.value());
+    public String createVote(@Valid @RequestBody CreateVoteRequest request,
+                             @CurrentUser User loginUser,
+                             Model model) {
+        var createVoteRequest = new CreateVoteRequest(
+                request.postId(), loginUser.getId(), request.value());
         postService.addVote(createVoteRequest);
         PostViewDTO post = postService.getPostViewDTO(request.postId());
         model.addAttribute("post", post);
-        model.addAttribute("abcd", "1234");
         return "fragments/post";
     }
 }

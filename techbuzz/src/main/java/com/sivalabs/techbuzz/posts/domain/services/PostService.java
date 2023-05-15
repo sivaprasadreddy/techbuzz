@@ -51,7 +51,7 @@ public class PostService {
 
     public PostViewDTO getPostViewDTO(Long postId) {
         log.debug("Fetching post by id: {}", postId);
-        Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+        Post post = this.getPost(postId);
         return convert(post);
     }
 

@@ -2,7 +2,7 @@ package com.sivalabs.techbuzz.posts.web.controllers;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
 import com.sivalabs.techbuzz.posts.domain.dtos.CreatePostRequest;
@@ -41,9 +41,9 @@ class AddVoteControllerTest extends AbstractIntegrationTest {
 
     @Test
     @WithUserDetails(value = ADMIN_EMAIL)
-    void shouldUpVotePost() throws Exception {
+    void shouldUpVoteAndReturnPostFragment() throws Exception {
         User user = securityService.loginUser();
-        mockMvc.perform(post("/api/votes")
+        mockMvc.perform(post("/partials/add-vote")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
@@ -55,6 +55,8 @@ class AddVoteControllerTest extends AbstractIntegrationTest {
                         }
                         """
                                         .formatted(post.getId(), user.getId())))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("post"))
+                .andExpect(view().name("fragments/post"));
     }
 }
