@@ -41,7 +41,7 @@
 		<junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
 
 		<!-- jib plugin config -->
-		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
+		<jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
 		<dockerUserName>sivaprasadreddy</dockerUserName>
 		<dockerImageName>${dockerUserName}/${project.artifactId}</dockerImageName>
 	</properties>
