@@ -39,11 +39,6 @@
 		<jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
 		<jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
 		<junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
-
-		<!-- jib plugin config -->
-		<jib-maven-plugin.version>3.3.2</jib-maven-plugin.version>
-		<dockerUserName>sivaprasadreddy</dockerUserName>
-		<dockerImageName>${dockerUserName}/${project.artifactId}</dockerImageName>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -207,27 +202,6 @@
 						<includeOnlyProperty>^git.commit.user.name$</includeOnlyProperty>
 						<includeOnlyProperty>^git.commit.message.full$</includeOnlyProperty>
 					</includeOnlyProperties>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>${jib-maven-plugin.version}</version>
-				<configuration>
-					<from>
-						<image>eclipse-temurin:17-jre-focal</image>
-					</from>
-					<to>
-						<image>${dockerImageName}</image>
-						<tags>
-							<tag>latest</tag>
-						</tags>
-					</to>
-					<container>
-						<ports>
-							<port>8080</port>
-						</ports>
-					</container>
 				</configuration>
 			</plugin>
 			<plugin>
