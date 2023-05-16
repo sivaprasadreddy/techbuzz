@@ -49,6 +49,12 @@ public class PostService {
         return postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found"));
     }
 
+    public PostViewDTO getPostViewDTO(Long postId) {
+        log.debug("Fetching post by id: {}", postId);
+        Post post = this.getPost(postId);
+        return convert(post);
+    }
+
     public PagedResult<PostViewDTO> getPostsByCategorySlug(String category, Integer page) {
         log.debug("Fetching posts by category={}, page={}", category, page);
         PagedResult<Post> postPagedResult = postRepository.findByCategorySlug(category, page);
@@ -123,5 +129,11 @@ public class PostService {
                 postsPage.isLast(),
                 postsPage.hasNext(),
                 postsPage.hasPrevious());
+    }
+
+    private PostViewDTO convert(Post post) {
+        User loginUser = securityService.loginUser();
+        PostViewDTO postDTO = postMapper.toPostViewDTO(loginUser, post);
+        return postDTO;
     }
 }

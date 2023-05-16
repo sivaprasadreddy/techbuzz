@@ -24,7 +24,7 @@ function addVote(postId, vote)
     let token = $("meta[name='_csrf']").attr("content");
     let header = $("meta[name='_csrf_header']").attr("content");
     $.ajax ({
-        url: '/api/votes',
+        url: '/partials/add-vote',
         type: "POST",
         headers: {
             [header]: token
@@ -32,7 +32,7 @@ function addVote(postId, vote)
         data: JSON.stringify({postId: postId, value: vote}),
         contentType: "application/json",
         success: function(responseData, status){
-            window.location.reload();
+           $("#post-container-"+postId).replaceWith(responseData);
         }
     });
 }
