@@ -37,6 +37,12 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
+    @Cacheable("user")
+    public Optional<User> getUserByEmailForResentVerification(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user;
+    }
+
     @CacheEvict(cacheNames = "user", allEntries = true)
     public UserDTO createUser(CreateUserRequest createUserRequest) {
         if (userRepository.existsByEmail(createUserRequest.email())) {
@@ -65,5 +71,13 @@ public class UserService {
         user.setVerified(true);
         user.setVerificationToken(null);
         userRepository.updateVerificationStatus(user);
+    }
+
+    @CacheEvict(cacheNames = "user", allEntries = true)
+    public Optional<UserDTO> getUserDTO(String emailID) {
+        Optional<User> existingUser = this.getUserByEmail(emailID);
+        return existingUser.isPresent()
+                ? Optional.ofNullable(userDTOMapper.toDTO(existingUser.get()))
+                : Optional.empty();
     }
 }
