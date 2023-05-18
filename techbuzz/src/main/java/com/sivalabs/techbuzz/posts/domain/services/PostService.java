@@ -50,14 +50,23 @@ public class PostService {
     }
 
     public PostViewDTO getPostViewDTO(Long postId) {
+<<<<<<< HEAD
         log.debug("Fetching post by id: {}", postId);
+=======
+>>>>>>> upstream/main
         Post post = this.getPost(postId);
         return convert(post);
     }
 
+<<<<<<< HEAD
     public PagedResult<PostViewDTO> getPostsByCategorySlug(String category, Integer page) {
         log.debug("Fetching posts by category={}, page={}", category, page);
         PagedResult<Post> postPagedResult = postRepository.findByCategorySlug(category, page);
+=======
+    public PagedResult<PostViewDTO> getPostsByCategorySlug(String categorySlug, Integer page) {
+        log.debug("Fetching posts by categorySlug={}, page={}", categorySlug, page);
+        PagedResult<Post> postPagedResult = postRepository.findByCategorySlug(categorySlug, page);
+>>>>>>> upstream/main
         return convert(postPagedResult);
     }
 
@@ -76,7 +85,7 @@ public class PostService {
     }
 
     public Post createPost(CreatePostRequest createPostRequest) {
-        log.info("process=create_post, title={}", createPostRequest.title());
+        log.info("Create post with title={}", createPostRequest.title());
         Category category = new Category(createPostRequest.categoryId());
         User user = new User(createPostRequest.createdUserId());
         Post post = new Post(
@@ -99,20 +108,19 @@ public class PostService {
         postRepository.delete(post.getId());
     }
 
-    public Vote addVote(CreateVoteRequest request) {
+    public void addVote(CreateVoteRequest request) {
         log.debug("Adding vote :{} for postId: {} by userId:{}", request.value(), request.postId(), request.userId());
         Optional<Vote> voteOptional = voteRepository.findByPostIdAndUserId(request.postId(), request.userId());
         if (voteOptional.isEmpty()) {
             Vote vote = new Vote(null, request.userId(), request.postId(), request.value(), LocalDateTime.now(), null);
-            Vote savedVote = voteRepository.save(vote);
+            voteRepository.save(vote);
             log.info("Vote saved successfully");
-            return savedVote;
+            return;
         }
         Vote existingVote = voteOptional.get();
         existingVote.setValue(request.value());
         voteRepository.update(existingVote);
         log.info("Vote update successfully");
-        return existingVote;
     }
 
     private PagedResult<PostViewDTO> convert(PagedResult<Post> postsPage) {
@@ -133,7 +141,11 @@ public class PostService {
 
     private PostViewDTO convert(Post post) {
         User loginUser = securityService.loginUser();
+<<<<<<< HEAD
         PostViewDTO postDTO = postMapper.toPostViewDTO(loginUser, post);
         return postDTO;
+=======
+        return postMapper.toPostViewDTO(loginUser, post);
+>>>>>>> upstream/main
     }
 }

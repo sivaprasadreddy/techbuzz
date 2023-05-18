@@ -1,5 +1,4 @@
 create sequence user_id_seq start with 1 increment by 5;
-create sequence category_id_seq start with 1 increment by 5;
 create sequence post_id_seq start with 1 increment by 5;
 create sequence vote_id_seq start with 1 increment by 5;
 
@@ -20,12 +19,12 @@ create table users
 
 create table categories
 (
-    id            bigint DEFAULT nextval('category_id_seq') not null,
-    name          varchar                                   not null,
-    slug          varchar                                   not null,
-    description   varchar                                   not null,
+    id            bigint  not null,
+    name          varchar not null,
+    slug          varchar not null,
+    description   varchar not null,
     image         varchar,
-    display_order integer                                   not null,
+    display_order integer not null,
     created_at    timestamp,
     updated_at    timestamp,
     primary key (id),

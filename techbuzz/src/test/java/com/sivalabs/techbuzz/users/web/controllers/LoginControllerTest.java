@@ -1,6 +1,7 @@
 package com.sivalabs.techbuzz.users.web.controllers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -12,5 +13,13 @@ class LoginControllerTest extends AbstractIntegrationTest {
     @Test
     void shouldShowLoginFormPage() throws Exception {
         mockMvc.perform(get("/login")).andExpect(status().isOk()).andExpect(view().name("users/login"));
+    }
+
+    @Test
+    void shouldShowLoginFormPageWithError() throws Exception {
+        mockMvc.perform(get("/login?error"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("users/login"))
+                .andExpect(model().attributeExists("errorMessage"));
     }
 }

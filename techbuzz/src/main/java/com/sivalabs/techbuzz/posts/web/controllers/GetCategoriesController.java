@@ -1,5 +1,6 @@
 package com.sivalabs.techbuzz.posts.web.controllers;
 
+import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.posts.domain.models.Category;
 import com.sivalabs.techbuzz.posts.domain.repositories.CategoryRepository;
 import java.util.List;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/categories")
+@Loggable
 public class GetCategoriesController {
     private final CategoryRepository categoryRepository;
 

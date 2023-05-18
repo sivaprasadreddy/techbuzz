@@ -8,18 +8,16 @@ import org.springframework.security.web.WebAttributes;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @Loggable
 class LoginController {
 
     @GetMapping("/login")
-    public String login(
-            HttpServletRequest request, Model model, @RequestParam(name = "error", required = false) String error) {
-        if (error != null) {
+    public String login(HttpServletRequest request, Model model) {
+        if (request.getParameterMap().containsKey("error")) {
             HttpSession session = request.getSession(false);
-            String errorMessage = null;
+            String errorMessage = "Failed to login, Try again";
             if (session != null) {
                 AuthenticationException ex =
                         (AuthenticationException) session.getAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);

@@ -2,7 +2,6 @@ package com.sivalabs.techbuzz.notifications;
 
 import com.sendgrid.Method;
 import com.sendgrid.Request;
-import com.sendgrid.Response;
 import com.sendgrid.SendGrid;
 import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
@@ -44,7 +43,7 @@ public class SendGridEmailService implements EmailService {
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
-            Response response = sg.api(request);
+            sg.api(request);
             log.info("Sent verification email using SendGrid email service");
         } catch (Exception e) {
             throw new TechBuzzException("Error while sending verification email", e);

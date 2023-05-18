@@ -11,12 +11,12 @@ import org.junit.jupiter.params.provider.EnumSource;
 class PostTest {
     @Test
     void shouldNotBeAbleToEditPostByOtherNormalUsers() {
-        User otherUser = new User(9L);
         User user = new User(1L);
         user.setRole(RoleEnum.ROLE_USER);
         Post post = new Post();
         post.setId(2L);
         post.setCreatedBy(user);
+        User otherUser = new User(9L);
 
         assertThat(post.canEditByUser(otherUser)).isFalse();
     }

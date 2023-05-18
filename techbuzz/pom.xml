@@ -21,13 +21,16 @@
 		<jquery.version>3.6.4</jquery.version>
 		<fontawesome.version>6.4.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
+		<testcontainers.version>1.18.1</testcontainers.version>
+		<instancio.version>2.15.0</instancio.version>
+		<archunit.version>1.0.1</archunit.version>
 
 		<!-- plugins config -->
 		<spotless-maven-plugin.version>2.36.0</spotless-maven-plugin.version>
 		<dependency-check-maven.version>8.2.1</dependency-check-maven.version>
 		<properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
-		<groovy-maven-plugin.version>2.1.1</groovy-maven-plugin.version>
+		<jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
 
 		<!-- jacoco plugin config -->
 		<jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
@@ -36,16 +39,6 @@
 		<jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
 		<jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
 		<junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
-		<!-- flyway plugin config -->
-		<flyway-maven-plugin.version>9.5.1</flyway-maven-plugin.version>
-		<!--<db.url>jdbc:postgresql://localhost:5432/postgres</db.url>-->
-		<db.username>postgres</db.username>
-		<db.password>postgres</db.password>
-
-		<!-- jib plugin config -->
-		<jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
-		<dockerUserName>sivaprasadreddy</dockerUserName>
-		<dockerImageName>${dockerUserName}/${project.artifactId}</dockerImageName>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -109,12 +102,6 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
-		<!--<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-			<optional>true</optional>
-		</dependency>-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
@@ -176,6 +163,17 @@
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.instancio</groupId>
+			<artifactId>instancio-junit</artifactId>
+			<version>${instancio.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.tngtech.archunit</groupId>
+			<artifactId>archunit</artifactId>
+			<version>${archunit.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -207,27 +205,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>com.google.cloud.tools</groupId>
-				<artifactId>jib-maven-plugin</artifactId>
-				<version>${jib-maven-plugin.version}</version>
-				<configuration>
-					<from>
-						<image>eclipse-temurin:17-jre-focal</image>
-					</from>
-					<to>
-						<image>${dockerImageName}</image>
-						<tags>
-							<tag>latest</tag>
-						</tags>
-					</to>
-					<container>
-						<ports>
-							<port>8080</port>
-						</ports>
-					</container>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>com.diffplug.spotless</groupId>
 				<artifactId>spotless-maven-plugin</artifactId>
 				<version>${spotless-maven-plugin.version}</version>
@@ -251,78 +228,21 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.codehaus.gmaven</groupId>
-				<artifactId>groovy-maven-plugin</artifactId>
-				<version>${groovy-maven-plugin.version}</version>
-
+				<groupId>io.github.sivalabs</groupId>
+				<artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
+				<version>${jooq-testcontainers-codegen-maven-plugin.version}</version>
 				<dependencies>
 					<dependency>
 						<groupId>org.testcontainers</groupId>
 						<artifactId>postgresql</artifactId>
 						<version>${testcontainers.version}</version>
 					</dependency>
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>${postgresql.version}</version>
+					</dependency>
 				</dependencies>
-				<executions>
-					<execution>
-						<id>testcontainer-start</id>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<phase>generate-sources</phase>
-						<configuration>
-							<source>db = new org.testcontainers.containers.PostgreSQLContainer("postgres:15.2-alpine")
-									.withUsername("${db.username}")
-									.withDatabaseName("postgres")
-									.withPassword("${db.password}")
-							db.start()
-							project.properties.setProperty('db.url', db.getJdbcUrl())
-							project.properties.setProperty('testcontainer.containerid', db.getContainerId())
-							project.properties.setProperty('testcontainer.imageName', db.getDockerImageName())</source>
-						</configuration>
-					</execution>
-					<execution>
-						<id>testcontainer-stop</id>
-						<goals>
-							<goal>execute</goal>
-						</goals>
-						<phase>test</phase>
-						<configuration>
-							<source>containerId = "${testcontainer.containerid}"
-							imageName = "${testcontainer.imageName}"
-							println("Stopping testcontainer $containerId - $imageName")
-							org.testcontainers.utility.ResourceReaper
-									.instance()
-									.stopAndRemoveContainer(containerId, imageName);</source>
-						</configuration>
-					</execution>
-
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.flywaydb</groupId>
-				<artifactId>flyway-maven-plugin</artifactId>
-				<version>${flyway-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>migrate</goal>
-						</goals>
-						<phase>generate-sources</phase>
-						<configuration>
-							<url>${db.url}</url>
-							<user>${db.username}</user>
-							<password>${db.password}</password>
-							<locations>
-								<location>filesystem:src/main/resources/db/migration</location>
-							</locations>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.jooq</groupId>
-				<artifactId>jooq-codegen-maven</artifactId>
-				<version>${jooq.version}</version>
 				<executions>
 					<execution>
 						<id>generate-jooq-sources</id>
@@ -331,11 +251,15 @@
 						</goals>
 						<phase>generate-sources</phase>
 						<configuration>
-							<jdbc>
-								<url>${db.url}</url>
-								<user>${db.username}</user>
-								<password>${db.password}</password>
-							</jdbc>
+							<database>
+								<type>POSTGRES</type>
+								<containerImage>postgres:15.2-alpine</containerImage>
+							</database>
+							<flyway>
+								<locations>
+									filesystem:${project.basedir}/src/main/resources/db/migration
+								</locations>
+							</flyway>
 							<generator>
 								<generate>
 									<!--<pojos>true</pojos>
@@ -519,6 +443,14 @@
 			<id>spring-milestones</id>
 			<name>Spring Milestones</name>
 			<url>https://repo.spring.io/milestone</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</pluginRepository>
+		<pluginRepository>
+			<id>central</id>
+			<name>plugins-release</name>
+			<url>http://repo1.maven.org/maven2/</url>
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
