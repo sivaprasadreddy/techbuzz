@@ -17,6 +17,10 @@
                     <h3>Registration Form</h3>
                 </div>
                 <div class="card-body">
+                    <div class="alert alert-danger" role="alert"  th:if="${errorMessage}">
+                        <span th:text="${message}"></span>
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+                    </div>
                     <form id="registrationForm" method="post" th:action="@{/registration}" th:object="${user}">
 
                         <div class="mb-3">

@@ -1,13 +1,19 @@
 package com.sivalabs.techbuzz.users.domain.services;
 
+import static java.net.URLEncoder.encode;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
+import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.dtos.CreateUserRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.mappers.UserDTOMapper;
 import com.sivalabs.techbuzz.users.domain.models.RoleEnum;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.cache.annotation.CacheEvict;
@@ -15,6 +21,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Service
 @Transactional
@@ -23,24 +30,22 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDTOMapper userDTOMapper;
 
+    private final EmailService emailService;
+
     public UserService(
             final PasswordEncoder passwordEncoder,
             final UserRepository userRepository,
-            final UserDTOMapper userDTOMapper) {
+            final UserDTOMapper userDTOMapper,
+            final EmailService emailService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userDTOMapper = userDTOMapper;
+        this.emailService = emailService;
     }
 
     @Cacheable("user")
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-
-    @Cacheable("user")
-    public Optional<User> getUserByEmailForResentVerification(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user;
     }
 
     @CacheEvict(cacheNames = "user", allEntries = true)
@@ -73,11 +78,21 @@ public class UserService {
         userRepository.updateVerificationStatus(user);
     }
 
-    @CacheEvict(cacheNames = "user", allEntries = true)
     public Optional<UserDTO> getUserDTO(String emailID) {
-        Optional<User> existingUser = this.getUserByEmail(emailID);
-        return existingUser.isPresent()
-                ? Optional.ofNullable(userDTOMapper.toDTO(existingUser.get()))
-                : Optional.empty();
+        return this.getUserByEmail(emailID).map(userDTOMapper::toDTO);
+    }
+
+    public void sendVerificationEmail(HttpServletRequest request, UserDTO userDTO) {
+        String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
+                .replacePath(null)
+                .build()
+                .toUriString();
+        String params =
+                "email=" + encode(userDTO.email(), UTF_8) + "&token=" + encode(userDTO.verificationToken(), UTF_8);
+        String verificationUrl = baseUrl + "/verify-email?" + params;
+        String to = userDTO.email();
+        String subject = "TechBuzz - Email verification";
+        Map<String, Object> paramsMap = Map.of("", userDTO.name(), "verificationUrl", verificationUrl);
+        emailService.sendEmail("email/verify-email", paramsMap, to, subject);
     }
 }
