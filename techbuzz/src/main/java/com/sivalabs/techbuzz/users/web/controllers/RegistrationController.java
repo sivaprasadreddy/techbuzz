@@ -124,7 +124,6 @@ class RegistrationController {
             }
         } catch (Exception e) {
             logger.error("error during resending email verification request error: {}", e.getMessage());
-            // bindingResult.rejectValue("email", "email.exists", e.getMessage());
             return RESENT_VERIFICATION_EMAIL;
         }
 
