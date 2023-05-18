@@ -50,23 +50,13 @@ public class PostService {
     }
 
     public PostViewDTO getPostViewDTO(Long postId) {
-<<<<<<< HEAD
-        log.debug("Fetching post by id: {}", postId);
-=======
->>>>>>> upstream/main
         Post post = this.getPost(postId);
         return convert(post);
     }
 
-<<<<<<< HEAD
-    public PagedResult<PostViewDTO> getPostsByCategorySlug(String category, Integer page) {
-        log.debug("Fetching posts by category={}, page={}", category, page);
-        PagedResult<Post> postPagedResult = postRepository.findByCategorySlug(category, page);
-=======
     public PagedResult<PostViewDTO> getPostsByCategorySlug(String categorySlug, Integer page) {
         log.debug("Fetching posts by categorySlug={}, page={}", categorySlug, page);
         PagedResult<Post> postPagedResult = postRepository.findByCategorySlug(categorySlug, page);
->>>>>>> upstream/main
         return convert(postPagedResult);
     }
 
@@ -141,11 +131,6 @@ public class PostService {
 
     private PostViewDTO convert(Post post) {
         User loginUser = securityService.loginUser();
-<<<<<<< HEAD
-        PostViewDTO postDTO = postMapper.toPostViewDTO(loginUser, post);
-        return postDTO;
-=======
         return postMapper.toPostViewDTO(loginUser, post);
->>>>>>> upstream/main
     }
 }
