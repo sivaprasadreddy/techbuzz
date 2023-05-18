@@ -3,6 +3,7 @@ package com.sivalabs.techbuzz.users.web.controllers;
 import static java.net.URLEncoder.encode;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.dtos.ResentVerificationRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.models.User;
@@ -29,9 +30,11 @@ public class ResentVerificationController {
     private static final String RESENT_VERIFICATION_EMAIL = "users/resentVerification";
 
     private final UserService userService;
+    private final EmailService emailService;
 
-    public ResentVerificationController(UserService userService) {
+    public ResentVerificationController(UserService userService, EmailService emailService) {
         this.userService = userService;
+        this.emailService = emailService;
     }
 
     @GetMapping("/resentVerification")
