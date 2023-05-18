@@ -7,14 +7,11 @@ import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
 import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.dtos.CreateUserRequest;
-import com.sivalabs.techbuzz.users.domain.dtos.ResentVerificationRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
-import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.util.Map;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -85,5 +82,4 @@ class RegistrationController {
         Map<String, Object> paramsMap = Map.of("", userDTO.name(), "verificationUrl", verificationUrl);
         emailService.sendEmail("email/verify-email", paramsMap, to, subject);
     }
-
 }
