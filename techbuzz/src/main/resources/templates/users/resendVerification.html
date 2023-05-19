@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>resend verification template</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+    <div class="col-md-4 offset-4">
+
+        <div class="card">
+            <div class="card-header text-center">
+                <h3>Resend verification email Form</h3>
+            </div>
+            <div class="card-body">.
+                <form id="resendVerificationForm" method="post" th:action="@{/resendVerification}" th:object="${resendEmail}">
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email (Please enter email ID which was used during registration)</label>
+                        <input type="text" id="email" name="email"
+                               th:field="*{email}"
+                               class="form-control"
+                               th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                               placeholder="Enter email" />
+                        <div class="invalid-feedback"  th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -31,7 +31,8 @@ public class WebSecurityConfig {
         "/registration",
         "/registrationStatus",
         "/verify-email",
-        "/c/**"
+        "/c/**",
+        "/resendVerification"
     };
 
     @Bean

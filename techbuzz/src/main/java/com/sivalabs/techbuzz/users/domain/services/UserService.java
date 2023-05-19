@@ -2,6 +2,7 @@ package com.sivalabs.techbuzz.users.domain.services;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
+import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.dtos.CreateUserRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.mappers.UserDTOMapper;
@@ -23,13 +24,17 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDTOMapper userDTOMapper;
 
+    private final EmailService emailService;
+
     public UserService(
             final PasswordEncoder passwordEncoder,
             final UserRepository userRepository,
-            final UserDTOMapper userDTOMapper) {
+            final UserDTOMapper userDTOMapper,
+            final EmailService emailService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userDTOMapper = userDTOMapper;
+        this.emailService = emailService;
     }
 
     @Cacheable("user")
@@ -65,5 +70,9 @@ public class UserService {
         user.setVerified(true);
         user.setVerificationToken(null);
         userRepository.updateVerificationStatus(user);
+    }
+
+    public Optional<UserDTO> getUserDTO(String emailID) {
+        return this.getUserByEmail(emailID).map(userDTOMapper::toDTO);
     }
 }
