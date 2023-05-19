@@ -18,6 +18,10 @@ import org.springframework.test.web.servlet.MockMvc;
 public abstract class AbstractIntegrationTest {
     public static final String ADMIN_EMAIL = "admin@gmail.com";
 
+    static {
+        TestcontainersConfig.init();
+    }
+
     @Autowired
     protected MockMvc mockMvc;
 
