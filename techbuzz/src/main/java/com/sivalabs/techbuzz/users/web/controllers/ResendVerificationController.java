@@ -4,7 +4,7 @@ import static java.net.URLEncoder.encode;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.sivalabs.techbuzz.notifications.EmailService;
-import com.sivalabs.techbuzz.users.domain.dtos.ResentVerificationRequest;
+import com.sivalabs.techbuzz.users.domain.dtos.ResendVerificationRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
@@ -24,37 +24,37 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
-public class ResentVerificationController {
+public class ResendVerificationController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResentVerificationController.class);
-    private static final String RESENT_VERIFICATION_EMAIL = "users/resentVerification";
+    private static final Logger logger = LoggerFactory.getLogger(ResendVerificationController.class);
+    private static final String RESEND_VERIFICATION_EMAIL = "users/resendVerification";
 
     private final UserService userService;
     private final EmailService emailService;
 
-    public ResentVerificationController(UserService userService, EmailService emailService) {
+    public ResendVerificationController(UserService userService, EmailService emailService) {
         this.userService = userService;
         this.emailService = emailService;
     }
 
-    @GetMapping("/resentVerification")
-    public String resentVerificationForm(Model model) {
-        model.addAttribute("resentEmail", new ResentVerificationRequest(""));
-        return RESENT_VERIFICATION_EMAIL;
+    @GetMapping("/resendVerification")
+    public String resendVerificationForm(Model model) {
+        model.addAttribute("resendEmail", new ResendVerificationRequest(""));
+        return RESEND_VERIFICATION_EMAIL;
     }
 
-    @PostMapping("/resentVerification")
-    public String resentVerification(
+    @PostMapping("/resendVerification")
+    public String resendVerification(
             HttpServletRequest request,
-            @Valid @ModelAttribute("resentEmail") ResentVerificationRequest resentVerificationRequest,
+            @Valid @ModelAttribute("resendEmail") ResendVerificationRequest resendVerificationRequest,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return RESENT_VERIFICATION_EMAIL;
+            return RESEND_VERIFICATION_EMAIL;
         }
 
         try {
-            Optional<User> user = userService.getUserByEmail(resentVerificationRequest.email());
+            Optional<User> user = userService.getUserByEmail(resendVerificationRequest.email());
             if (user.isPresent()) {
                 // if account is verified then redirect to login page with account exist message
                 if (user.get().isVerified()) {
@@ -62,7 +62,7 @@ public class ResentVerificationController {
                             "errorMessage", "account is already verified, please use forget password if needed");
                     return "redirect:/login";
                 }
-                // if account is not-verified then resent email and redirect to registrationStatus page
+                // if account is not-verified then resend email and redirect to registrationStatus page
                 if (!user.get().isVerified()) {
                     Optional<UserDTO> existingUserDTO =
                             userService.getUserDTO(user.get().getEmail());
@@ -74,13 +74,14 @@ public class ResentVerificationController {
 
                     this.sendVerificationEmail(request, existingUserDTO.get());
                     redirectAttributes.addFlashAttribute(
-                            "message", "reset verification link is successful please check your email");
+                            "message",
+                            "reset verification link is sent on your provided email ID please check your email");
                     return "redirect:/registrationStatus";
                 }
             }
         } catch (Exception e) {
             logger.error("error during resending email verification request error: {}", e.getMessage());
-            return RESENT_VERIFICATION_EMAIL;
+            return RESEND_VERIFICATION_EMAIL;
         }
 
         redirectAttributes.addFlashAttribute("errorMessage", "reset verification failed, please try re-register");
