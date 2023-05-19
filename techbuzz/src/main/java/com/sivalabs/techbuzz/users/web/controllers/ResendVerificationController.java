@@ -1,16 +1,11 @@
 package com.sivalabs.techbuzz.users.web.controllers;
 
-import static java.net.URLEncoder.encode;
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 import com.sivalabs.techbuzz.config.logging.Loggable;
-import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.dtos.ResendVerificationRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import java.util.Map;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,11 +26,9 @@ class ResendVerificationController {
     private static final String RESEND_VERIFICATION_EMAIL = "users/resendVerification";
 
     private final UserService userService;
-    private final EmailService emailService;
 
-    public ResendVerificationController(UserService userService, EmailService emailService) {
+    public ResendVerificationController(UserService userService) {
         this.userService = userService;
-        this.emailService = emailService;
     }
 
     @GetMapping("/resendVerification")
@@ -81,12 +74,6 @@ class ResendVerificationController {
                 .replacePath(null)
                 .build()
                 .toUriString();
-        String params =
-                "email=" + encode(userDTO.email(), UTF_8) + "&token=" + encode(userDTO.verificationToken(), UTF_8);
-        String verificationUrl = baseUrl + "/verify-email?" + params;
-        String to = userDTO.email();
-        String subject = "TechBuzz - Email verification";
-        Map<String, Object> paramsMap = Map.of("", userDTO.name(), "verificationUrl", verificationUrl);
-        emailService.sendEmail("email/verify-email", paramsMap, to, subject);
+        userService.sendVerificationEmail(baseUrl, userDTO);
     }
 }
