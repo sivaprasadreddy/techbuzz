@@ -5,7 +5,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <head>
-    <title>resend verification template</title>
+    <title>Resend Verification Email</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -14,13 +14,19 @@
 
         <div class="card">
             <div class="card-header text-center">
-                <h3>Resend verification email Form</h3>
+                <h3>Resend Verification Email</h3>
             </div>
-            <div class="card-body">.
-                <form id="resendVerificationForm" method="post" th:action="@{/resendVerification}" th:object="${resendEmail}">
-
+            <div class="card-body">
+                <form id="resendVerificationForm" method="post"
+                      th:action="@{/resendVerification}" th:object="${resendEmail}">
+                    <div class="alert alert-danger" role="alert" th:if="${errorMessage}">
+                        <span th:text="${errorMessage}"></span>
+                    </div>
+                    <div class="alert alert-success" role="alert"  th:if="${message}">
+                        <span th:text="${message}"></span>
+                    </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email (Please enter email ID which was used during registration)</label>
+                        <label for="email" class="form-label">Email</label>
                         <input type="text" id="email" name="email"
                                th:field="*{email}"
                                class="form-control"

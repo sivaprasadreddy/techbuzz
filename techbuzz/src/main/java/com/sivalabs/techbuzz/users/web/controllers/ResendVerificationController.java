@@ -3,10 +3,10 @@ package com.sivalabs.techbuzz.users.web.controllers;
 import static java.net.URLEncoder.encode;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.dtos.ResendVerificationRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
-import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -24,7 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @Controller
-public class ResendVerificationController {
+@Loggable
+class ResendVerificationController {
 
     private static final Logger logger = LoggerFactory.getLogger(ResendVerificationController.class);
     private static final String RESEND_VERIFICATION_EMAIL = "users/resendVerification";
@@ -54,38 +55,25 @@ public class ResendVerificationController {
         }
 
         try {
-            Optional<User> user = userService.getUserByEmail(resendVerificationRequest.email());
-            if (user.isPresent()) {
-                // if account is verified then redirect to login page with account exist message
-                if (user.get().isVerified()) {
-                    redirectAttributes.addFlashAttribute(
-                            "errorMessage", "account is already verified, please use forget password if needed");
-                    return "redirect:/login";
-                }
-                // if account is not-verified then resend email and redirect to registrationStatus page
-                if (!user.get().isVerified()) {
-                    Optional<UserDTO> existingUserDTO =
-                            userService.getUserDTO(user.get().getEmail());
-
-                    String baseUrl = ServletUriComponentsBuilder.fromRequestUri(request)
-                            .replacePath(null)
-                            .build()
-                            .toUriString();
-
-                    this.sendVerificationEmail(request, existingUserDTO.get());
-                    redirectAttributes.addFlashAttribute(
-                            "message",
-                            "reset verification link is sent on your provided email ID please check your email");
-                    return "redirect:/registrationStatus";
-                }
+            Optional<UserDTO> userDTO = userService.getUserDTO(resendVerificationRequest.email());
+            if (userDTO.isEmpty()) {
+                redirectAttributes.addFlashAttribute("errorMessage", "Account not found with given email");
+                return "redirect:/resendVerification";
+            }
+            var user = userDTO.get();
+            if (user.verified()) {
+                redirectAttributes.addFlashAttribute(
+                        "errorMessage", "Account is already verified, please use forget password if needed");
+            } else {
+                this.sendVerificationEmail(request, user);
+                redirectAttributes.addFlashAttribute("message", "Email verification link is sent to your email");
             }
         } catch (Exception e) {
             logger.error("error during resending email verification request error: {}", e.getMessage());
-            return RESEND_VERIFICATION_EMAIL;
+            redirectAttributes.addFlashAttribute(
+                    "errorMessage", "Resending verification email failed, please try again");
         }
-
-        redirectAttributes.addFlashAttribute("errorMessage", "reset verification failed, please try re-register");
-        return "redirect:/registration";
+        return "redirect:/resendVerification";
     }
 
     private void sendVerificationEmail(HttpServletRequest request, UserDTO userDTO) {

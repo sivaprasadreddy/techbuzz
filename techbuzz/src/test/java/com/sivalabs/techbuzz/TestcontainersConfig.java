@@ -18,7 +18,7 @@ public class TestcontainersConfig {
 
     @Bean
     GenericContainer<?> mailhogContainer(DynamicPropertyRegistry registry) {
-        var container = new GenericContainer("mailhog/mailhog").withExposedPorts(1025);
+        var container = new GenericContainer("mailhog/mailhog").withExposedPorts(1025, 8025);
         registry.add("spring.mail.host", container::getHost);
         registry.add("spring.mail.port", () -> String.valueOf(container.getMappedPort(1025)));
         return container;
