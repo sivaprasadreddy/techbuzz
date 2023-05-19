@@ -4,5 +4,5 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public record ResendVerificationRequest(
-        @NotBlank(message = "Reset verification Email cannot be blank") @Email(message = "Invalid email address")
+        @NotBlank(message = "Resed verification Email cannot be blank") @Email(message = "Invalid email address")
                 String email) {}
