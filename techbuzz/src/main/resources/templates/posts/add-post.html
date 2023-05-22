@@ -10,77 +10,108 @@
 <body>
 
 <div layout:fragment="content">
+    <section class="bg-gray-50 dark:bg-gray-900">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 
-        <div class="col-md-6 offset-3">
+            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                        Add New Post
+                    </h1>
 
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="text-center">Add New Post</h3>
-                </div>
-                <div class="card-body">
-                    <form id="addForm" method="post" th:action="@{/posts}" th:object="${post}">
+                    <form class="space-y-4 md:space-y-6" id="addForm" method="post" th:action="@{/posts}"
+                          th:object="${post}">
+                        <div>
+                            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title
+                                *</label>
 
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title*</label>
                             <input type="text" id="title" name="title"
                                    th:field="*{title}"
-                                   class="form-control"
-                                   th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' : ''"
-                                   placeholder="Enter title"
-                            />
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}"
-                                 th:errors="*{title}">Title Error</div>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="url" class="form-label">URL</label>
-                            <input type="text" id="url" name="url"
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   th:classappend="${#fields.hasErrors('title')} ? 'border-red-500' : ''"
+                                   placeholder="Enter title"/>
+                            <p class="text-red-500 text-xs italic" th:if="${#fields.hasErrors('title')}"
+                               th:errors="*{title}">Title Error</p>
+
+                        </div>
+                        <div>
+                            <label for="url" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">URL
+                                *</label>
+
+                            <input type="text" id="url" name="title"
                                    th:field="*{url}"
-                                   class="form-control"
-                                   th:classappend="${#fields.hasErrors('url')} ? 'is-invalid' : ''"
-                                   placeholder="Enter url"
-                            />
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('url')}"
-                                 th:errors="*{url}">url Error</div>
-                        </div>
 
-                        <div class="mb-3">
-                            <label for="categoryId" class="form-label">Category*</label>
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   th:classappend="${#fields.hasErrors('title')} ? 'border-red-500' : ''"
+                                   placeholder="Enter url"/>
+                            <p class="text-red-500 text-xs italic" th:if="${#fields.hasErrors('url')}"
+                               th:errors="*{url}">Url Error</p>
+
+                        </div>
+                        <div>
+                            <label for="categoryId"
+                                   class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category
+                                *</label>
+
+
                             <input type="text" id="categoryId" name="categoryId"
-                                   class="form-control"
-                                   autocomplete="off"
                                    th:field="*{categoryId}"
-                                   th:classappend="${#fields.hasErrors('categoryId')} ? 'is-invalid' : ''"
-                                   placeholder="Select category"
-                            />
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('categoryId')}"
-                                 th:errors="*{categoryId}">Category Error</div>
+                                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   th:classappend="${#fields.hasErrors('categoryId')} ? 'border-red-500' : ''"
+                                   placeholder="Select category"/>
+                            <p class="text-red-500 text-xs italic" th:if="${#fields.hasErrors('categoryId')}"
+                               th:errors="*{categoryId}">Category Error</p>
+
+                        </div>
+                        <div>
+                            <label for="content" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Content
+                                *</label>
+
+                            <textarea type="text" id="content" name="content"
+                                      th:field="*{content}"
+
+                                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                      th:classappend="${#fields.hasErrors('content')} ? 'border-red-500' : ''"
+                                      placeholder="Enter content"/>
+                            <p class="text-red-500 text-xs italic" th:if="${#fields.hasErrors('content')}"
+                               th:errors="*{url}">Content Error</p>
+
+                        </div>
+                        <div class="mt-6 flex justify-center space-x-4 text-sm">
+                            <div>
+
+                                <button type="submit"
+                                        class="w-full bg-green-700 text-white bg-primary-800 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                    Register
+                                </button>
+                            </div>
+                            <div>
+                                <a th:href="${'/'}">
+                                    <button type="button"
+                                            class="w-full bg-red-800 text-white  hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                                        Back
+                                    </button>
+                                </a>
+
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="content" class="form-label">Content*</label>
-                            <textarea id="content" name="content"
-                                      rows="5"
-                                   th:field="*{content}"
-                                   class="form-control"
-                                   th:classappend="${#fields.hasErrors('content')} ? 'is-invalid' : ''"
-                                   placeholder="Enter content"></textarea>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('content')}"
-                                 th:errors="*{content}">content Error</div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a th:href="${'/'}" class="btn btn-secondary">Back</a>
                     </form>
                 </div>
+            </div>
         </div>
-    </div>
+    </section>
+
 </div>
 <div layout:fragment="pageScripts">
-<script>
+    <script>
     $(function () {
         initCategoriesAutoComplete("#categoryId")
     });
-</script>
+
+
+    </script>
 </div>
 </body>
 </html>

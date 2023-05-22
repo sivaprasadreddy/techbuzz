@@ -1,76 +1,54 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">TechBuzz</title>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE"> TechBuzz </title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"/>
     <!--<link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.css">-->
-    <link rel="stylesheet" th:href="@{'/webjars/bootswatch/5.2.3/dist/zephyr/bootstrap.css'}">
-    <link rel="stylesheet" th:href="@{'/assets/libs/selectize.js-0.13.6/css/selectize.bootstrap5.css'}">
-    <link rel="stylesheet" href="/webjars/font-awesome/6.4.0/css/all.css">
-    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet"/>
 </head>
 
-<body>
-<main>
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="/">TechBuzz</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!--<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
-                    </li>
-                </ul>-->
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link" href="/login"> Login </a>
-                    </li>
-                    <li class="nav-item" sec:authorize="!isAuthenticated()">
-                        <a class="nav-link" href="/registration"> Registration </a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" href="#"><span sec:authentication="principal.name">User</span></a>
-                    </li>
-                    <li class="nav-item" sec:authorize="!isAnonymous()">
-                        <a class="nav-link" href="#" th:href="@{/posts/new}">
-                            <i class="fas fa-plus-circle" ></i> Add
-                        </a>
-                    </li>
-                    <li class="nav-item" sec:authorize="isAuthenticated()">
-                        <a class="nav-link" href="/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout </a>
-                    </li>
-                    <!--<li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            UserName
-                        </a>
-                        <ul class="dropdown-menu  dropdown-menu-end">
-                            <li><a class="dropdown-item" href="#">My Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Change Password</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
-                        </ul>
-                    </li>-->
-                </ul>
-            </div>
+<body class="antialiased text-gray-500 dark:text-gray-300 bg-gray-100 dark:bg-gray-800">
+<nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 left-0 border-b border-gray-200 dark:border-gray-600">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a href="#" class="flex items-center">
+            <span class="self-center text-2xl font-extrabold whitespace-nowrap dark:text-white">TechBuzz</span>
+        </a>
+        <div class="flex md:order-2">
+            <a sec:authorize="!isAuthenticated()" href="/login"
+               class="mr-2 bg-gray-900 hover:bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50  font-semibold h-12 px-6 rounded-lg w-full flex items-center justify-center sm:w-auto dark:bg-blue-500 dark:highlight-white/20  dark:hover:bg-sky-400">
+                Login
+            </a>
+            <a sec:authorize="isAuthenticated()" href="/logout"
+               class="mr-2 bg-gray-900 hover:bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-gray-50  font-semibold h-12 px-6 rounded-lg w-full flex items-center justify-center sm:w-auto dark:bg-red-500 dark:highlight-white/20  dark:hover:bg-sky-400">
+                Logout
+            </a>
+            <div th:replace="~{fragments/headerButtons :: themeToggle}"></div>
+            <div th:replace="~{fragments/headerButtons :: smMenu}"></div>
         </div>
-    </nav>
-
-    <div id="app" class="container-fluid pt-3">
-        <div layout:fragment="content">
-            <!-- Your Page Content Here -->
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
+            <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li><a href="/"
+                       class="block font-bold py-2 pl-4 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500"
+                       aria-current="page">Home</a></li>
+                <li><a href="#" th:href="@{/posts/new}"
+                       class="block font-bold py-2 pl-4 pr-4 text-gray-900 rounded hover:bg-gray-10 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                    Add
+                </a></li>
+                <li sec:authorize="isAuthenticated()"><a href="#"
+                                                         class="block font-bold py-2 pl-4 pr-4 text-gray-900 rounded hover:bg-gray-10 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">
+                    <span sec:authentication="principal.name">User</span></a></a></li>
+            </ul>
         </div>
+    </div>
+</nav>
+<main class="dark:bg-gray-900  ">
+    <div layout:fragment="content">
+        <!-- Your Page Content Here -->
     </div>
 </main>
 <script src="/webjars/jquery/3.6.4/jquery.js"></script>
@@ -78,7 +56,52 @@
 <script th:src="@{'/assets/libs/selectize.js-0.13.6/js/standalone/selectize.min.js'}"></script>
 <script th:src="@{'/assets/js/common.js'}"></script>
 <script th:src="@{'/assets/js/app.js'}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 <div layout:fragment="pageScripts">
+
 </div>
 </body>
+<script>
+
+    if (localStorage.getItem("color-theme") === "dark" ||
+      (!("color-theme" in localStorage) &&
+    	window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+
+    var themeToggleBtn = document.querySelectorAll("#theme-toggle");
+
+    themeToggleBtn.forEach((x) =>
+      x.addEventListener("click", function () {
+    	// toggle icons inside button
+
+    	// if set via local storage previously
+    	if (localStorage.getItem("color-theme")) {
+    	  if (localStorage.getItem("color-theme") === "light") {
+    		document.documentElement.classList.add("dark");
+    		localStorage.setItem("color-theme", "dark");
+    	  } else {
+    		document.documentElement.classList.remove("dark");
+    		localStorage.setItem("color-theme", "light");
+    	  }
+
+    	  // if NOT set via local storage previously
+    	} else {
+    	  if (document.documentElement.classList.contains("dark")) {
+    		document.documentElement.classList.remove("dark");
+    		localStorage.setItem("color-theme", "light");
+    	  } else {
+    		document.documentElement.classList.add("dark");
+    		localStorage.setItem("color-theme", "dark");
+    	  }
+    	}
+      })
+    );
+
+
+</script>
+
 </html>
