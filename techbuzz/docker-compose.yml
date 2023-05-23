@@ -1,0 +1,13 @@
+version: '3.1'
+
+services:
+  db:
+    container_name: buzz-postgres
+    image: aeros-pg:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USERNAME=maelstrom
+      - POSTGRES_PASSWORD=aeflheim
+    volumes:
+      - /mnt/data:/var/lib/postgresql/data
