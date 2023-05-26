@@ -9,73 +9,48 @@
 </head>
 <body>
 <div layout:fragment="content">
-    <section class="bg-gray-50 dark:bg-gray-900">
-        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
 
-            <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
-                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                        Registration Form
-                    </h1>
+        <div class="col-md-4 offset-4">
 
-                    <form class="space-y-4 md:space-y-6" id="registrationForm" method="post"
-                          th:action="@{/registration}" th:object="${user}">
-                        <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email
-                                *</label>
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>Registration Form</h3>
+                </div>
+                <div class="card-body">
+                    <form id="registrationForm" method="post" th:action="@{/registration}" th:object="${user}">
 
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email*</label>
                             <input type="text" id="email" name="email"
                                    th:field="*{email}"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   th:classappend="${#fields.hasErrors('email')} ? 'border-red-500' : ''"
-                                   placeholder="Enter email"/>
-                            <p class="text-red-500 text-xs italic" th:if="${#fields.hasErrors('email')}"
-                               th:errors="*{email}">Email Error</p>
-
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                   placeholder="Enter email" />
+                            <div class="invalid-feedback"  th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</div>
                         </div>
-                        <div>
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password
-                                *</label>
-
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password*</label>
                             <input type="password" id="password" name="password"
                                    th:field="*{password}"
-                                   placeholder="••••••••"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   th:classappend="${#fields.hasErrors('password')} ? 'border-red-500' : ''"
-                            />
-                            <p class="text-red-500 text-xs italic" th:if="${#fields.hasErrors('password')}"
-                               th:errors="*{password}">Password</p>
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                                   placeholder="Enter password" />
+                            <div class="invalid-feedback"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</div>
                         </div>
-                        <div>
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name
-                                *</label>
-
-
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name*</label>
                             <input type="text" id="name" name="name"
                                    th:field="*{name}"
-                                   class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                   th:classappend="${#fields.hasErrors('name')} ? 'border-red-500' : ''"
+                                   class="form-control"
+                                   th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
                                    placeholder="Enter name"/>
-                            <p class="text-red-500 text-xs italic" th:if="${#fields.hasErrors('name')}"
-                               th:errors="*{name}">Name Error</p>
-
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</div>
                         </div>
-
-                        <button type="submit"
-                                class="w-full bg-green-700 text-white bg-primary-800 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                            Register
-                        </button>
-                        <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                            Already have an account? <a href="/login"
-                                                        class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login</a>
-                        </p>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
-    </section>
-
-
 </div>
 
 </body>

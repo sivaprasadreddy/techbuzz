@@ -10,38 +10,26 @@
 <body>
 
 <div layout:fragment="content">
-    <section class=" text-gray-900 body-font overflow-hidden dark:text-gray-300">
-        <div class="mt-36 ml-10 mr-10 grid grid-cols-1 gap-6 lg:gap-8 sm:grid-cols-2 lg:grid-cols-3 overflow-hidden mb-10">
 
-
-            <div class="md:flex font-sans bg-gray-50 dark:bg-gray-800  items-start shadow-xl shadow-zinc-300 lg:mr-0.3 dark:shadow-gray-800 lg:h-48"
-                 th:each="category: ${categories}">
-                <div class="md:flex-none md:w-40 relative sm:w-full lg:mt-5 lg:ml-3">
-                    <img th:src="${'/assets/images/'+category.image}" alt=""
-                         class=" inset-0 w-full h-full object-cover"/>
-                </div>
-                <div class="flex-auto p-6 ">
-                    <div class="flex flex-wrap">
-                        <h1 class="flex-auto text-lg font-extrabold text-gray-900 dark:text-gray-300"
-                            th:text="${category.name}">
-                            Category
-                        </h1>
-
+    <div class="container">
+        <h2 class="text-center">Welcome to TechBuzz</h2>
+        <div class="row">
+            <div class="col-sm-4 category-tile" th:each="category: ${categories}">
+                <a class="category-card" href="#" th:href="@{'/c/'+ ${category.slug}}">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-center" th:text="${category.name}">Category</h5>
+                            <div class="card-text text-center">
+                                <div th:text="${category.description}">description</div>
+                                <img class="category-img" src="/assets/images/java.png"
+                                     th:src="${'/assets/images/'+category.image}">
+                            </div>
+                        </div>
                     </div>
-
-
-                    <p class="text-sm text-gray-700 dark:text-gray-200 prose prose-xl"
-                       th:text="${category.description}">
-                        Description
-                    </p>
-                </div>
+                </a>
             </div>
-
-
         </div>
-    </section>
-
-
+    </div>
 </div>
 
 </body>
