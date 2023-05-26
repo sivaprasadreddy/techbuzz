@@ -1,13 +1,18 @@
 package com.sivalabs.techbuzz.users.domain.services;
 
+import static java.net.URLEncoder.encode;
+import static java.nio.charset.StandardCharsets.UTF_8;
+
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
+import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.dtos.CreateUserRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.mappers.UserDTOMapper;
 import com.sivalabs.techbuzz.users.domain.models.RoleEnum;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.cache.annotation.CacheEvict;
@@ -19,14 +24,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class UserService {
+    private final EmailService emailService;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserDTOMapper userDTOMapper;
 
     public UserService(
+            final EmailService emailService,
             final PasswordEncoder passwordEncoder,
             final UserRepository userRepository,
             final UserDTOMapper userDTOMapper) {
+        this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userDTOMapper = userDTOMapper;
@@ -65,5 +73,19 @@ public class UserService {
         user.setVerified(true);
         user.setVerificationToken(null);
         userRepository.updateVerificationStatus(user);
+    }
+
+    public Optional<UserDTO> getUserDTO(String emailID) {
+        return this.getUserByEmail(emailID).map(userDTOMapper::toDTO);
+    }
+
+    public void sendVerificationEmail(String baseUrl, UserDTO userDTO) {
+        String params =
+                "email=" + encode(userDTO.email(), UTF_8) + "&token=" + encode(userDTO.verificationToken(), UTF_8);
+        String verificationUrl = baseUrl + "/verify-email?" + params;
+        String to = userDTO.email();
+        String subject = "TechBuzz - Email verification";
+        Map<String, Object> paramsMap = Map.of("", userDTO.name(), "verificationUrl", verificationUrl);
+        emailService.sendEmail("email/verify-email", paramsMap, to, subject);
     }
 }
