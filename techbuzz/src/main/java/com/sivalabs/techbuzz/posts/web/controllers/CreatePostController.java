@@ -33,6 +33,7 @@ public class CreatePostController {
     @GetMapping("/posts/new")
     @AnyAuthenticatedUser
     public String newPostForm(Model model) {
+        log.info("New post form requested by user");
         model.addAttribute(MODEL_ATTRIBUTE_POST, new CreatePostRequest("", "", "", null, null));
         return "posts/add-post";
     }

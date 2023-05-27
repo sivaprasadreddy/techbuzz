@@ -36,6 +36,7 @@ public class UpdatePostController {
     @GetMapping("/posts/{id}/edit")
     @AnyAuthenticatedUser
     public String editPostForm(@PathVariable Long id, @CurrentUser User loginUser, Model model) {
+        log.info("Edit post form requested for Post ID: {} by User ID: {}", id, loginUser.getId());
         Post post = postService.getPost(id);
         this.checkPrivilege(post, loginUser);
         Long categoryId = post.getCategory().getId();

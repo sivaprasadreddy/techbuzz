@@ -59,6 +59,7 @@ class ResendVerificationController {
                         "errorMessage", "Account is already verified, please use forget password if needed");
             } else {
                 this.sendVerificationEmail(request, user);
+                logger.info("Sent email verification link");
                 redirectAttributes.addFlashAttribute("message", "Email verification link is sent to your email");
             }
         } catch (Exception e) {

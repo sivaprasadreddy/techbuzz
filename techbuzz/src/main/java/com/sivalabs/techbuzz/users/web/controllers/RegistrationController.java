@@ -32,6 +32,7 @@ class RegistrationController {
 
     @GetMapping("/registration")
     public String registrationForm(Model model) {
+        logger.info("Received request for registration form");
         model.addAttribute("user", new CreateUserRequest("", "", ""));
         return REGISTRATION_VIEW;
     }
@@ -43,12 +44,15 @@ class RegistrationController {
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+            logger.warn("Registration form has validation errors");
             return REGISTRATION_VIEW;
         }
         try {
+            logger.info("POST /registration - Registering user");
             UserDTO userDTO = userService.createUser(createUserRequest);
             this.sendVerificationEmail(request, userDTO);
             redirectAttributes.addFlashAttribute("message", "Registration is successful");
+            logger.info("User successfully registered: {}", userDTO.email());
             return "redirect:/registrationStatus";
         } catch (ResourceAlreadyExistsException e) {
             logger.error("Registration error: {}", e.getMessage());
@@ -59,6 +63,7 @@ class RegistrationController {
 
     @GetMapping("/registrationStatus")
     public String registrationStatus() {
+        logger.info("GET /registrationStatus");
         return "users/registrationStatus";
     }
 
