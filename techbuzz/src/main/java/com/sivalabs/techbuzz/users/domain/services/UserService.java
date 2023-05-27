@@ -85,7 +85,7 @@ public class UserService {
         String verificationUrl = baseUrl + "/verify-email?" + params;
         String to = userDTO.email();
         String subject = "TechBuzz - Email verification";
-        Map<String, Object> paramsMap = Map.of("", userDTO.name(), "verificationUrl", verificationUrl);
+        Map<String, Object> paramsMap = Map.of("username", userDTO.name(), "verificationUrl", verificationUrl);
         emailService.sendEmail("email/verify-email", paramsMap, to, subject);
     }
 }
