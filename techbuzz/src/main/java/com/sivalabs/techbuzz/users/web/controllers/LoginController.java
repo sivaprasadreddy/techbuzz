@@ -29,8 +29,8 @@ class LoginController {
                     errorMessage = ex.getMessage();
                 }
             }
-            log.warn("GET /login - {}", errorMessage);
             model.addAttribute("errorMessage", errorMessage);
+            log.error("GET /login - {}", errorMessage);
         }
         return "users/login";
     }
