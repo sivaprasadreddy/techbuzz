@@ -32,11 +32,12 @@ public class ViewCategoryController {
             @PathVariable(name = "categorySlug") String categorySlug,
             @RequestParam(name = "page", defaultValue = "1") Integer page,
             Model model) {
-        log.info("GET /c/{} - Fetching posts for category {} with page: {}", categorySlug, categorySlug, page);
+        log.info("Fetching posts for category {} with page: {}", categorySlug, page);
         PagedResult<PostViewDTO> data = postService.getPostsByCategorySlug(categorySlug, page);
         if (data.data().isEmpty() && (page > 1 && page > data.totalPages())) {
-            log.warn("No posts found for category: {}", categorySlug);
-            log.info("Redirecting to the last available page: {}", data.totalPages());
+            log.warn("No posts found for category: {}, page:{}. Redirecting to last page",
+                    categorySlug, data.totalPages());
+
             return "redirect:/c/" + categorySlug + "?page=" + data.totalPages();
         }
         Category category = categoryService.getCategory(categorySlug);

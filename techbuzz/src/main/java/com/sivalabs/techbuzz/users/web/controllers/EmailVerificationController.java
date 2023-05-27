@@ -24,7 +24,7 @@ class EmailVerificationController {
 
     @GetMapping("/verify-email")
     public String verifyEmail(Model model, @RequestParam("email") String email, @RequestParam("token") String token) {
-        logger.info("GET /verify-email - Verifying email {} with token: {}", email, token);
+        logger.info("Verifying email {}", email);
         try {
             userService.verifyEmail(email, token);
             model.addAttribute("success", true);

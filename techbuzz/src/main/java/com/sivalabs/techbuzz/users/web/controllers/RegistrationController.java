@@ -49,7 +49,7 @@ class RegistrationController {
             return REGISTRATION_VIEW;
         }
         try {
-            logger.info("POST /registration - Registering user");
+            logger.info("Registering user");
             UserDTO userDTO = userService.createUser(createUserRequest);
             this.sendVerificationEmail(request, userDTO);
             redirectAttributes.addFlashAttribute("message", "Registration is successful");
@@ -64,7 +64,7 @@ class RegistrationController {
 
     @GetMapping("/registrationStatus")
     public String registrationStatus() {
-        logger.info("GET /registrationStatus");
+        logger.info("Fetching registration status");
         return "users/registrationStatus";
     }
 

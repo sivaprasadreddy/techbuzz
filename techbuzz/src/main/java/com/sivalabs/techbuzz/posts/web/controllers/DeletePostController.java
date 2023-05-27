@@ -33,7 +33,7 @@ public class DeletePostController {
         Post post = postService.getPost(id);
         this.checkPrivilege(post, loginUser);
         postService.deletePost(id);
-        log.info("DELETE /post{} - Remove Post with id {}", id);
+        log.info("Remove Post with id {}", id);
         return ResponseEntity.ok().build();
     }
 

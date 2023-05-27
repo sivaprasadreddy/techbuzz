@@ -23,7 +23,7 @@ public class GetCategoriesController {
 
     @GetMapping
     public List<Category> allCategories() {
-        log.info("GET /api/categories - Fetching all categories");
+        log.info("Fetching all categories");
         return categoryRepository.findAll();
     }
 }

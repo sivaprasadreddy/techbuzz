@@ -20,7 +20,7 @@ class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
-        log.info("GET / - Handle home request");
+        log.info("Handle home request");
         model.addAttribute("categories", categoryService.getAllCategories());
         return "posts/home";
     }

@@ -31,7 +31,7 @@ class AddVoteController {
         var createVoteRequest = new CreateVoteRequest(request.postId(), loginUser.getId(), request.value());
         postService.addVote(createVoteRequest);
         log.info(
-                "POST /partials/add-vote - Vote added by User id: {} for Post id: {}",
+                "Vote added by User id: {} for Post id: {}",
                 loginUser.getId(),
                 request.postId());
         PostViewDTO post = postService.getPostViewDTO(request.postId());

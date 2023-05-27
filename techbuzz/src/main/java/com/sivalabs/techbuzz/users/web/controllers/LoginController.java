@@ -30,7 +30,7 @@ class LoginController {
                 }
             }
             model.addAttribute("errorMessage", errorMessage);
-            log.error("GET /login - {}", errorMessage);
+            log.error(errorMessage);
         }
         return "users/login";
     }
