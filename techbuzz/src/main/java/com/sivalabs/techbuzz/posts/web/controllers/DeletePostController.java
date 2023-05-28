@@ -8,6 +8,8 @@ import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.services.PostService;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import java.util.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Controller
 @Loggable
 public class DeletePostController {
+    private static final Logger log = LoggerFactory.getLogger(DeletePostController.class);
     private final PostService postService;
 
     public DeletePostController(PostService postService) {
@@ -30,6 +33,7 @@ public class DeletePostController {
         Post post = postService.getPost(id);
         this.checkPrivilege(post, loginUser);
         postService.deletePost(id);
+        log.info("Remove Post with id {}", id);
         return ResponseEntity.ok().build();
     }
 
