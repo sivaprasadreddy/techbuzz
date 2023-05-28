@@ -35,8 +35,10 @@ public class ViewCategoryController {
         log.info("Fetching posts for category {} with page: {}", categorySlug, page);
         PagedResult<PostViewDTO> data = postService.getPostsByCategorySlug(categorySlug, page);
         if (data.data().isEmpty() && (page > 1 && page > data.totalPages())) {
-            log.warn("No posts found for category: {}, page:{}. Redirecting to last page",
-                    categorySlug, data.totalPages());
+            log.warn(
+                    "No posts found for category: {}, page:{}. Redirecting to last page",
+                    categorySlug,
+                    data.totalPages());
 
             return "redirect:/c/" + categorySlug + "?page=" + data.totalPages();
         }

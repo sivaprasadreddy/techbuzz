@@ -30,10 +30,7 @@ class AddVoteController {
     public String createVote(@Valid @RequestBody CreateVoteRequest request, @CurrentUser User loginUser, Model model) {
         var createVoteRequest = new CreateVoteRequest(request.postId(), loginUser.getId(), request.value());
         postService.addVote(createVoteRequest);
-        log.info(
-                "Vote added by User id: {} for Post id: {}",
-                loginUser.getId(),
-                request.postId());
+        log.info("Vote added by User id: {} for Post id: {}", loginUser.getId(), request.postId());
         PostViewDTO post = postService.getPostViewDTO(request.postId());
         model.addAttribute("post", post);
         return "fragments/post";

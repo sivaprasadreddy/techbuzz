@@ -3,7 +3,6 @@ package com.sivalabs.techbuzz.users.web.controllers;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
 import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;

@@ -21,7 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @Controller
 @Loggable
 class RegistrationController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(RegistrationController.class);
     private static final String REGISTRATION_VIEW = "users/registration";
 
