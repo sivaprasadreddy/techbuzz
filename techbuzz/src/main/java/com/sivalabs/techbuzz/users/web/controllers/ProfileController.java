@@ -1,7 +1,9 @@
 package com.sivalabs.techbuzz.users.web.controllers;
 
 import com.sivalabs.techbuzz.config.logging.Loggable;
+import com.sivalabs.techbuzz.users.domain.models.UserProfile;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,12 +21,16 @@ public class ProfileController {
         this.userService = userService;
     }
 
-    @GetMapping("/userSpecific/profile/{userId}")
+    @GetMapping("/users/{userId}")
     public String getUserProfile(@PathVariable(name = "userId") Long userId, Model model) {
         log.info("Fetching user profile for {}", userId);
-        String userSpecificPostsUrl = "/userSpecific/posts/" + userId + "/";
+        String userSpecificPostsUrl = "/users/" + userId + "/posts/";
+        Optional<UserProfile> userProfile = userService.getUserProfile(userId);
+        if (userProfile.isEmpty()) {
+            return "posts/category";
+        }
+        model.addAttribute("userProfile", userProfile.get());
         model.addAttribute("userSpecificPostsUrl", userSpecificPostsUrl);
-        model.addAttribute("userProfile", userService.getUserProfile(userId));
         return "users/profile";
     }
 }

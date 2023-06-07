@@ -49,7 +49,7 @@ public class PostsByUserControllerTest extends AbstractIntegrationTest {
     """)
     @WithUserDetails(value = ADMIN_EMAIL)
     void shouldFetchPostsByUser(Long userId, String tab) throws Exception {
-        mockMvc.perform(get("/userSpecific/posts/{userId}/{tab}", userId, tab))
+        mockMvc.perform(get("/users/{userId}/posts/{tab}", userId, tab))
                 .andExpect(status().isOk())
                 .andExpect(view().name("fragments/user-posts"))
                 .andExpect(model().attributeExists("paginationPrefix"))

@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
+import org.jooq.Records;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -24,12 +25,12 @@ class JooqUserRepository implements UserRepository {
         return this.dsl.selectFrom(USERS).where(USERS.EMAIL.eq(email)).fetchOptional(UserRecordMapper.INSTANCE);
     }
 
-    public UserProfile findProfileById(Long id) {
+    public Optional<UserProfile> findProfileById(Long id) {
         return this.dsl
                 .select(USERS.ID, USERS.NAME, USERS.EMAIL, USERS.CREATED_AT)
                 .from(USERS)
                 .where(USERS.ID.eq(id))
-                .fetchSingle(rec -> new UserProfile(rec.value1(), rec.value2(), rec.value3(), rec.value4()));
+                .fetchOptional(Records.mapping(UserProfile::new));
     }
 
     public boolean existsByEmail(String email) {

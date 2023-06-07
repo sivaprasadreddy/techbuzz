@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 public class ProfileControllerTest extends AbstractIntegrationTest {
     @Test
     void shouldFetchUserProfileDetails() throws Exception {
-        mockMvc.perform(get("/userSpecific/profile/{userId}", 1L))
+        mockMvc.perform(get("/users/{userId}", 1L))
                 .andExpect(status().isOk())
                 .andExpect(view().name("users/profile"))
                 .andExpect(model().attributeExists("userProfile"))

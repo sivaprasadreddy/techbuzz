@@ -62,16 +62,13 @@ class JooqPostRepository implements PostRepository {
 
     @Override
     public PagedResult<Post> findVotedPostsByUser(Long userId, Integer page) {
-        int totalElements = this.dsl.fetchCount(
-                POSTS.join(VOTES).on(POSTS.ID.eq(VOTES.POST_ID)).where(VOTES.USER_ID.eq(userId)));
+        int totalElements = this.dsl.fetchCount(VOTES.where(VOTES.USER_ID.eq(userId)));
 
         List<Long> postIds = this.dsl
-                .selectDistinct(POSTS.ID, POSTS.CREATED_AT)
-                .from(POSTS)
-                .join(VOTES)
-                .on(POSTS.ID.eq(VOTES.POST_ID))
+                .selectDistinct(VOTES.ID, VOTES.CREATED_AT)
+                .from(VOTES)
                 .where(VOTES.USER_ID.eq(userId))
-                .orderBy(POSTS.CREATED_AT.desc())
+                .orderBy(VOTES.CREATED_AT.desc())
                 .limit(properties.postsPerPage())
                 .offset((page - 1) * properties.postsPerPage())
                 .fetch(POSTS.ID);

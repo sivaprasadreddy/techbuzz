@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @Loggable
 public class PostsByUserController {
-    private static final Logger log = LoggerFactory.getLogger(ViewCategoryController.class);
+    private static final Logger log = LoggerFactory.getLogger(PostsByUserController.class);
 
     private final PostService postService;
 
@@ -23,7 +23,7 @@ public class PostsByUserController {
         this.postService = postService;
     }
 
-    @GetMapping("/userSpecific/posts/{userId}/{tab}")
+    @GetMapping("/users/{userId}/posts/{tab}")
     public String getUserSpecificPosts(
             @PathVariable(name = "userId") Long userId,
             @PathVariable(name = "tab") String tab,
@@ -33,7 +33,7 @@ public class PostsByUserController {
         PagedResult<PostViewDTO> data = "created".equals(tab)
                 ? postService.getCreatedPostsByUser(userId, page)
                 : postService.getVotedPostsByUser(userId, page);
-        String commonUrl = "/userSpecific/posts/" + userId + "/";
+        String commonUrl = "/users/" + userId + "/posts/";
         model.addAttribute("paginationPrefix", commonUrl + tab + "?");
         model.addAttribute("postsData", data);
         model.addAttribute("currentTab", tab);

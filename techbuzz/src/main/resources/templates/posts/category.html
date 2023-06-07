@@ -36,7 +36,7 @@
                 <h3 class="alert-heading">No results found</h3>
             </div>
             <div class="p-2" th:each="post: ${postsData.data}">
-                <div th:replace="~{fragments/post :: post('normalPost')}"></div>
+                <div th:replace="~{fragments/post :: post}"></div>
             </div>
 
         </div>

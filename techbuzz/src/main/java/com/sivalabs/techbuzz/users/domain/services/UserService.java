@@ -46,7 +46,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public UserProfile getUserProfile(Long id) {
+    public Optional<UserProfile> getUserProfile(Long id) {
         return userRepository.findProfileById(id);
     }
 
