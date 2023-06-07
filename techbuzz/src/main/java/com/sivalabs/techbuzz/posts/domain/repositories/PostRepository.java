@@ -11,6 +11,10 @@ public interface PostRepository {
 
     List<Post> findPosts(List<Long> postIds);
 
+    PagedResult<Post> findCreatedPostsByUser(Long userId, Integer page);
+
+    PagedResult<Post> findVotedPostsByUser(Long userId, Integer page);
+
     Optional<Post> findById(Long postId);
 
     Post save(Post post);

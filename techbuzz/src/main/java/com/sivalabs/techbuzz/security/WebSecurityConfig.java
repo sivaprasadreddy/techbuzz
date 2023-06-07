@@ -32,6 +32,7 @@ public class WebSecurityConfig {
         "/registrationStatus",
         "/verify-email",
         "/c/**",
+        "/userSpecific/**",
         "/resendVerification"
     };
 

@@ -55,3 +55,24 @@ function initCategoriesAutoComplete(fieldSelector)
       }
   });
 }
+const getUserProfile = (userId) => {
+    $.ajax({
+        url: '/api/userProfile/' + userId,
+        type: "GET",
+        dataType: "json",
+        success: function(responseData) {
+            $("#userNameTxt").innerHTML(responseData.name);
+            $("#")
+        }
+    });
+}
+
+const tabChangeHandler = (tabName, dataUrl) => {
+    const contentPane = $("#" + tabName + "TabContent");
+    contentPane.load(dataUrl, function(result) {
+        var tabElement = $('#' + tabName);
+        var tab = new bootstrap.Tab(tabElement);
+        tab.show();
+    });
+
+}

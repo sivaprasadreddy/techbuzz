@@ -11,6 +11,7 @@ import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.mappers.UserDTOMapper;
 import com.sivalabs.techbuzz.users.domain.models.RoleEnum;
 import com.sivalabs.techbuzz.users.domain.models.User;
+import com.sivalabs.techbuzz.users.domain.models.UserProfile;
 import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
 import java.util.Map;
 import java.util.Optional;
@@ -43,6 +44,10 @@ public class UserService {
     @Cacheable("user")
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    public UserProfile getUserProfile(Long id) {
+        return userRepository.findProfileById(id);
     }
 
     @CacheEvict(cacheNames = "user", allEntries = true)

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<body>
+<div>
+    <div class="pt-3" >
+        <div class="row">
+            <div class="col-md-8 ">
+                <div th:replace="~{fragments/pagination-in-tabs :: pagination}"></div>
+
+                <div>
+                    <div class="alert alert-warning" role="alert"
+                         th:if="${postsData==null || postsData.data == null || postsData.data.isEmpty() }">
+                        <h3 class="alert-heading">No results found</h3>
+                    </div>
+                    <div class="p-2" th:each="post: ${postsData?.data}">
+                        <div th:replace="~{fragments/post :: post('userSpecificPost')}"></div>
+                    </div>
+
+                </div>
+
+                <div th:replace="~{fragments/pagination-in-tabs :: pagination}"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
