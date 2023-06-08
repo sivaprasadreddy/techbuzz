@@ -65,13 +65,13 @@ class JooqPostRepository implements PostRepository {
         int totalElements = this.dsl.fetchCount(VOTES.where(VOTES.USER_ID.eq(userId)));
 
         List<Long> postIds = this.dsl
-                .selectDistinct(VOTES.ID, VOTES.CREATED_AT)
+                .selectDistinct(VOTES.POST_ID, VOTES.CREATED_AT)
                 .from(VOTES)
                 .where(VOTES.USER_ID.eq(userId))
                 .orderBy(VOTES.CREATED_AT.desc())
                 .limit(properties.postsPerPage())
                 .offset((page - 1) * properties.postsPerPage())
-                .fetch(POSTS.ID);
+                .fetch(VOTES.POST_ID);
 
         List<Post> posts = findPosts(postIds);
         int totalPages = (int) Math.ceil((double) totalElements / (double) properties.postsPerPage());
