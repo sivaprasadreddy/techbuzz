@@ -1,9 +1,9 @@
 package com.sivalabs.techbuzz.users.web.controllers;
 
+import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
 import com.sivalabs.techbuzz.config.logging.Loggable;
 import com.sivalabs.techbuzz.users.domain.models.UserProfile;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
-import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -25,11 +25,10 @@ public class ProfileController {
     public String getUserProfile(@PathVariable(name = "userId") Long userId, Model model) {
         log.info("Fetching user profile for {}", userId);
         String userSpecificPostsUrl = "/users/" + userId + "/posts/";
-        Optional<UserProfile> userProfile = userService.getUserProfile(userId);
-        if (userProfile.isEmpty()) {
-            return "posts/category";
-        }
-        model.addAttribute("userProfile", userProfile.get());
+        UserProfile userProfile = userService
+                .getUserProfile(userId)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("User Id %s not found", userId)));
+        model.addAttribute("userProfile", userProfile);
         model.addAttribute("userSpecificPostsUrl", userSpecificPostsUrl);
         return "users/profile";
     }
