@@ -6,6 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class SecurityUser extends org.springframework.security.core.userdetails.User {
     private final String name;
+    private final Long id;
 
     public SecurityUser(User user) {
         super(
@@ -18,9 +19,14 @@ public class SecurityUser extends org.springframework.security.core.userdetails.
                 Set.of(new SimpleGrantedAuthority(user.getRole().name())));
 
         this.name = user.getName();
+        this.id = user.getId();
     }
 
     public String getName() {
         return name;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

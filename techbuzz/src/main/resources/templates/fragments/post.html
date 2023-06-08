@@ -4,59 +4,62 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
 <body>
-    <div th:fragment="post" th:id="'post-container-' + ${post.id}">
-        <div class="card post">
-            <div class="card-body">
-                <h4 class="card-title">
-                    <a href="#" th:href="${post.url}" th:text="${post.title}" target="_blank"></a>
-                </h4>
-                <p class="card-text">
-                <div class="pb-2 text-muted">
-                    Posted By: <span th:text="${post.createdBy.name}">Name</span>
-                    Date: <span th:text="${#temporals.format(post.createdAt, 'dd-MMM-yyyy')}">Date</span>
-                </div>
-                <div th:text="${post.content}">
-                    Post content
-                </div>
-                <p sec:authorize="isAuthenticated()" class="mt-3 mb-0">
+<div th:fragment="post" th:id="'post-container-' + ${post.id}">
+    <div class="card post">
+        <div class="card-body">
+            <h4 class="card-title">
+                <a href="#" th:href="${post.url}" th:text="${post.title}" target="_blank"></a>
+            </h4>
+            <p class="card-text">
+            <div class="pb-2 text-muted">
+                Posted By: <a href="#" class="text-dark"  th:href="@{'/users/'+ ${post.createdBy.id}}" th:text="${post.createdBy.name}">Name</a>
+                Date: <span class="text-dark" th:text="${#temporals.format(post.createdAt, 'dd-MMM-yyyy')}">Date</span>
+                <span th:if ="${type=='userSpecificPost'}" >Category: <span class="text-dark" th:text="${post.category.name}">Category</span></span>
+            </div>
+            <div th:text="${post.content}">
+                Post content
+            </div>
+            <p  sec:authorize="isAuthenticated()" class="mt-3 mb-0">
 
-                    <a th:if="${post.editable}" class="btn btn-primary" href="#" th:href="${'/posts/'+post.id+'/edit'}">
-                        <i class="fas fa-edit"></i> Edit
-                    </a>
+                <a th:if="${post.editable} " class="btn btn-primary" href="#" th:href="${'/posts/'+post.id+'/edit'}">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
 
-                    <button th:if="${post.editable}" class="btn btn-danger"
+                <button th:if="${post.editable} " class="btn btn-danger"
                         th:onclick="'javascript:deletePost( \''+${post.id}+'\');'">
-                        <i class="fas fa-trash-alt"></i> Delete
-                    </button>
+                    <i class="fas fa-trash-alt"></i> Delete
+                </button>
 
-                    <button class="btn btn-success" th:classappend="${post.upVoted()} ? disabled : ''"
+                <button class="btn btn-success" th:classappend="${post.upVoted()} ? disabled : ''"
                         th:onclick="'javascript:addVote( \''+${post.id}+'\', 1);'">
-                        <span th:text="${post.getUpVoteCount()}" class="p-2">1</span>
-                        <i class="fa-solid fa-thumbs-up"></i>
-                    </button>
+                    <span th:text="${post.getUpVoteCount()}" class="p-2">1</span>
+                    <i class="fa-solid fa-thumbs-up"></i>
+                </button>
 
-                    <button class="btn btn-danger" th:classappend="${post.downVoted()} ? disabled : ''"
+                <button class="btn btn-danger" th:classappend="${post.downVoted()}  ? disabled : ''"
                         th:onclick="'javascript:addVote( \''+${post.id}+'\', -1);'">
-                        <span th:text="${post.getDownVoteCount()}" class="p-2">1</span>
-                        <i class="fa-solid fa-thumbs-down"></i>
-                    </button>
-                </p>
-                <p sec:authorize="!isAuthenticated()" class="mt-3 mb-0">
+                    <span th:text="${post.getDownVoteCount()}" class="p-2">1</span>
+                    <i class="fa-solid fa-thumbs-down"></i>
+                </button>
+            </p>
+            <p  sec:authorize="!isAuthenticated()" class="mt-3 mb-0">
                     <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Login to vote">
                         <button class="btn btn-success disabled">
                             <span th:text="${post.getUpVoteCount()}" class="p-2">1</span>
                             <i class="fa-solid fa-thumbs-up"></i>
                         </button>
                     </span>
-                    <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Login to vote">
+                <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Login to vote">
                         <button class="btn btn-danger disabled">
                             <span th:text="${post.getDownVoteCount()}" class="p-2">1</span>
                             <i class="fa-solid fa-thumbs-down"></i>
                         </button>
                     </span>
-                </p>
-            </div>
+            </p>
+
+          
         </div>
     </div>
+</div>
 </body>
 </html>

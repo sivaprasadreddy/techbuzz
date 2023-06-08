@@ -60,6 +60,18 @@ public class PostService {
         return convert(postPagedResult);
     }
 
+    public PagedResult<PostViewDTO> getCreatedPostsByUser(Long userId, Integer page) {
+        log.debug("Fetching post by user id: {}", userId);
+        PagedResult<Post> postPagedResult = postRepository.findCreatedPostsByUser(userId, page);
+        return convert(postPagedResult);
+    }
+
+    public PagedResult<PostViewDTO> getVotedPostsByUser(Long userId, Integer page) {
+        log.debug("Fetching post by user id: {}", userId);
+        PagedResult<Post> postPagedResult = postRepository.findVotedPostsByUser(userId, page);
+        return convert(postPagedResult);
+    }
+
     public Post updatePost(UpdatePostRequest request) {
         log.debug("Update post with id={}", request.id());
         Post post = postRepository

@@ -61,6 +61,50 @@ class JooqPostRepository implements PostRepository {
     }
 
     @Override
+    public PagedResult<Post> findVotedPostsByUser(Long userId, Integer page) {
+        int totalElements = this.dsl.fetchCount(VOTES.where(VOTES.USER_ID.eq(userId)));
+
+        List<Long> postIds = this.dsl
+                .selectDistinct(VOTES.ID, VOTES.CREATED_AT)
+                .from(VOTES)
+                .where(VOTES.USER_ID.eq(userId))
+                .orderBy(VOTES.CREATED_AT.desc())
+                .limit(properties.postsPerPage())
+                .offset((page - 1) * properties.postsPerPage())
+                .fetch(POSTS.ID);
+
+        List<Post> posts = findPosts(postIds);
+        int totalPages = (int) Math.ceil((double) totalElements / (double) properties.postsPerPage());
+        return new PagedResult<>(
+                posts, totalElements, page, totalPages, page == 1, totalPages == page, totalPages > page, page > 1);
+    }
+
+    @Override
+    public PagedResult<Post> findCreatedPostsByUser(Long userId, Integer page) {
+        int totalElements = this.dsl.fetchCount(POSTS.where(POSTS.CREATED_BY.eq(userId)));
+
+        List<Post> posts = selectPostSpec()
+                .where(POSTS.CREATED_BY.eq(userId))
+                .orderBy(POSTS.CREATED_AT.desc())
+                .limit(properties.postsPerPage())
+                .offset((page - 1) * properties.postsPerPage())
+                .fetch(r -> new Post(
+                        r.value1(),
+                        r.value2(),
+                        r.value3(),
+                        r.value4(),
+                        r.value7(),
+                        r.value8(),
+                        new HashSet<>(r.value9()),
+                        r.value5(),
+                        r.value6()));
+
+        int totalPages = (int) Math.ceil((double) totalElements / (double) properties.postsPerPage());
+        return new PagedResult<>(
+                posts, totalElements, page, totalPages, page == 1, totalPages == page, totalPages > page, page > 1);
+    }
+
+    @Override
     public List<Post> findPosts(List<Long> postIds) {
         return selectPostSpec()
                 .where(POSTS.ID.in(postIds))

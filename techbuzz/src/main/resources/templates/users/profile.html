@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity"
+        layout:decorate="~{layout}"
+>
+<head>
+    <title>User Posts</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="offset-md-2">
+        <div>
+            <div class="text-left pt-3">
+                <h4 th:text="${userProfile.name}">Name</h4>
+            </div>
+            <div class="text-left">
+                <h6
+                        th:text="${#temporals.format(userProfile.activeFrom, 'dd-MMM-yyyy')}"
+                >
+                    Date
+                </h6>
+            </div>
+            <nav class="col-md-8">
+                <div class="nav nav-tabs" id="postsTab" role="tablist">
+                    <nav class="nav">
+                        <a id="created"
+                                class="nav-link active"
+                                aria-current="page"
+                                href="#createdTabContent"
+                                th:attr="data-url=${userSpecificPostsUrl+'created'}">
+                        Created
+                        </a>
+                        <a id="voted"
+                                class="nav-link"
+                                href="#votedTabContent"
+                                th:attr="data-url=${userSpecificPostsUrl+'voted'}">
+                            Voted
+                        </a>
+                    </nav>
+                </div>
+            </nav>
+        </div>
+        <div class="tab-content" id="nav-tabContent">
+            <div
+                    class="tab-pane fade show active"
+                    id="createdTabContent"
+                    role="tabpanel"
+                    aria-labelledby="nav-home-tab"
+
+            ></div>
+            <div
+                    class="tab-pane fade"
+                    id="votedTabContent"
+                    role="tabpanel"
+                    aria-labelledby="nav-profile-tab"
+
+            ></div>
+        </div>
+    </div>
+</div>
+<div layout:fragment="pageScripts">
+    <script th:inline="javascript">
+        let currentTab =  [[${currentTab}]];
+        if (currentTab === null)
+            currentTab = 'created';
+
+        $(document).ready(function() {
+            $('#postsTab a').click(function(e) {
+                e.preventDefault();
+                var url = $(this).attr("data-url");
+                var href = this.hash;
+                console.log(href);
+                tabChangeHandler($(this).attr("id"), $(this).attr("data-url"));
+            });
+            $('#' + currentTab + 'TabContent').load($('.nav-link.active').attr("data-url"), function(result) {});
+        });
+         </script>
+</div>
+</body>
+</html>

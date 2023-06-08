@@ -1,0 +1,18 @@
+<div th:fragment="pagination">
+    <nav aria-label="Page navigation" th:if="${postsData!=null && postsData.totalPages() > 1 }">
+        <ul class="pagination pagination justify-content-center">
+            <li class="page-item" th:classappend="${!postsData.hasPrevious()} ? disabled : ''">
+                <a class="page-link" href="#" th:onclick='tabChangeHandler([[${currentTab}]],[[${paginationPrefix+"page=1"}]])'>First</a>
+            </li>
+            <li class="page-item" th:classappend="${!postsData.hasPrevious()} ? disabled : ''">
+                <a class="page-link" href="#" th:onclick='tabChangeHandler([[${currentTab}]],[[${paginationPrefix+"page="+(postsData.pageNumber() - 1)}]])'>Previous</a>
+            </li>
+            <li class="page-item" th:classappend="${!postsData.hasNext()} ? disabled : ''">
+                <a class="page-link" href="#" th:onclick='tabChangeHandler([[${currentTab}]],[[${paginationPrefix+"page="+(postsData.pageNumber() + 1)}]])' >Next</a>
+            </li>
+            <li class="page-item" th:classappend="${!postsData.hasNext()} ? disabled : ''">
+                <a class="page-link" href="#" th:onclick='tabChangeHandler([[${currentTab}]],[[${paginationPrefix+"page="+(postsData.totalPages())}]])'>Last</a>
+            </li>
+        </ul>
+    </nav>
+</div>

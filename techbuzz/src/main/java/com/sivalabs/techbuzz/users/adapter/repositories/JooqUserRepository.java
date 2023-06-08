@@ -4,11 +4,13 @@ import static com.sivalabs.techbuzz.jooq.tables.Users.USERS;
 
 import com.sivalabs.techbuzz.jooq.tables.records.UsersRecord;
 import com.sivalabs.techbuzz.users.domain.models.User;
+import com.sivalabs.techbuzz.users.domain.models.UserProfile;
 import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
+import org.jooq.Records;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -21,6 +23,14 @@ class JooqUserRepository implements UserRepository {
 
     public Optional<User> findByEmail(String email) {
         return this.dsl.selectFrom(USERS).where(USERS.EMAIL.eq(email)).fetchOptional(UserRecordMapper.INSTANCE);
+    }
+
+    public Optional<UserProfile> findProfileById(Long id) {
+        return this.dsl
+                .select(USERS.ID, USERS.NAME, USERS.EMAIL, USERS.CREATED_AT)
+                .from(USERS)
+                .where(USERS.ID.eq(id))
+                .fetchOptional(Records.mapping(UserProfile::new));
     }
 
     public boolean existsByEmail(String email) {
