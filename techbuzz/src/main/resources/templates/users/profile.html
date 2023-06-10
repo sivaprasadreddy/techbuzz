@@ -49,14 +49,14 @@
                     class="tab-pane fade show active"
                     id="createdTabContent"
                     role="tabpanel"
-                    aria-labelledby="nav-home-tab"
+                    aria-labelledby="created-posts-tab"
 
             ></div>
             <div
                     class="tab-pane fade"
                     id="votedTabContent"
                     role="tabpanel"
-                    aria-labelledby="nav-profile-tab"
+                    aria-labelledby="voted-posts-tab"
 
             ></div>
         </div>
@@ -73,7 +73,6 @@
                 e.preventDefault();
                 var url = $(this).attr("data-url");
                 var href = this.hash;
-                console.log(href);
                 tabChangeHandler($(this).attr("id"), $(this).attr("data-url"));
             });
             $('#' + currentTab + 'TabContent').load($('.nav-link.active').attr("data-url"), function(result) {});

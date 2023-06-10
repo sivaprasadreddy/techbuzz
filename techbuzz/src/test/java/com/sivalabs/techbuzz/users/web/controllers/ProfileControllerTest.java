@@ -15,4 +15,9 @@ public class ProfileControllerTest extends AbstractIntegrationTest {
                 .andExpect(model().attributeExists("userProfile"))
                 .andExpect(model().attributeExists("userSpecificPostsUrl"));
     }
+
+    @Test
+    void shouldReturn404PageForInvalidUser() throws Exception {
+        mockMvc.perform(get("/users/{userId}", 10L)).andExpect(status().isNotFound());
+    }
 }
