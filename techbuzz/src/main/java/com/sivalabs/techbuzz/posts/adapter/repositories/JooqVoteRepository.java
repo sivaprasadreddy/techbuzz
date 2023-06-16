@@ -1,11 +1,11 @@
 package com.sivalabs.techbuzz.posts.adapter.repositories;
 
+import static com.sivalabs.techbuzz.common.model.SystemClock.dateTimeNow;
 import static com.sivalabs.techbuzz.jooq.tables.Votes.VOTES;
 
 import com.sivalabs.techbuzz.jooq.tables.records.VotesRecord;
 import com.sivalabs.techbuzz.posts.domain.models.Vote;
 import com.sivalabs.techbuzz.posts.domain.repositories.VoteRepository;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
@@ -39,7 +39,7 @@ class JooqVoteRepository implements VoteRepository {
                 .set(VOTES.USER_ID, vote.getUserId())
                 .set(VOTES.POST_ID, vote.getPostId())
                 .set(VOTES.VAL, vote.getValue())
-                .set(VOTES.CREATED_AT, LocalDateTime.now())
+                .set(VOTES.CREATED_AT, dateTimeNow())
                 .returning()
                 .fetchSingle(VoteRecordMapper.INSTANCE);
     }

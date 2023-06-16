@@ -8,7 +8,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-@Target({TYPE, METHOD})
+@Target({METHOD, TYPE})
 @Retention(RUNTIME)
 @Inherited
 public @interface Loggable {}

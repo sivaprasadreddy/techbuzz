@@ -23,7 +23,7 @@ public class SecurityUserDetailsService implements UserDetailsService {
         if (securityUser.isEmpty()) {
             throw new UsernameNotFoundException("No user found with username " + username);
         }
-        if (!securityUser.get().isEnabled()) {
+        if (!securityUser.orElseThrow().isEnabled()) {
             throw new DisabledException("Account verification is pending");
         }
         return securityUser.orElseThrow();

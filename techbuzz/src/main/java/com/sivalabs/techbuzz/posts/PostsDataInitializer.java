@@ -1,5 +1,7 @@
 package com.sivalabs.techbuzz.posts;
 
+import static com.sivalabs.techbuzz.common.model.SystemClock.dateTimeNow;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.posts.domain.models.Category;
@@ -10,7 +12,6 @@ import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
 import java.io.IOException;
 import java.io.InputStream;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import org.slf4j.Logger;
@@ -82,15 +83,7 @@ public class PostsDataInitializer implements CommandLineRunner {
             return categoryRepository.findBySlug("general").orElseThrow();
         });
         return new Post(
-                null,
-                postEntry.title,
-                postEntry.url,
-                postEntry.content,
-                category,
-                user,
-                Set.of(),
-                LocalDateTime.now(),
-                null);
+                null, postEntry.title, postEntry.url, postEntry.content, category, user, Set.of(), dateTimeNow(), null);
     }
 
     record PostsData(List<PostEntry> posts) {}

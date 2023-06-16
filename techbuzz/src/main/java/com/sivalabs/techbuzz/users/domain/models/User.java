@@ -38,7 +38,7 @@ public class User implements Serializable {
             String email,
             String password,
             RoleEnum role,
-            Boolean verified,
+            boolean verified,
             String verificationToken) {
         this.id = id;
         this.name = name;

@@ -1,12 +1,12 @@
 package com.sivalabs.techbuzz.users.adapter.repositories;
 
+import static com.sivalabs.techbuzz.common.model.SystemClock.dateTimeNow;
 import static com.sivalabs.techbuzz.jooq.tables.Users.USERS;
 
 import com.sivalabs.techbuzz.jooq.tables.records.UsersRecord;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.models.UserProfile;
 import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
-import java.time.LocalDateTime;
 import java.util.Optional;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
@@ -55,7 +55,7 @@ class JooqUserRepository implements UserRepository {
                 .set(USERS.ROLE, user.getRole())
                 .set(USERS.VERIFIED, user.isVerified())
                 .set(USERS.VERIFICATION_TOKEN, user.getVerificationToken())
-                .set(USERS.CREATED_AT, LocalDateTime.now())
+                .set(USERS.CREATED_AT, dateTimeNow())
                 .returning()
                 .fetchOne(UserRecordMapper.INSTANCE);
     }

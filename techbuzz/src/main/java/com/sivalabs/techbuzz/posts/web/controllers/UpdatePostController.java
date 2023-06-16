@@ -38,7 +38,7 @@ public class UpdatePostController {
     public String editPostForm(@PathVariable Long id, @CurrentUser User loginUser, Model model) {
         log.info("Edit post form requested for Post ID: {} by User ID: {}", id, loginUser.getId());
         Post post = postService.getPost(id);
-        this.checkPrivilege(post, loginUser);
+        checkPrivilege(post, loginUser);
         Long categoryId = post.getCategory().getId();
         UpdatePostRequest updatePostRequest =
                 new UpdatePostRequest(id, post.getTitle(), post.getUrl(), post.getContent(), categoryId);
@@ -61,14 +61,14 @@ public class UpdatePostController {
         Post post = postService.getPost(id);
         var updatePostRequest =
                 new UpdatePostRequest(id, request.title(), request.url(), request.content(), request.categoryId());
-        this.checkPrivilege(post, loginUser);
+        checkPrivilege(post, loginUser);
         Post updatedPost = postService.updatePost(updatePostRequest);
         log.info("Post with id: {} updated successfully", updatedPost.getId());
         redirectAttributes.addFlashAttribute("message", "Post updated successfully");
         return "redirect:/posts/" + updatedPost.getId() + "/edit";
     }
 
-    private void checkPrivilege(Post post, User loginUser) {
+    private static void checkPrivilege(Post post, User loginUser) {
         if (!(Objects.equals(post.getCreatedBy().getId(), loginUser.getId()) || loginUser.isAdminOrModerator())) {
             throw new UnauthorisedAccessException("Permission Denied");
         }

@@ -504,6 +504,7 @@
                                     improvement. -->
 									-Xep:StringJoin:OFF
 									-XepOpt:ErrorProneSupport:IgnoreClasspathCompat=true
+									-XepExcludedPaths:.*/src/main/jooq/.*
 									<!--
                                     END Error Prone Support configuration.
                                     -->
