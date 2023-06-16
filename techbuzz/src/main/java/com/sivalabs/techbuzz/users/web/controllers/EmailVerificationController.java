@@ -17,7 +17,7 @@ class EmailVerificationController {
     private static final Logger logger = LoggerFactory.getLogger(EmailVerificationController.class);
     private final UserService userService;
 
-    public EmailVerificationController(final UserService userService) {
+    public EmailVerificationController(UserService userService) {
         this.userService = userService;
     }
 

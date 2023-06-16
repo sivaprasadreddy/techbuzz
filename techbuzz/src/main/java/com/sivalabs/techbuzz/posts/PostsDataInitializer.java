@@ -31,10 +31,10 @@ public class PostsDataInitializer implements CommandLineRunner {
     private final ApplicationProperties properties;
 
     public PostsDataInitializer(
-            final PostRepository postRepository,
-            final CategoryRepository categoryRepository,
-            final UserService userService,
-            final ApplicationProperties properties) {
+            PostRepository postRepository,
+            CategoryRepository categoryRepository,
+            UserService userService,
+            ApplicationProperties properties) {
         this.postRepository = postRepository;
         this.categoryRepository = categoryRepository;
         this.userService = userService;

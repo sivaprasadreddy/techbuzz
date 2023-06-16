@@ -31,10 +31,10 @@ public class UserService {
     private final UserDTOMapper userDTOMapper;
 
     public UserService(
-            final EmailService emailService,
-            final PasswordEncoder passwordEncoder,
-            final UserRepository userRepository,
-            final UserDTOMapper userDTOMapper) {
+            EmailService emailService,
+            PasswordEncoder passwordEncoder,
+            UserRepository userRepository,
+            UserDTOMapper userDTOMapper) {
         this.emailService = emailService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;

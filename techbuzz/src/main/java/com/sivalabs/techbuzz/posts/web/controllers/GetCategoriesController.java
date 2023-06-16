@@ -17,7 +17,7 @@ public class GetCategoriesController {
     private static final Logger log = LoggerFactory.getLogger(GetCategoriesController.class);
     private final CategoryRepository categoryRepository;
 
-    public GetCategoriesController(final CategoryRepository categoryRepository) {
+    public GetCategoriesController(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 

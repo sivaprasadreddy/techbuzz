@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class PostMapper {
     private final UserDTOMapper userDTOMapper;
 
-    public PostMapper(final UserDTOMapper userDTOMapper) {
+    public PostMapper(UserDTOMapper userDTOMapper) {
         this.userDTOMapper = userDTOMapper;
     }
 

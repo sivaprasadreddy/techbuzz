@@ -19,9 +19,7 @@ public class JavaEmailService implements EmailService {
     private final ApplicationProperties properties;
 
     public JavaEmailService(
-            final JavaMailSender emailSender,
-            final TemplateEngine templateEngine,
-            final ApplicationProperties properties) {
+            JavaMailSender emailSender, TemplateEngine templateEngine, ApplicationProperties properties) {
         this.emailSender = emailSender;
         this.templateEngine = templateEngine;
         this.properties = properties;

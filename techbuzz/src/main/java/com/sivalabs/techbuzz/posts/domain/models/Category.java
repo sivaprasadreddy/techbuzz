@@ -24,19 +24,19 @@ public class Category {
 
     public Category() {}
 
-    public Category(final Long id) {
+    public Category(Long id) {
         this.id = id;
     }
 
     public Category(
-            final Long id,
-            final String name,
-            final String slug,
-            final String description,
-            final String image,
-            final Integer displayOrder,
-            final LocalDateTime createdAt,
-            final LocalDateTime updatedAt) {
+            Long id,
+            String name,
+            String slug,
+            String description,
+            String image,
+            Integer displayOrder,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.slug = slug;
@@ -47,35 +47,35 @@ public class Category {
         this.updatedAt = updatedAt;
     }
 
-    public void setId(final Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setName(final String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setSlug(final String slug) {
+    public void setSlug(String slug) {
         this.slug = slug;
     }
 
-    public void setDescription(final String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setImage(final String image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
-    public void setDisplayOrder(final Integer displayOrder) {
+    public void setDisplayOrder(Integer displayOrder) {
         this.displayOrder = displayOrder;
     }
 
-    public void setCreatedAt(final LocalDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public void setUpdatedAt(final LocalDateTime updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
