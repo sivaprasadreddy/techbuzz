@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
-		<bootstrap.version>5.2.3</bootstrap.version>
+		<bootstrap.version>5.3.0</bootstrap.version>
 		<jquery.version>3.6.4</jquery.version>
 		<fontawesome.version>6.4.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
@@ -26,7 +26,7 @@
 		<archunit.version>1.0.1</archunit.version>
 
 		<!-- plugins config -->
-		<spotless-maven-plugin.version>2.36.0</spotless-maven-plugin.version>
+		<spotless-maven-plugin.version>2.37.0</spotless-maven-plugin.version>
 		<dependency-check-maven.version>8.2.1</dependency-check-maven.version>
 		<properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
