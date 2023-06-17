@@ -28,18 +28,18 @@ public class User implements Serializable {
 
     public User() {}
 
-    public User(final Long id) {
+    public User(Long id) {
         this.id = id;
     }
 
     public User(
-            final Long id,
-            final String name,
-            final String email,
-            final String password,
-            final RoleEnum role,
-            final Boolean verified,
-            final String verificationToken) {
+            Long id,
+            String name,
+            String email,
+            String password,
+            RoleEnum role,
+            boolean verified,
+            String verificationToken) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -57,31 +57,31 @@ public class User implements Serializable {
         return Arrays.asList(roles).contains(this.getRole());
     }
 
-    public void setId(final Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setName(final String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setEmail(final String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setPassword(final String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setRole(final RoleEnum role) {
+    public void setRole(RoleEnum role) {
         this.role = role;
     }
 
-    public void setVerified(final Boolean verified) {
+    public void setVerified(Boolean verified) {
         this.verified = verified;
     }
 
-    public void setVerificationToken(final String verificationToken) {
+    public void setVerificationToken(String verificationToken) {
         this.verificationToken = verificationToken;
     }
 

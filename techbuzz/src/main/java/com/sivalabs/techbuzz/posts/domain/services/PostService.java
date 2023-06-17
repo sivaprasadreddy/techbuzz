@@ -1,5 +1,7 @@
 package com.sivalabs.techbuzz.posts.domain.services;
 
+import static com.sivalabs.techbuzz.common.model.SystemClock.dateTimeNow;
+
 import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
 import com.sivalabs.techbuzz.common.model.PagedResult;
 import com.sivalabs.techbuzz.posts.domain.dtos.CreatePostRequest;
@@ -14,7 +16,6 @@ import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.VoteRepository;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.models.User;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -82,7 +83,7 @@ public class PostService {
         post.setTitle(request.title());
         post.setUrl(request.url());
         post.setContent(request.content());
-        post.setUpdatedAt(LocalDateTime.now());
+        post.setUpdatedAt(dateTimeNow());
         return postRepository.update(post);
     }
 
@@ -98,7 +99,7 @@ public class PostService {
                 category,
                 user,
                 Set.of(),
-                LocalDateTime.now(),
+                dateTimeNow(),
                 null);
         return postRepository.save(post);
     }
@@ -114,12 +115,12 @@ public class PostService {
         log.debug("Adding vote :{} for postId: {} by userId:{}", request.value(), request.postId(), request.userId());
         Optional<Vote> voteOptional = voteRepository.findByPostIdAndUserId(request.postId(), request.userId());
         if (voteOptional.isEmpty()) {
-            Vote vote = new Vote(null, request.userId(), request.postId(), request.value(), LocalDateTime.now(), null);
+            Vote vote = new Vote(null, request.userId(), request.postId(), request.value(), dateTimeNow(), null);
             voteRepository.save(vote);
             log.info("Vote saved successfully");
             return;
         }
-        Vote existingVote = voteOptional.get();
+        Vote existingVote = voteOptional.orElseThrow();
         existingVote.setValue(request.value());
         voteRepository.update(existingVote);
         log.info("Vote update successfully");

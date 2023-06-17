@@ -29,15 +29,15 @@ public class Post {
     public Post() {}
 
     public Post(
-            final Long id,
-            final String title,
-            final String url,
-            final String content,
-            final Category category,
-            final User createdBy,
-            final Set<Vote> votes,
-            final LocalDateTime createdAt,
-            final LocalDateTime updatedAt) {
+            Long id,
+            String title,
+            String url,
+            String content,
+            Category category,
+            User createdBy,
+            Set<Vote> votes,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt) {
         this.id = id;
         this.title = title;
         this.url = url;
@@ -70,39 +70,39 @@ public class Post {
                 .anyMatch(v -> Objects.equals(v.getUserId(), loginUser.getId()) && v.getValue() == vote);
     }
 
-    public void setId(final Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setTitle(final String title) {
+    public void setTitle(String title) {
         this.title = title;
     }
 
-    public void setUrl(final String url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 
-    public void setContent(final String content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
-    public void setCategory(final Category category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
-    public void setCreatedBy(final User createdBy) {
+    public void setCreatedBy(User createdBy) {
         this.createdBy = createdBy;
     }
 
-    public void setVotes(final Set<Vote> votes) {
+    public void setVotes(Set<Vote> votes) {
         this.votes = votes;
     }
 
-    public void setCreatedAt(final LocalDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public void setUpdatedAt(final LocalDateTime updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

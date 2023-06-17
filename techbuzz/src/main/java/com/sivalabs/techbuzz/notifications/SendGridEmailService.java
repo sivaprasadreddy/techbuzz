@@ -24,7 +24,7 @@ public class SendGridEmailService implements EmailService {
     private final TemplateEngine templateEngine;
     private final ApplicationProperties properties;
 
-    public SendGridEmailService(final TemplateEngine templateEngine, final ApplicationProperties properties) {
+    public SendGridEmailService(TemplateEngine templateEngine, ApplicationProperties properties) {
         this.templateEngine = templateEngine;
         this.properties = properties;
     }

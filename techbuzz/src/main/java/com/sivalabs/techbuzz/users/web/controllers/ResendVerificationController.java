@@ -53,7 +53,7 @@ class ResendVerificationController {
                 redirectAttributes.addFlashAttribute("errorMessage", "Account not found with given email");
                 return "redirect:/resendVerification";
             }
-            var user = userDTO.get();
+            var user = userDTO.orElseThrow();
             if (user.verified()) {
                 redirectAttributes.addFlashAttribute(
                         "errorMessage", "Account is already verified, please use forget password if needed");
@@ -62,7 +62,7 @@ class ResendVerificationController {
                 logger.info("Sent email verification link to {}", resendVerificationRequest.email());
                 redirectAttributes.addFlashAttribute("message", "Email verification link is sent to your email");
             }
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             logger.error("Error during resending email verification request error: {}", e.getMessage());
             redirectAttributes.addFlashAttribute(
                     "errorMessage", "Resending verification email failed, please try again");

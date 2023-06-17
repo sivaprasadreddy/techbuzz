@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
-		<bootstrap.version>5.2.3</bootstrap.version>
+		<bootstrap.version>5.3.0</bootstrap.version>
 		<jquery.version>3.6.4</jquery.version>
 		<fontawesome.version>6.4.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
@@ -26,7 +26,7 @@
 		<archunit.version>1.0.1</archunit.version>
 
 		<!-- plugins config -->
-		<spotless-maven-plugin.version>2.36.0</spotless-maven-plugin.version>
+		<spotless-maven-plugin.version>2.37.0</spotless-maven-plugin.version>
 		<dependency-check-maven.version>8.2.1</dependency-check-maven.version>
 		<properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
@@ -40,7 +40,12 @@
 		<jacoco.utReportFile>${jacoco.utReportFolder}/test.exec</jacoco.utReportFile>
 		<junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
 
-		<maven.plugin.validation>BRIEF</maven.plugin.validation>
+		<version.error-prone>2.19.1-picnic-1</version.error-prone>
+		<version.error-prone-support>0.11.1</version.error-prone-support>
+		<!-- Property using which additional Error Prone flags can be
+        specified. Used by the `patch` profile. -->
+		<error-prone.patch-args />
+
 	</properties>
 	<dependencies>
 		<dependency>
@@ -422,4 +427,119 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>error-prone</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<annotationProcessorPaths combine.children="append">
+								<!-- Picnic's Error Prone fork. -->
+								<path>
+									<groupId>com.github.PicnicSupermarket.error-prone</groupId>
+									<artifactId>error_prone_core</artifactId>
+									<version>${version.error-prone}</version>
+								</path>
+								<!-- Error Prone Support's additional bug checkers. -->
+								<path>
+									<groupId>tech.picnic.error-prone-support</groupId>
+									<artifactId>error-prone-contrib</artifactId>
+									<version>${version.error-prone-support}</version>
+								</path>
+								<!-- Error Prone Support's Refaster templates. -->
+								<path>
+									<groupId>tech.picnic.error-prone-support</groupId>
+									<artifactId>refaster-runner</artifactId>
+									<version>${version.error-prone-support}</version>
+								</path>
+							</annotationProcessorPaths>
+							<compilerArgs>
+								<!-- Enable and configure Error Prone. -->
+								<arg>
+									-Xplugin:ErrorProne
+									<!-- We use a separate Maven profile to
+                                    raise all warnings as errors. This way one
+                                    can optionally collect all warnings without
+                                    failing the build on the first error
+                                    encountered. -->
+									-XepAllErrorsAsWarnings
+									<!-- -XepAllSuggestionsAsWarnings-->
+									<!-- We want to enable almost all Error
+                                    Prone bug pattern checkers, so we enable
+                                    all and then selectively deactivate some. -->
+									-XepAllDisabledChecksAsWarnings
+									<!-- Some generated classes violate Error
+                                    Prone bug patterns. We cannot in all cases
+                                    avoid that, so we simply tell Error Prone
+                                    not to warn about generated code. -->
+									-XepDisableWarningsInGeneratedCode
+									-XepExcludedPaths:\Q${project.build.directory}${file.separator}\E.*
+									<!-- We don't target Android. -->
+									-Xep:AndroidJdkLibsChecker:OFF
+									<!-- We don't target JDK 7. -->
+									-Xep:Java7ApiChecker:OFF
+									<!-- We don't target JDK 8. -->
+									-Xep:Java8ApiChecker:OFF
+									<!-- We generally discourage `var` use. -->
+									-Xep:Varifier:OFF
+									<!-- Disabled for demo purposes. -->
+									-Xep:SystemOut:OFF
+									<!-- Refaster name pattern example:
+                                    -XepOpt:Refaster:NamePattern=^(?!(Immutable.*Rules)).*
+                                    -->
+									<!--
+                                    START Error Prone Support configuration.
+                                    -->
+									<!-- XXX: Enable once sufficiently
+                                    configurable. -->
+									-Xep:LexicographicalAnnotationListing:OFF
+									<!-- XXX: Enable once false positives no longer
+                                    have a major performance impact. -->
+									-Xep:MethodReferenceUsage:OFF
+									<!-- XXX: Disabled as it is not a clear
+                                    improvement. -->
+									-Xep:StringJoin:OFF
+									-XepOpt:ErrorProneSupport:IgnoreClasspathCompat=true
+									-XepExcludedPaths:.*/src/main/jooq/.*
+									<!--
+                                    END Error Prone Support configuration.
+                                    -->
+									<!-- Append additional custom arguments. -->
+									${error-prone.patch-args}
+								</arg>
+								<arg>-XDcompilePolicy=simple</arg>
+							</compilerArgs>
+							<showWarnings>true</showWarnings>
+							<!-- <failOnWarning>true</failOnWarning> -->
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<!-- The code is built against a Picnic-managed fork of Error
+            Prone. This fork is hosted by Jitpack.io. See
+            https://jitpack.io/#PicnicSupermarket/error-prone. -->
+			<repositories>
+				<repository>
+					<id>jitpack.io</id>
+					<url>https://jitpack.io</url>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<!-- If combined with the `error-prone` profile above, this profile
+            configures Error Prone to try and automatically fix (rather than
+            merely flag) bug pattern violations in the source code. -->
+			<id>patch</id>
+			<properties>
+				<error-prone.patch-args>-XepPatchChecks:${error-prone.patch-checks} -XepPatchLocation:IN_PLACE</error-prone.patch-args>
+				<!-- One can override this value to specify which checks should be patched. -->
+				<error-prone.patch-checks />
+			</properties>
+		</profile>
+	</profiles>
+
 </project>

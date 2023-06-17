@@ -12,13 +12,7 @@ public class Vote {
 
     public Vote() {}
 
-    public Vote(
-            final Long id,
-            final Long userId,
-            final Long postId,
-            final Integer value,
-            final LocalDateTime createdAt,
-            final LocalDateTime updatedAt) {
+    public Vote(Long id, Long userId, Long postId, Integer value, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.userId = userId;
         this.postId = postId;
@@ -27,27 +21,27 @@ public class Vote {
         this.updatedAt = updatedAt;
     }
 
-    public void setId(final Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setUserId(final Long userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public void setPostId(final Long postId) {
+    public void setPostId(Long postId) {
         this.postId = postId;
     }
 
-    public void setValue(final Integer value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
-    public void setCreatedAt(final LocalDateTime createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
-    public void setUpdatedAt(final LocalDateTime updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
