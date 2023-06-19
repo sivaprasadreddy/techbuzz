@@ -22,7 +22,7 @@
 		<fontawesome.version>6.4.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
 		<testcontainers.version>1.18.3</testcontainers.version>
-		<instancio.version>2.15.0</instancio.version>
+		<instancio.version>2.16.1</instancio.version>
 		<archunit.version>1.0.1</archunit.version>
 
 		<!-- plugins config -->
@@ -260,7 +260,7 @@
 						<configuration>
 							<database>
 								<type>POSTGRES</type>
-								<containerImage>postgres:15.2-alpine</containerImage>
+								<containerImage>postgres:15.3-alpine</containerImage>
 							</database>
 							<flyway>
 								<locations>

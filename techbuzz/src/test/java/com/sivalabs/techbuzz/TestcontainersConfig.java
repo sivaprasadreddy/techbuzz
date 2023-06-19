@@ -12,7 +12,7 @@ public class TestcontainersConfig {
     @Bean
     @ServiceConnection
     PostgreSQLContainer<?> postgreSQLContainer() {
-        return new PostgreSQLContainer<>("postgres:15.2-alpine");
+        return new PostgreSQLContainer<>("postgres:15.3-alpine");
     }
 
     /*@Bean
