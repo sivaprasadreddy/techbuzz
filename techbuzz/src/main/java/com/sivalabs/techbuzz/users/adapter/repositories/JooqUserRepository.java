@@ -11,6 +11,7 @@ import java.util.Optional;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
 import org.jooq.Records;
+import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -31,6 +32,14 @@ class JooqUserRepository implements UserRepository {
                 .from(USERS)
                 .where(USERS.ID.eq(id))
                 .fetchOptional(Records.mapping(UserProfile::new));
+    }
+
+    public Optional<String> findVerifiedUsersMailIds() {
+        return this.dsl
+                .select(DSL.listAgg(USERS.EMAIL, ",").withinGroupOrderBy(USERS.EMAIL))
+                .from(USERS)
+                .where(USERS.VERIFIED)
+                .fetchOptional(r -> r.value1());
     }
 
     public boolean existsByEmail(String email) {

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity">
+<body>
+<div th:fragment="post" th:id="'post-container-' + ${post.id}">
+    <div class="card post">
+        <div class="card-body">
+            <h4 class="card-title ">
+                <a class="text-decoration-none" href="#" th:href="${post.url}" th:text="${post.title}" target="_blank"></a>
+            </h4>
+            <p class="card-text">
+            <div class="pb-2 text-muted ">
+           <b>
+                Posted By: <a href="#" class="text-dark text-decoration-none"
+                          th:href="${'/users/'+ post.createdBy.id}"
+                          th:text="${post.createdBy.name}">Name</a>
+
+                Category: <span class="text-dark"
+                                th:text="${post.category.name}">Category</span>
+            </b>
+            </div>
+            <div th:text="${post.content}">
+                Post content
+            </div>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

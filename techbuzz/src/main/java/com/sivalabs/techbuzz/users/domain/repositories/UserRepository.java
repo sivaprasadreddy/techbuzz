@@ -12,6 +12,8 @@ public interface UserRepository {
 
     boolean existsByEmail(String email);
 
+    Optional<String> findVerifiedUsersMailIds();
+
     Optional<User> findByEmailAndVerificationToken(String email, String token);
 
     User save(User user);

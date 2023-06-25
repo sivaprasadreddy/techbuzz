@@ -14,4 +14,6 @@ public record ApplicationProperties(
         @NotEmpty @Email String adminEmail,
         String sendgridApiKey,
         @Min(1) int postsPerPage,
-        List<String> importFilePaths) {}
+        List<String> importFilePaths,
+        int newPostsAgeInDays,
+        String newPostsNotificationFrequency) {}

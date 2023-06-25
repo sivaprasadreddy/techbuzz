@@ -15,6 +15,8 @@ public interface PostRepository {
 
     PagedResult<Post> findVotedPostsByUser(Long userId, Integer page);
 
+    List<Post> findPostCreatedInNDays(int days);
+
     Optional<Post> findById(Long postId);
 
     Post save(Post post);

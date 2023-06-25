@@ -17,6 +17,7 @@ import com.sivalabs.techbuzz.posts.domain.models.Vote;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -117,6 +118,38 @@ class JooqPostRepository implements PostRepository {
                         r.value7(),
                         r.value8(),
                         new HashSet<>(r.value9()),
+                        r.value5(),
+                        r.value6()));
+    }
+
+    @Override
+    public List<Post> findPostCreatedInNDays(int days) {
+        return this.dsl
+                .select(
+                        POSTS.ID,
+                        POSTS.TITLE,
+                        POSTS.URL,
+                        POSTS.CONTENT,
+                        POSTS.CREATED_AT,
+                        POSTS.UPDATED_AT,
+                        row(POSTS.categories().ID, POSTS.categories().NAME, POSTS.categories().SLUG)
+                                .mapping(mapToCategory())
+                                .as("category"),
+                        row(POSTS.users().ID, POSTS.users().NAME)
+                                .mapping(mapToUser())
+                                .as("user"))
+                .from(POSTS)
+                .where(POSTS.CREATED_AT.greaterOrEqual(
+                        LocalDateTime.now().with(LocalTime.MIDNIGHT).minusDays(days)))
+                .orderBy(POSTS.CREATED_AT.desc())
+                .fetch(r -> new Post(
+                        r.value1(),
+                        r.value2(),
+                        r.value3(),
+                        r.value4(),
+                        r.value7(),
+                        r.value8(),
+                        null,
                         r.value5(),
                         r.value6()));
     }

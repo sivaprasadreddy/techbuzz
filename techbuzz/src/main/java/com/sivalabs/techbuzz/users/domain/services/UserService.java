@@ -50,6 +50,10 @@ public class UserService {
         return userRepository.findProfileById(id);
     }
 
+    public Optional<String> findVerifiedUsersMailIds() {
+        return userRepository.findVerifiedUsersMailIds();
+    }
+
     @CacheEvict(cacheNames = "user", allEntries = true)
     public UserDTO createUser(CreateUserRequest createUserRequest) {
         if (userRepository.existsByEmail(createUserRequest.email())) {

@@ -2,6 +2,7 @@ package com.sivalabs.techbuzz.notifications;
 
 import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -33,7 +34,7 @@ public class JavaEmailService implements EmailService {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setFrom(properties.adminEmail());
-            helper.setTo(to);
+            helper.setTo(InternetAddress.parse(to));
             helper.setSubject(subject);
             helper.setText(content, true);
             emailSender.send(mimeMessage);
