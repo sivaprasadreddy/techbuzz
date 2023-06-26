@@ -4,6 +4,7 @@ import static com.sivalabs.techbuzz.common.model.SystemClock.dateTimeNow;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
 import com.sivalabs.techbuzz.common.model.PagedResult;
+import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.posts.domain.dtos.CreatePostRequest;
 import com.sivalabs.techbuzz.posts.domain.dtos.CreateVoteRequest;
 import com.sivalabs.techbuzz.posts.domain.dtos.PostViewDTO;
@@ -16,7 +17,9 @@ import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.VoteRepository;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.models.User;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import org.slf4j.Logger;
@@ -30,16 +33,19 @@ public class PostService {
     private static final Logger log = LoggerFactory.getLogger(PostService.class);
 
     private final SecurityService securityService;
+    private final EmailService emailService;
     private final PostRepository postRepository;
     private final VoteRepository voteRepository;
     private final PostMapper postMapper;
 
     public PostService(
             SecurityService securityService,
+            EmailService emailService,
             PostRepository postRepository,
             VoteRepository voteRepository,
             PostMapper postMapper) {
         this.securityService = securityService;
+        this.emailService = emailService;
         this.postRepository = postRepository;
         this.voteRepository = voteRepository;
         this.postMapper = postMapper;
@@ -65,6 +71,19 @@ public class PostService {
         log.debug("Fetching post by user id: {}", userId);
         PagedResult<Post> postPagedResult = postRepository.findCreatedPostsByUser(userId, page);
         return convert(postPagedResult);
+    }
+
+    public void sendNewPostsNotification(List<Post> posts, String to) {
+
+        log.debug("Sending email---");
+        String subject = "TechBuzz - New Posts";
+        Map<String, Object> paramsMap = Map.of("posts", posts);
+        emailService.sendBroadcastEmail("email/new-posts-email", paramsMap, to, subject);
+    }
+
+    public List<Post> findPostCreatedFrom(LocalDateTime createdDateFrom) {
+        log.debug("Fetching latest posts ");
+        return postRepository.findPostCreatedFrom(createdDateFrom);
     }
 
     public PagedResult<PostViewDTO> getVotedPostsByUser(Long userId, Integer page) {

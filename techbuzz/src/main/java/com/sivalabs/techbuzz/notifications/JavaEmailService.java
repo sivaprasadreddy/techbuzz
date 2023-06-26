@@ -2,6 +2,7 @@ package com.sivalabs.techbuzz.notifications;
 
 import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
+import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -26,6 +27,18 @@ public class JavaEmailService implements EmailService {
     }
 
     public void sendEmail(String template, Map<String, Object> params, String to, String subject) {
+
+        sendEmail(template, params, to, subject, false);
+    }
+
+    @Override
+    public void sendBroadcastEmail(String template, Map<String, Object> params, String recipient, String subject) {
+
+        sendEmail(template, params, recipient, subject, true);
+    }
+
+    private void sendEmail(
+            String template, Map<String, Object> params, String recipient, String subject, boolean broadcast) {
         try {
             Context context = new Context();
             context.setVariables(params);
@@ -33,13 +46,14 @@ public class JavaEmailService implements EmailService {
             MimeMessage mimeMessage = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
             helper.setFrom(properties.adminEmail());
-            helper.setTo(to);
+            if (broadcast) helper.setBcc(InternetAddress.parse(recipient));
+            else helper.setTo(recipient);
             helper.setSubject(subject);
             helper.setText(content, true);
             emailSender.send(mimeMessage);
-            log.info("Sent verification email using default email service");
+            log.info("Sent email using default email service");
         } catch (Exception e) {
-            throw new TechBuzzException("Error while sending verification email", e);
+            throw new TechBuzzException("Error while sending email", e);
         }
     }
 }

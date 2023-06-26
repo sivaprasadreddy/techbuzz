@@ -13,6 +13,7 @@ import com.sivalabs.techbuzz.users.domain.models.RoleEnum;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.models.UserProfile;
 import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -48,6 +49,10 @@ public class UserService {
 
     public Optional<UserProfile> getUserProfile(Long id) {
         return userRepository.findProfileById(id);
+    }
+
+    public List<String> findVerifiedUsersMailIds() {
+        return userRepository.findVerifiedUsersMailIds();
     }
 
     @CacheEvict(cacheNames = "user", allEntries = true)

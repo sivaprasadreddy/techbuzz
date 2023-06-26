@@ -122,6 +122,37 @@ class JooqPostRepository implements PostRepository {
     }
 
     @Override
+    public List<Post> findPostCreatedFrom(LocalDateTime createdDateFrom) {
+        return this.dsl
+                .select(
+                        POSTS.ID,
+                        POSTS.TITLE,
+                        POSTS.URL,
+                        POSTS.CONTENT,
+                        POSTS.CREATED_AT,
+                        POSTS.UPDATED_AT,
+                        row(POSTS.categories().ID, POSTS.categories().NAME, POSTS.categories().SLUG)
+                                .mapping(mapToCategory())
+                                .as("category"),
+                        row(POSTS.users().ID, POSTS.users().NAME)
+                                .mapping(mapToUser())
+                                .as("user"))
+                .from(POSTS)
+                .where(POSTS.CREATED_AT.greaterOrEqual(createdDateFrom))
+                .orderBy(POSTS.CREATED_AT.desc())
+                .fetch(r -> new Post(
+                        r.value1(),
+                        r.value2(),
+                        r.value3(),
+                        r.value4(),
+                        r.value7(),
+                        r.value8(),
+                        null,
+                        r.value5(),
+                        r.value6()));
+    }
+
+    @Override
     public Optional<Post> findById(Long postId) {
 
         return selectPostSpec()
