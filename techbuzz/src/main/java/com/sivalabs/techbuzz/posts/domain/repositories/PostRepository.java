@@ -2,7 +2,6 @@ package com.sivalabs.techbuzz.posts.domain.repositories;
 
 import com.sivalabs.techbuzz.common.model.PagedResult;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

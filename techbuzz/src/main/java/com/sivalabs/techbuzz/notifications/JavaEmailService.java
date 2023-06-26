@@ -37,7 +37,8 @@ public class JavaEmailService implements EmailService {
         sendEmail(template, params, recipient, subject, true);
     }
 
-    private void sendEmail(String template, Map<String, Object> params, String recipient, String subject, boolean broadcast) {
+    private void sendEmail(
+            String template, Map<String, Object> params, String recipient, String subject, boolean broadcast) {
         try {
             Context context = new Context();
             context.setVariables(params);

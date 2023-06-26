@@ -17,7 +17,6 @@ import com.sivalabs.techbuzz.posts.domain.models.Vote;
 import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;

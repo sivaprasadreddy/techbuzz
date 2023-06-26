@@ -4,7 +4,6 @@ import com.sivalabs.techbuzz.ApplicationProperties;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.services.PostService;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
-
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -31,7 +30,8 @@ public class NewPostsNotificationJob {
 
     @Scheduled(cron = "${techbuzz.new-posts-notification-frequency}")
     public void notifyUsersAboutNewPosts() {
-        LocalDateTime createdDateFrom = LocalDateTime.now().with(LocalTime.MIDNIGHT).minusDays(properties.newPostsAgeInDays());
+        LocalDateTime createdDateFrom =
+                LocalDateTime.now().with(LocalTime.MIDNIGHT).minusDays(properties.newPostsAgeInDays());
         List<Post> posts = postService.findPostCreatedFrom(createdDateFrom);
         if (posts.size() > 0) {
             List<String> emailIds = userService.findVerifiedUsersMailIds();
