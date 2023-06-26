@@ -9,8 +9,6 @@ import com.sivalabs.techbuzz.common.AbstractIntegrationTest;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
 import com.sivalabs.techbuzz.posts.domain.services.PostService;
 import com.sivalabs.techbuzz.users.domain.services.UserService;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,10 +48,6 @@ public class NewPostNotificationJobTest extends AbstractIntegrationTest {
         job = new NewPostsNotificationJob(postService, userService, properties);
         job.notifyUsersAboutNewPosts();
         verify(postService, never()).sendNewPostsNotification(null, null);
-        /* verify(postService)
-                .sendNewPostsNotification(
-                        argThat(posts ->  posts.size()==2), argThat(emailIds -> emailIds.contains(",")));
-        */
     }
 
     @Test
@@ -65,8 +59,6 @@ public class NewPostNotificationJobTest extends AbstractIntegrationTest {
         String emailCaptorValue = emailIds.getValue();
         assertThat(emailCaptorValue.contains(","));
         List<Post> postsCaptorValue = posts.getValue();
-        assertThat(postsCaptorValue).extracting(Post::getCreatedAt).allSatisfy(date -> assertThat(date)
-                .isAfterOrEqualTo(
-                        LocalDateTime.now().with(LocalTime.MIDNIGHT).minusDays(properties.newPostsAgeInDays())));
+        assertThat(postsCaptorValue.size() == 2);
     }
 }

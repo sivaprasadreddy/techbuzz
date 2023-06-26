@@ -2,6 +2,8 @@ package com.sivalabs.techbuzz.posts.domain.repositories;
 
 import com.sivalabs.techbuzz.common.model.PagedResult;
 import com.sivalabs.techbuzz.posts.domain.models.Post;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +17,7 @@ public interface PostRepository {
 
     PagedResult<Post> findVotedPostsByUser(Long userId, Integer page);
 
-    List<Post> findPostCreatedInNDays(int days);
+    List<Post> findPostCreatedFrom(LocalDateTime createdDateFrom);
 
     Optional<Post> findById(Long postId);
 

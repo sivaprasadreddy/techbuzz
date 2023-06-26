@@ -17,6 +17,8 @@ import com.sivalabs.techbuzz.posts.domain.repositories.PostRepository;
 import com.sivalabs.techbuzz.posts.domain.repositories.VoteRepository;
 import com.sivalabs.techbuzz.security.SecurityService;
 import com.sivalabs.techbuzz.users.domain.models.User;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -77,12 +79,12 @@ public class PostService {
         log.debug("Sending email---");
         String subject = "TechBuzz - New Posts";
         Map<String, Object> paramsMap = Map.of("posts", posts);
-        emailService.sendEmail("email/new-posts-email", paramsMap, to, subject);
+        emailService.sendBroadcastEmail("email/new-posts-email", paramsMap, to, subject);
     }
 
-    public List<Post> findPostCreatedInNDays(int days) {
+    public List<Post> findPostCreatedFrom(LocalDateTime createdDateFrom) {
         log.debug("Fetching latest posts ");
-        return postRepository.findPostCreatedInNDays(days);
+        return postRepository.findPostCreatedFrom(createdDateFrom);
     }
 
     public PagedResult<PostViewDTO> getVotedPostsByUser(Long userId, Integer page) {

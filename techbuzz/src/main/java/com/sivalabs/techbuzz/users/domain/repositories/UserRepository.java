@@ -2,6 +2,7 @@ package com.sivalabs.techbuzz.users.domain.repositories;
 
 import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.models.UserProfile;
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository {
@@ -12,7 +13,7 @@ public interface UserRepository {
 
     boolean existsByEmail(String email);
 
-    Optional<String> findVerifiedUsersMailIds();
+    List<String> findVerifiedUsersMailIds();
 
     Optional<User> findByEmailAndVerificationToken(String email, String token);
 

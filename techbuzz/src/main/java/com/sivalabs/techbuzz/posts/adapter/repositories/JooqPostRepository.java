@@ -123,7 +123,7 @@ class JooqPostRepository implements PostRepository {
     }
 
     @Override
-    public List<Post> findPostCreatedInNDays(int days) {
+    public List<Post> findPostCreatedFrom(LocalDateTime createdDateFrom) {
         return this.dsl
                 .select(
                         POSTS.ID,
@@ -139,8 +139,7 @@ class JooqPostRepository implements PostRepository {
                                 .mapping(mapToUser())
                                 .as("user"))
                 .from(POSTS)
-                .where(POSTS.CREATED_AT.greaterOrEqual(
-                        LocalDateTime.now().with(LocalTime.MIDNIGHT).minusDays(days)))
+                .where(POSTS.CREATED_AT.greaterOrEqual(createdDateFrom))
                 .orderBy(POSTS.CREATED_AT.desc())
                 .fetch(r -> new Post(
                         r.value1(),

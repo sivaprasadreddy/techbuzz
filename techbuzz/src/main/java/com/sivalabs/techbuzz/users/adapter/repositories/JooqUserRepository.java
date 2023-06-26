@@ -7,11 +7,11 @@ import com.sivalabs.techbuzz.jooq.tables.records.UsersRecord;
 import com.sivalabs.techbuzz.users.domain.models.User;
 import com.sivalabs.techbuzz.users.domain.models.UserProfile;
 import com.sivalabs.techbuzz.users.domain.repositories.UserRepository;
+import java.util.List;
 import java.util.Optional;
 import org.jooq.DSLContext;
 import org.jooq.RecordMapper;
 import org.jooq.Records;
-import org.jooq.impl.DSL;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -34,12 +34,8 @@ class JooqUserRepository implements UserRepository {
                 .fetchOptional(Records.mapping(UserProfile::new));
     }
 
-    public Optional<String> findVerifiedUsersMailIds() {
-        return this.dsl
-                .select(DSL.listAgg(USERS.EMAIL, ",").withinGroupOrderBy(USERS.EMAIL))
-                .from(USERS)
-                .where(USERS.VERIFIED)
-                .fetchOptional(r -> r.value1());
+    public List<String> findVerifiedUsersMailIds() {
+        return this.dsl.select(USERS.EMAIL).from(USERS).where(USERS.VERIFIED).fetch(r -> r.value1());
     }
 
     public boolean existsByEmail(String email) {
