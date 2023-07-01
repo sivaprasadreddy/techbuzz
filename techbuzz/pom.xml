@@ -41,7 +41,7 @@
 		<junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
 
 		<version.error-prone>2.19.1-picnic-1</version.error-prone>
-		<version.error-prone-support>0.11.1</version.error-prone-support>
+		<version.error-prone-support>0.12.0</version.error-prone-support>
 		<!-- Property using which additional Error Prone flags can be
         specified. Used by the `patch` profile. -->
 		<error-prone.patch-args />

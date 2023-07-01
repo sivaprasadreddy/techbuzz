@@ -3,6 +3,7 @@ TechBuzz is a place to share the interesting tech news such as blog posts, video
 
 [![Build](https://github.com/sivaprasadreddy/techbuzz/actions/workflows/maven.yml/badge.svg)](https://github.com/sivaprasadreddy/techbuzz/actions/workflows/maven.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=sivaprasadreddy_techbuzz&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=sivaprasadreddy_techbuzz)
+[![Project Map](https://sourcespy.com/shield.svg)](https://sourcespy.com/github/sivaprasadreddytechbuzz/)
 
 ## Features
 * Login with username/password
