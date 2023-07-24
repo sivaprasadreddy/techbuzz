@@ -26,7 +26,7 @@
 		<archunit.version>1.0.1</archunit.version>
 
 		<!-- plugins config -->
-		<spotless-maven-plugin.version>2.37.0</spotless-maven-plugin.version>
+		<spotless-maven-plugin.version>2.38.0</spotless-maven-plugin.version>
 		<dependency-check-maven.version>8.3.1</dependency-check-maven.version>
 		<properties-maven-plugin.version>1.1.0</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
