@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
-		<bootstrap.version>5.3.0</bootstrap.version>
+		<bootstrap.version>5.3.1</bootstrap.version>
 		<jquery.version>3.6.4</jquery.version>
 		<fontawesome.version>6.4.0</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
