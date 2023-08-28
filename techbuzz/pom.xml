@@ -23,7 +23,7 @@
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
 		<testcontainers.version>1.18.3</testcontainers.version>
 		<instancio.version>3.1.0</instancio.version>
-		<archunit.version>1.0.1</archunit.version>
+		<archunit.version>1.1.0</archunit.version>
 
 		<!-- plugins config -->
 		<spotless-maven-plugin.version>2.38.0</spotless-maven-plugin.version>
