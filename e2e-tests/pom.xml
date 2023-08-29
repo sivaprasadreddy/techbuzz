@@ -14,7 +14,7 @@
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <spotless.version>2.38.0</spotless.version>
+        <spotless.version>2.39.0</spotless.version>
         <playwright.version>1.37.0</playwright.version>
         <jackson.version>2.15.2</jackson.version>
         <junit-jupiter.version>5.10.0</junit-jupiter.version>
