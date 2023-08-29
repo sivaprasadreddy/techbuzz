@@ -21,16 +21,16 @@
 		<jquery.version>3.7.0</jquery.version>
 		<fontawesome.version>6.4.2</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
-		<testcontainers.version>1.18.3</testcontainers.version>
+		<testcontainers.version>1.19.0</testcontainers.version>
 		<instancio.version>3.2.0</instancio.version>
 		<archunit.version>1.1.0</archunit.version>
 
 		<!-- plugins config -->
-		<spotless-maven-plugin.version>2.38.0</spotless-maven-plugin.version>
-		<dependency-check-maven.version>8.3.1</dependency-check-maven.version>
+		<spotless-maven-plugin.version>2.39.0</spotless-maven-plugin.version>
+		<dependency-check-maven.version>8.4.0</dependency-check-maven.version>
 		<properties-maven-plugin.version>1.2.0</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.9.1.2184</sonar-maven-plugin.version>
-		<jooq-testcontainers-codegen-maven-plugin.version>0.0.2</jooq-testcontainers-codegen-maven-plugin.version>
+		<testcontainers-jooq-codegen-maven-plugin.version>0.0.3</testcontainers-jooq-codegen-maven-plugin.version>
 
 		<!-- jacoco plugin config -->
 		<jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
@@ -41,7 +41,7 @@
 		<junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
 
 		<version.error-prone>2.19.1-picnic-1</version.error-prone>
-		<version.error-prone-support>0.12.0</version.error-prone-support>
+		<version.error-prone-support>0.13.0</version.error-prone-support>
 		<!-- Property using which additional Error Prone flags can be
         specified. Used by the `patch` profile. -->
 		<error-prone.patch-args />
@@ -235,9 +235,9 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>io.github.sivalabs</groupId>
-				<artifactId>jooq-testcontainers-codegen-maven-plugin</artifactId>
-				<version>${jooq-testcontainers-codegen-maven-plugin.version}</version>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-jooq-codegen-maven-plugin</artifactId>
+				<version>${testcontainers-jooq-codegen-maven-plugin.version}</version>
 				<dependencies>
 					<dependency>
 						<groupId>org.testcontainers</groupId>
@@ -260,13 +260,14 @@
 						<configuration>
 							<database>
 								<type>POSTGRES</type>
-								<containerImage>postgres:15.3-alpine</containerImage>
+								<containerImage>postgres:15.4-alpine</containerImage>
 							</database>
 							<flyway>
 								<locations>
 									filesystem:${project.basedir}/src/main/resources/db/migration
 								</locations>
 							</flyway>
+							<jooq>
 							<generator>
 								<generate>
 									<!--<pojos>true</pojos>
@@ -311,6 +312,7 @@
 									<directory>src/main/jooq</directory>
 								</target>
 							</generator>
+							</jooq>
 						</configuration>
 					</execution>
 				</executions>
