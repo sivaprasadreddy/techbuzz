@@ -19,12 +19,13 @@
 		<java.version>17</java.version>
 		<webjars-locator.version>0.47</webjars-locator.version>
 		<bootstrap.version>5.3.1</bootstrap.version>
-		<jquery.version>3.7.0</jquery.version>
+		<jquery.version>3.7.1</jquery.version>
 		<fontawesome.version>6.4.2</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
 		<testcontainers.version>1.19.0</testcontainers.version>
 		<instancio.version>3.2.0</instancio.version>
 		<archunit.version>1.1.0</archunit.version>
+		<dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
 
 		<!-- plugins config -->
 		<spotless-maven-plugin.version>2.39.0</spotless-maven-plugin.version>
@@ -195,6 +196,18 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<image>
+						<name>${dockerImageName}</name>
+					</image>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>build-info</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>io.github.git-commit-id</groupId>

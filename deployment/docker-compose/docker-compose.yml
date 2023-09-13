@@ -21,6 +21,8 @@ services:
       resources:
         limits:
           memory: 1024m
+    profiles:
+      - app
 
   techbuzz-db:
     image: postgres:15.4-alpine
