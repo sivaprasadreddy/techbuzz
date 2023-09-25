@@ -90,6 +90,19 @@ $ ./mvnw -pl e2e-tests test -DskipTests=false
 $ ./mvnw -pl gatling-tests gatling:test 
 ```
 
+## Using Taskfile for running various tasks
+[Task](https://taskfile.dev/) is a CLI utility to automate running common tasks.
+
+```shell
+$ task format
+$ task test
+$ task build_image
+$ task start_infra
+$ task stop_infra
+$ task start
+$ task stop_infra
+$ task restart
+```
 ## How to contribute?
 * If you find this project interesting, fork/clone it, run the application and provide feedback.
 * If you find any bugs or have suggestions for improvement, then please file an issue.

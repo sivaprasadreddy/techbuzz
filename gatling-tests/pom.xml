@@ -16,8 +16,8 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<gatling.version>3.9.5</gatling.version>
-		<gatling-maven-plugin.version>4.3.7</gatling-maven-plugin.version>
-		<spotless.version>2.37.0</spotless.version>
+		<gatling-maven-plugin.version>4.5.0</gatling-maven-plugin.version>
+		<spotless.version>2.39.0</spotless.version>
 	</properties>
 
 	<dependencies>
@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.12.0</version>
+			<version>3.13.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

@@ -21,9 +21,11 @@ services:
       resources:
         limits:
           memory: 1024m
+    profiles:
+      - app
 
   techbuzz-db:
-    image: postgres:15.3-alpine
+    image: postgres:15.4-alpine
     container_name: techbuzz-db
     environment:
       POSTGRES_USER: "${DB_USERNAME}"
