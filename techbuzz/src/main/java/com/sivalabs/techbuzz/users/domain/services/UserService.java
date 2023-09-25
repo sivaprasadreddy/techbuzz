@@ -4,9 +4,12 @@ import static java.net.URLEncoder.encode;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.sivalabs.techbuzz.common.exceptions.ResourceAlreadyExistsException;
+import com.sivalabs.techbuzz.common.exceptions.ResourceNotFoundException;
 import com.sivalabs.techbuzz.common.exceptions.TechBuzzException;
 import com.sivalabs.techbuzz.notifications.EmailService;
 import com.sivalabs.techbuzz.users.domain.dtos.CreateUserRequest;
+import com.sivalabs.techbuzz.users.domain.dtos.ForgotPasswordRequest;
+import com.sivalabs.techbuzz.users.domain.dtos.PasswordResetRequest;
 import com.sivalabs.techbuzz.users.domain.dtos.UserDTO;
 import com.sivalabs.techbuzz.users.domain.mappers.UserDTOMapper;
 import com.sivalabs.techbuzz.users.domain.models.RoleEnum;
@@ -70,7 +73,8 @@ public class UserService {
                 encPwd,
                 RoleEnum.ROLE_USER,
                 false,
-                verificationToken);
+                verificationToken,
+                null);
         User savedUser = userRepository.save(user);
         return userDTOMapper.toDTO(savedUser);
     }
@@ -97,5 +101,43 @@ public class UserService {
         String subject = "TechBuzz - Email verification";
         Map<String, Object> paramsMap = Map.of("username", userDTO.name(), "verificationUrl", verificationUrl);
         emailService.sendEmail("email/verify-email", paramsMap, to, subject);
+    }
+
+    public UserDTO verifyPasswordResetToken(String email, String token) {
+        User user = userRepository
+                .findByEmailAndPasswordResetToken(email, token)
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid password reset request"));
+        return userDTOMapper.toDTO(user);
+    }
+
+    public UserDTO createPasswordResetToken(ForgotPasswordRequest passwordResetInitiationRequest) {
+
+        String passwordResetToken = UUID.randomUUID().toString();
+        User user = userRepository
+                .findByEmail(passwordResetInitiationRequest.email())
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid password reset request"));
+        user.setPasswordResetToken(passwordResetToken);
+        userRepository.updatePasswordResetToken(user);
+        return userDTOMapper.toDTO(user);
+    }
+
+    public void sendPasswordResetEmail(String baseUrl, UserDTO userDTO) {
+        String params =
+                "email=" + encode(userDTO.email(), UTF_8) + "&token=" + encode(userDTO.passwordResetToken(), UTF_8);
+        String passwordResetUrl = baseUrl + "/reset-password?" + params;
+        String to = userDTO.email();
+        String subject = "TechBuzz - Password Reset";
+        Map<String, Object> paramsMap = Map.of("username", userDTO.name(), "passwordResetUrl", passwordResetUrl);
+        emailService.sendEmail("email/password-reset", paramsMap, to, subject);
+    }
+
+    public void changePassword(PasswordResetRequest passwordResetRequest) {
+        String encPwd = passwordEncoder.encode(passwordResetRequest.password());
+        String verificationCode = passwordResetRequest.token();
+        String email = passwordResetRequest.email();
+        int updated = userRepository.updatePassword(email, verificationCode, encPwd);
+        if (updated == 0) {
+            throw new TechBuzzException("Unable to change password");
+        }
     }
 }

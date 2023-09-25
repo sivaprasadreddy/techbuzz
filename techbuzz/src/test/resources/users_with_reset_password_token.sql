@@ -1,0 +1,1 @@
+update users set password_reset_token='test' where users.email='admin@gmail.com';

@@ -75,6 +75,36 @@ class JooqUserRepository implements UserRepository {
                 .execute();
     }
 
+    @Override
+    public void updatePasswordResetToken(User user) {
+        this.dsl
+                .update(USERS)
+                .set(USERS.PASSWORD_RESET_TOKEN, user.getPasswordResetToken())
+                .where(USERS.ID.eq(user.getId()))
+                .execute();
+    }
+
+    @Override
+    public Optional<User> findByEmailAndPasswordResetToken(String email, String token) {
+
+        return this.dsl
+                .selectFrom(USERS)
+                .where(USERS.EMAIL.eq(email))
+                .and(USERS.PASSWORD_RESET_TOKEN.eq(token))
+                .fetchOptional(UserRecordMapper.INSTANCE);
+    }
+
+    @Override
+    public int updatePassword(String email, String token, String encodedPassword) {
+        return this.dsl
+                .update(USERS)
+                .set(USERS.PASSWORD, encodedPassword)
+                .set(USERS.PASSWORD_RESET_TOKEN, "")
+                .where(USERS.EMAIL.eq(email))
+                .and(USERS.PASSWORD_RESET_TOKEN.eq(token))
+                .execute();
+    }
+
     static class UserRecordMapper implements RecordMapper<UsersRecord, User> {
         static final UserRecordMapper INSTANCE = new UserRecordMapper();
 
@@ -89,7 +119,8 @@ class JooqUserRepository implements UserRepository {
                     r.getPassword(),
                     r.getRole(),
                     r.getVerified() != null && r.getVerified(),
-                    r.getVerificationToken());
+                    r.getVerificationToken(),
+                    r.getPasswordResetToken());
         }
     }
 }

@@ -20,4 +20,10 @@ public interface UserRepository {
     User save(User user);
 
     void updateVerificationStatus(User user);
+
+    void updatePasswordResetToken(User user);
+
+    Optional<User> findByEmailAndPasswordResetToken(String email, String token);
+
+    int updatePassword(String email, String verificationCode, String encodedPassword);
 }

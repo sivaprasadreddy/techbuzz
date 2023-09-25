@@ -22,6 +22,9 @@
             <div th:if="${errorMessage != null}">
                 <div class="alert alert-danger" th:text="${errorMessage}">Error Message</div>
             </div>
+            <div   th:if="${message}">
+                <div class="alert alert-success" th:text="${message}">Success Message</div>
+            </div>
             <div th:if="${param.logout}">
                 <div class="alert alert-success">You have been logged out.</div>
             </div>
@@ -42,6 +45,9 @@
                 </form>
                 <div class="mt-3">
                     Account Verification Pending? <a href="/resendVerification">Resend Verification Email</a>
+                </div>
+                <div class="mt-3">
+                    <a href="/forgot-password">Forgot Password</a>
                 </div>
             </div>
         </div>

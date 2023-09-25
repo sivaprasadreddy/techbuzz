@@ -76,3 +76,11 @@ const tabChangeHandler = (tabName, dataUrl) => {
     });
 
 }
+const checkPassword =()=>{
+    if($("#password").val()!==$("#confirmedPassword").val()){
+        $("#passwordMismatchError").show();
+        return false;
+    }
+    $("#passwordMismatchError").hide();
+    return true;
+}
