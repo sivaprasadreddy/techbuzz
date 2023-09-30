@@ -203,7 +203,7 @@ class JooqPostRepository implements PostRepository {
     }
 
     private static Function2<Long, String, User> mapToUser() {
-        return (id, name) -> new User(id, name, null, null, null, true, null);
+        return (id, name) -> new User(id, name, null, null, null, true, null, null);
     }
 
     @Override

@@ -33,7 +33,9 @@ public class WebSecurityConfig {
         "/verify-email",
         "/c/**",
         "/users/**",
-        "/resendVerification"
+        "/resendVerification",
+        "/forgot-password",
+        "/reset-password"
     };
 
     @Bean

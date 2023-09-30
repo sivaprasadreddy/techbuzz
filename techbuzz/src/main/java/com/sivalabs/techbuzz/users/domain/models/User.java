@@ -25,6 +25,7 @@ public class User implements Serializable {
     private boolean verified;
 
     private String verificationToken;
+    private String passwordResetToken;
 
     public User() {}
 
@@ -39,7 +40,8 @@ public class User implements Serializable {
             String password,
             RoleEnum role,
             boolean verified,
-            String verificationToken) {
+            String verificationToken,
+            String passwordResetToken) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -47,6 +49,7 @@ public class User implements Serializable {
         this.role = role;
         this.verified = verified;
         this.verificationToken = verificationToken;
+        this.passwordResetToken = passwordResetToken;
     }
 
     public boolean isAdminOrModerator() {
@@ -85,6 +88,10 @@ public class User implements Serializable {
         this.verificationToken = verificationToken;
     }
 
+    public void setPasswordResetToken(String passwordResetToken) {
+        this.passwordResetToken = passwordResetToken;
+    }
+
     public Long getId() {
         return this.id;
     }
@@ -111,5 +118,9 @@ public class User implements Serializable {
 
     public String getVerificationToken() {
         return this.verificationToken;
+    }
+
+    public String getPasswordResetToken() {
+        return passwordResetToken;
     }
 }
