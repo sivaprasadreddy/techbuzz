@@ -22,13 +22,13 @@
 		<jquery.version>3.7.1</jquery.version>
 		<fontawesome.version>6.4.2</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
-		<testcontainers.version>1.19.0</testcontainers.version>
-		<instancio.version>3.3.0</instancio.version>
+		<testcontainers.version>1.19.1</testcontainers.version>
+		<instancio.version>3.3.1</instancio.version>
 		<archunit.version>1.1.0</archunit.version>
 		<dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
 
 		<!-- plugins config -->
-		<spotless-maven-plugin.version>2.39.0</spotless-maven-plugin.version>
+		<spotless.version>2.40.0</spotless.version>
 		<dependency-check-maven.version>8.4.0</dependency-check-maven.version>
 		<properties-maven-plugin.version>1.2.0</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.10.0.2594</sonar-maven-plugin.version>
@@ -43,7 +43,7 @@
 		<junit.utReportFolder>${project.testresult.directory}/test</junit.utReportFolder>
 
 		<version.error-prone>2.19.1-picnic-1</version.error-prone>
-		<version.error-prone-support>0.13.0</version.error-prone-support>
+		<version.error-prone-support>0.14.0</version.error-prone-support>
 		<!-- Property using which additional Error Prone flags can be
         specified. Used by the `patch` profile. -->
 		<error-prone.patch-args />
@@ -234,7 +234,7 @@
 			<plugin>
 				<groupId>com.diffplug.spotless</groupId>
 				<artifactId>spotless-maven-plugin</artifactId>
-				<version>${spotless-maven-plugin.version}</version>
+				<version>${spotless.version}</version>
 				<configuration>
 					<java>
 						<importOrder />
