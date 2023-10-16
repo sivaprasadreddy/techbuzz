@@ -16,7 +16,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<maven.compiler.release>${java.version}</maven.compiler.release>
 		<gatling.version>3.9.5</gatling.version>
-		<gatling-maven-plugin.version>4.5.0</gatling-maven-plugin.version>
+		<gatling-maven-plugin.version>4.6.0</gatling-maven-plugin.version>
 		<spotless.version>2.39.0</spotless.version>
 	</properties>
 
