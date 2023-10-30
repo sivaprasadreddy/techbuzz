@@ -23,19 +23,19 @@
 		<fontawesome.version>6.4.2</fontawesome.version>
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
 		<testcontainers.version>1.19.1</testcontainers.version>
-		<instancio.version>3.3.1</instancio.version>
+		<instancio.version>3.4.1</instancio.version>
 		<archunit.version>1.1.0</archunit.version>
 		<dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
 
 		<!-- plugins config -->
 		<spotless.version>2.40.0</spotless.version>
-		<dependency-check-maven.version>8.4.0</dependency-check-maven.version>
-		<properties-maven-plugin.version>1.2.0</properties-maven-plugin.version>
+		<dependency-check-maven.version>8.4.2</dependency-check-maven.version>
+		<properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.10.0.2594</sonar-maven-plugin.version>
 		<testcontainers-jooq-codegen-maven-plugin.version>0.0.3</testcontainers-jooq-codegen-maven-plugin.version>
 
 		<!-- jacoco plugin config -->
-		<jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
 		<jacoco.minimum.coverage>80%</jacoco.minimum.coverage>
 		<project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
 		<jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
