@@ -24,7 +24,7 @@
 		<sendgrid-java.version>4.9.3</sendgrid-java.version>
 		<testcontainers.version>1.19.1</testcontainers.version>
 		<instancio.version>3.4.1</instancio.version>
-		<archunit.version>1.1.0</archunit.version>
+		<archunit.version>1.2.0</archunit.version>
 		<dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
 
 		<!-- plugins config -->
