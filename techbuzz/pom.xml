@@ -21,15 +21,15 @@
 		<bootstrap.version>5.3.2</bootstrap.version>
 		<jquery.version>3.7.1</jquery.version>
 		<fontawesome.version>6.4.2</fontawesome.version>
-		<sendgrid-java.version>4.9.3</sendgrid-java.version>
-		<testcontainers.version>1.19.1</testcontainers.version>
-		<instancio.version>3.4.1</instancio.version>
-		<archunit.version>1.1.0</archunit.version>
+		<sendgrid-java.version>4.10.1</sendgrid-java.version>
+		<testcontainers.version>1.19.2</testcontainers.version>
+		<instancio.version>3.6.0</instancio.version>
+		<archunit.version>1.2.0</archunit.version>
 		<dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
 
 		<!-- plugins config -->
 		<spotless.version>2.40.0</spotless.version>
-		<dependency-check-maven.version>8.4.2</dependency-check-maven.version>
+		<dependency-check-maven.version>8.4.3</dependency-check-maven.version>
 		<properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.10.0.2594</sonar-maven-plugin.version>
 		<tc-jooq-codegen-plugin.version>0.0.3</tc-jooq-codegen-plugin.version>
