@@ -31,14 +31,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup Java
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
 
       - name: Build with Maven
-        run: ./mvnw verify
+        run: ./mvnw -ntp verify
 
       - if: ${{ github.ref == 'refs/heads/main' }}
         name: Sonar Scan

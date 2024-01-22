@@ -14,11 +14,11 @@
         <java.version>17</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <spotless.version>2.40.0</spotless.version>
-        <playwright.version>1.39.0</playwright.version>
-        <jackson.version>2.15.3</jackson.version>
+        <spotless.version>2.42.0</spotless.version>
+        <playwright.version>1.41.0</playwright.version>
+        <jackson.version>2.16.1</jackson.version>
         <junit-jupiter.version>5.10.1</junit-jupiter.version>
-        <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <skipTests>true</skipTests>
         <assertj-core.version>3.24.2</assertj-core.version>
     </properties>
