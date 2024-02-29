@@ -21,14 +21,14 @@
 		<bootstrap.version>5.3.2</bootstrap.version>
 		<jquery.version>3.7.1</jquery.version>
 		<fontawesome.version>6.4.2</fontawesome.version>
-		<sendgrid-java.version>4.10.1</sendgrid-java.version>
-		<testcontainers.version>1.19.3</testcontainers.version>
+		<sendgrid-java.version>4.10.2</sendgrid-java.version>
+		<testcontainers.version>1.19.6</testcontainers.version>
 		<instancio.version>3.7.1</instancio.version>
 		<archunit.version>1.2.1</archunit.version>
 		<dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
 
 		<!-- plugins config -->
-		<spotless.version>2.42.0</spotless.version>
+		<spotless.version>2.43.0</spotless.version>
 		<dependency-check-maven.version>8.4.3</dependency-check-maven.version>
 		<properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
 		<sonar-maven-plugin.version>3.10.0.2594</sonar-maven-plugin.version>
