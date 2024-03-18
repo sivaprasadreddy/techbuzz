@@ -15,7 +15,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spotless.version>2.43.0</spotless.version>
-        <playwright.version>1.41.2</playwright.version>
+        <playwright.version>1.42.0</playwright.version>
         <jackson.version>2.16.1</jackson.version>
         <junit-jupiter.version>5.10.2</junit-jupiter.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
