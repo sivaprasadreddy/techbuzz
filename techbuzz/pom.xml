@@ -35,7 +35,7 @@
 		<tc-jooq-codegen-plugin.version>0.0.3</tc-jooq-codegen-plugin.version>
 
 		<!-- jacoco plugin config -->
-		<jacoco-maven-plugin.version>0.8.11</jacoco-maven-plugin.version>
+		<jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
 		<jacoco.minimum.coverage>80%</jacoco.minimum.coverage>
 		<project.testresult.directory>${project.build.directory}/test-results</project.testresult.directory>
 		<jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
