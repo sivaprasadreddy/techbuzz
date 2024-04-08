@@ -20,7 +20,7 @@
 		<webjars-locator.version>0.52</webjars-locator.version>
 		<bootstrap.version>5.3.3</bootstrap.version>
 		<jquery.version>3.7.1</jquery.version>
-		<fontawesome.version>6.5.1</fontawesome.version>
+		<fontawesome.version>6.5.2</fontawesome.version>
 		<sendgrid-java.version>4.10.2</sendgrid-java.version>
 		<testcontainers.version>1.19.7</testcontainers.version>
 		<instancio.version>3.7.1</instancio.version>
