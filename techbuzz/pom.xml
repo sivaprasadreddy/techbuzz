@@ -22,7 +22,7 @@
 		<jquery.version>3.7.1</jquery.version>
 		<fontawesome.version>6.5.2</fontawesome.version>
 		<sendgrid-java.version>4.10.2</sendgrid-java.version>
-		<testcontainers.version>1.19.7</testcontainers.version>
+		<testcontainers.version>1.20.0</testcontainers.version>
 		<instancio.version>4.6.0</instancio.version>
 		<archunit.version>1.3.0</archunit.version>
 		<dockerImageName>sivaprasadreddy/${project.artifactId}</dockerImageName>
