@@ -15,12 +15,12 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <spotless.version>2.43.0</spotless.version>
-        <playwright.version>1.43.0</playwright.version>
-        <jackson.version>2.17.0</jackson.version>
+        <playwright.version>1.45.0</playwright.version>
+        <jackson.version>2.17.2</jackson.version>
         <junit-jupiter.version>5.10.2</junit-jupiter.version>
         <maven-surefire-plugin.version>3.2.5</maven-surefire-plugin.version>
         <skipTests>true</skipTests>
-        <assertj-core.version>3.25.3</assertj-core.version>
+        <assertj-core.version>3.26.3</assertj-core.version>
     </properties>
 
     <dependencies>
