@@ -30,7 +30,7 @@
 		<spotless.version>2.43.0</spotless.version>
 		<dependency-check-maven.version>10.0.4</dependency-check-maven.version>
 		<properties-maven-plugin.version>1.2.1</properties-maven-plugin.version>
-		<sonar-maven-plugin.version>3.11.0.3922</sonar-maven-plugin.version>
+		<sonar-maven-plugin.version>5.0.0.4389</sonar-maven-plugin.version>
 		<tc-jooq-codegen-plugin.version>0.0.4</tc-jooq-codegen-plugin.version>
 
 		<!-- jacoco plugin config -->
