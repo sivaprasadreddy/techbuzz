@@ -20,7 +20,7 @@
         <junit-jupiter.version>5.11.3</junit-jupiter.version>
         <maven-surefire-plugin.version>3.5.2</maven-surefire-plugin.version>
         <skipTests>true</skipTests>
-        <assertj-core.version>3.26.3</assertj-core.version>
+        <assertj-core.version>3.27.7</assertj-core.version>
     </properties>
 
     <dependencies>
